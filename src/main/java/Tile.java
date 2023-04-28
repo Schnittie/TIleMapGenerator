@@ -17,6 +17,20 @@ public class Tile {
         Arrays.fill(canIbe, true);
     }
 
+    public ArrayList<ETileContent> getPossibleTileContentLeft() {
+        ArrayList<ETileContent> response = new ArrayList();
+        if (isCollapsed) {
+            response.add(content);
+            return response;
+        }
+        for (int i = 0; i < canIbe.length; i++) {
+            if (canIbe[i]) {
+                response.add(ETileContent.findById(i));
+            }
+        }
+        return response;
+    }
+
     public boolean propagate(EDirection whereIamRelativeToCaller, ETileContent whatItIsNow) {
         if (isCollapsed) return false;
         for (int i = 0; i < ETileContent.values().length; i++) {
@@ -29,6 +43,27 @@ public class Tile {
             }
         }
         return false;
+    }
+
+    public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossbilitiesNow) {
+        PropagationResponseEntity response = new PropagationResponseEntity(false,false, new ArrayList<>());
+        if (isCollapsed) return response;
+        for (int i = 0; i < ETileContent.values().length; i++) {
+            if (canIbe[i]) {
+                if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, listOfPossbilitiesNow)) {
+                    response.setHasChangedPossibility(true);
+                    if (removePossibility(i)) {
+                        return new PropagationResponseEntity(true,false,null);
+                    }
+                }
+                else {
+                    ArrayList<ETileContent> listOfPossibilities = response.getNewPossibilities();
+                    listOfPossibilities.add(ETileContent.findById(i));
+                    response.setNewPossibilities(listOfPossibilities);
+                }
+            }
+        }
+        return response;
     }
 
     private boolean removePossibility(int toRemove) {

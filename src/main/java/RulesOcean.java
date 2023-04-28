@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class RulesOcean extends RuleList {
-    private ArrayList<Rule> rules = new ArrayList<>();
+public class RulesOcean implements RuleList {
+    ArrayList<Rule> rules = new ArrayList<>();
 
     public RulesOcean(){
         rules.add(new Rule(RuleList.SEAID, EDirection.ABOVE));
@@ -26,10 +26,12 @@ public class RulesOcean extends RuleList {
         rules.add(new Rule(RuleList.OCEANID, EDirection.DOWNLEFT));
 
     }
-    public boolean canThisBeHere(EDirection direction, ETileContent tileContent) {
-        for (Rule rule : rules) {
-            if (rule.equals(new Rule(tileContent.getId(),direction))){
-                return true;
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+        for (Rule rule : this.rules) {
+            for (ETileContent tileContent:listOfPossbilitiesNow) {
+                if (rule.equals(new Rule(tileContent.getId(), direction))) {
+                    return true;
+                }
             }
         }
         return false;

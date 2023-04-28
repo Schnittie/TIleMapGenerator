@@ -6,6 +6,8 @@ public class Main {
 
     //TODO: propagate possible states
     //TODO: More Directions
+
+    //TODO:Fluss
     public static void main(String[] args) throws IOException {
         int trialcound = 0;
         boolean t = true;

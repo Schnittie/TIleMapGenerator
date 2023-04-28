@@ -3,12 +3,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Board {
     private Tile[][] board;
-    private final int WIDTH = 50; //x
-    private final int HEIGHT = 30;//y
+    private final int WIDTH = 88; //x
+    private final int HEIGHT = 88;//y
     private final int NUMBEROFTILES = WIDTH * HEIGHT;
     private int numberCollapsed = 0;
 
@@ -45,45 +46,86 @@ public class Board {
     private void collapseATile(int x, int y) throws IllegalArgumentException {
         //returns the amount of collapsed tiles
         board[x][y].collapse();
-        if (!checkIfPlacedTileIsRight(x, y)) {
-            throw new IllegalArgumentException();
-        }
+//        if (!checkIfPlacedTileIsRight(x, y)) {
+//            throw new IllegalArgumentException();
+//        }
         propagate(x, y);
     }
 
-    private void propagate(int x, int y) throws IllegalArgumentException {
-        ETileContent newTileContent = board[x][y].getContent();
-        ArrayList<Pair> toCollapse = new ArrayList<>(8);
-        if (x > 0 && board[x - 1][y].propagate(EDirection.LEFT, newTileContent)) {
-            toCollapse.add(new Pair(x - 1, y));
+    private PropagationResultLists propagateOneTile(int x, int y, EDirection direction,
+                                                    ArrayList<ETileContent> newTileContent, PropagationResultLists propagationResultLists) {
+        ArrayList<Board.Pair> toCollapse = propagationResultLists.toCollapse();
+        HashMap<Board.Pair, ArrayList<ETileContent>> toPropagate = propagationResultLists.toPropagate();
+        if (doCoordinatesFitForDirection(x, y, direction)) {
+            PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
+            if (response.isHasCollapsed()) {
+                toCollapse.add(new Pair(x , y));
+            } else if (response.isHasChangedPossibility()) {
+                toPropagate.put(new Pair(x , y), response.getNewPossibilities());
+            }
         }
-        if (x < WIDTH - 1 && board[x + 1][y].propagate(EDirection.RIGHT, newTileContent)) {
-            toCollapse.add(new Pair(x + 1, y));
-        }
-        if (y > 0 && board[x][y - 1].propagate(EDirection.ABOVE, newTileContent)) {
-            toCollapse.add(new Pair(x, y - 1));
-        }
-        if (y < HEIGHT - 1 && board[x][y + 1].propagate(EDirection.BELOW, newTileContent)) {
-            toCollapse.add(new Pair(x, y + 1));
-        }
-        if (x > 0 && y > 0 && board[x - 1][y - 1].propagate(EDirection.TOPLEFT, newTileContent)) {
-            toCollapse.add(new Pair(x - 1, y - 1));
-        }
-        if (x < WIDTH - 1 && y > 0 && board[x + 1][y - 1].propagate(EDirection.TOPRIGHT, newTileContent)) {
-            toCollapse.add(new Pair(x + 1, y - 1));
-        }
-        if (x > 0 && y < HEIGHT - 1 && board[x - 1][y + 1].propagate(EDirection.DOWNLEFT, newTileContent)) {
-            toCollapse.add(new Pair(x - 1, y + 1));
-        }
-        if (x < WIDTH - 1 && y < HEIGHT - 1 && board[x + 1][y + 1].propagate(EDirection.DOWNRIGHT, newTileContent)) {
-            toCollapse.add(new Pair(x + 1, y + 1));
-        }
-        for (Pair pair : toCollapse) {
-            collapseATile(pair.x, pair.y);
+        return new PropagationResultLists(toCollapse, toPropagate);
+    }
+
+    private boolean doCoordinatesFitForDirection(int x, int y, EDirection direction) {
+        switch (direction) {
+            case ABOVE -> {
+                return y > 0;
+            }
+            case BELOW -> {
+                return y < HEIGHT - 1;
+            }
+            case RIGHT -> {
+                return x < WIDTH - 1;
+            }
+            case LEFT -> {
+                return x > 0;
+            }
+            case TOPLEFT -> {
+                return doCoordinatesFitForDirection(x, y, EDirection.ABOVE) && doCoordinatesFitForDirection(x, y, EDirection.LEFT);
+            }
+            case TOPRIGHT -> {
+                return doCoordinatesFitForDirection(x, y, EDirection.ABOVE) && doCoordinatesFitForDirection(x, y, EDirection.RIGHT);
+            }
+            case DOWNLEFT -> {
+                return doCoordinatesFitForDirection(x, y, EDirection.BELOW) && doCoordinatesFitForDirection(x, y, EDirection.LEFT);
+            }
+            case DOWNRIGHT -> {
+                return doCoordinatesFitForDirection(x, y, EDirection.BELOW) && doCoordinatesFitForDirection(x, y, EDirection.RIGHT);
+            }
+            default -> {
+                return false;
+            }
         }
     }
 
-    private Pair getRandomTileWithLowEntropy() {
+    private void propagate(int x, int y, ArrayList<ETileContent> newTileContent) throws IllegalArgumentException {
+        ArrayList<Pair> toCollapse = new ArrayList<>(8);
+        HashMap<Pair, ArrayList<ETileContent>> toPropagate = new HashMap<>(8);
+        PropagationResultLists propagationResultLists = new PropagationResultLists(toCollapse, toPropagate);
+        propagationResultLists = propagateOneTile(x - 1, y, EDirection.LEFT, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x + 1, y, EDirection.RIGHT, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x, y - 1, EDirection.ABOVE, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x, y + 1, EDirection.BELOW, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x - 1, y - 1, EDirection.TOPLEFT, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x - 1, y + 1, EDirection.DOWNLEFT, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x + 1, y - 1, EDirection.TOPRIGHT, newTileContent, propagationResultLists);
+        propagationResultLists = propagateOneTile(x + 1, y + 1, EDirection.DOWNRIGHT, newTileContent, propagationResultLists);
+        toPropagate = propagationResultLists.toPropagate();
+        toCollapse = propagationResultLists.toCollapse();
+        for (Pair pair : toCollapse) {
+            collapseATile(pair.x(), pair.y());
+        }
+        for (Pair pair : toPropagate.keySet()) {
+            propagate(pair.x(), pair.y(), toPropagate.get(pair));
+        }
+    }
+
+    private void propagate(int x, int y) throws IllegalArgumentException {
+        propagate(x, y, board[x][y].getPossibleTileContentLeft());
+    }
+
+    public Pair getRandomTileWithLowEntropy() {
         int lowestEntropy = ETileContent.values().length;
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < WIDTH; x++) {
@@ -104,7 +146,7 @@ public class Board {
         return lowestEntropyTiles.get(random.nextInt(lowestEntropyTiles.size()));
     }
 
-    private record Pair(int x, int y) {
+    record Pair(int x, int y) {
         @Override
         public String toString() {
             return (x + " " + y);
@@ -115,28 +157,28 @@ public class Board {
         if (!board[x][y].isCollapsed()) {
             return true;
         }
-        if (((x > 0 && board[x - 1][y].isCollapsed()) && !board[x - 1][y].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getContent()))) {
+        if (((x > 0 && board[x-1][y].isCollapsed()) && !board[x - 1][y].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((x < WIDTH - 1 && board[x + 1][y].isCollapsed()) && !board[x + 1][y].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getContent()))) {
+        if (((x < WIDTH - 1 && board[x + 1][y].isCollapsed()) && !board[x + 1][y].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((y > 0 && board[x][y - 1].isCollapsed()) && !board[x][y - 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getContent()))) {
+        if (((y > 0 && board[x][y - 1].isCollapsed()) && !board[x][y - 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((y < HEIGHT - 1 && board[x][y + 1].isCollapsed()) && !board[x][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getContent()))) {
+        if (((y < HEIGHT - 1 && board[x][y + 1].isCollapsed()) && !board[x][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((x > 0 && y > 0 && board[x - 1][y - 1].isCollapsed()) && !board[x - 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getContent()))) {
+        if (((x > 0 && y > 0 && board[x - 1][y - 1].isCollapsed()) && !board[x - 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((x < WIDTH - 1 && y > 0 && board[x + 1][y - 1].isCollapsed()) && !board[x + 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getContent()))) {
+        if (((x < WIDTH - 1 && y > 0 && board[x + 1][y - 1].isCollapsed()) && !board[x + 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((x > 0 && y < HEIGHT - 1 && board[x - 1][y + 1].isCollapsed()) && !board[x - 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getContent()))) {
+        if (((x > 0 && y < HEIGHT - 1 && board[x - 1][y + 1].isCollapsed()) && !board[x - 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
-        if (((x < WIDTH - 1 && y < HEIGHT - 1 && board[x + 1][y + 1].isCollapsed()) && !board[x + 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getContent()))) {
+        if (((x < WIDTH - 1 && y < HEIGHT - 1 && board[x + 1][y + 1].isCollapsed()) && !board[x + 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
         return true;

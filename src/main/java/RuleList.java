@@ -1,10 +1,30 @@
-public abstract class RuleList {
-    public final static int LANDID = 0;
-    public final static int COASTID = 1;
-    public final static int SEAID = 2;
-    public final static int HILLID = 3;
-    public final static int REEFID = 4;
-    public final static int MOUNTAINID = 5;
-    public final static int OCEANID = 6;
-    public abstract boolean canThisBeHere(EDirection direction, ETileContent tileContent);
+import java.util.ArrayList;
+public interface RuleList {
+    ArrayList<Rule> rules = new ArrayList<>();
+    int LANDID = 0;
+     int COASTID = 1;
+     int SEAID = 2;
+     int HILLID = 3;
+     int REEFID = 4;
+     int MOUNTAINID = 5;
+     int OCEANID = 6;
+     default boolean canThisBeHere(EDirection direction, ETileContent tileContent) {
+        for (Rule rule : rules) {
+            if (rule.equals(new Rule(tileContent.getId(), direction))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+     default boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+         for (Rule rule : this.rules) {
+             for (ETileContent tileContent:listOfPossbilitiesNow) {
+                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
+                     return true;
+                 }
+             }
+         }
+         return false;
+    }
 }

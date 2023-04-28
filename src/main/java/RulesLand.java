@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class RulesLand extends RuleList {
-    private  ArrayList<Rule> rules = new ArrayList<>();
+public class RulesLand implements RuleList {
+    ArrayList<Rule> rules = new ArrayList<>();
     public RulesLand(){
         rules.add(new Rule(RuleList.LANDID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.LANDID, EDirection.BELOW));
@@ -30,10 +30,12 @@ public class RulesLand extends RuleList {
         rules.add(new Rule(RuleList.HILLID, EDirection.DOWNLEFT));
 
     }
-    public boolean canThisBeHere(EDirection direction, ETileContent tileContent) {
-        for (Rule rule : rules) {
-            if (rule.equals(new Rule(tileContent.getId(),direction))){
-                return true;
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+        for (Rule rule : this.rules) {
+            for (ETileContent tileContent:listOfPossbilitiesNow) {
+                if (rule.equals(new Rule(tileContent.getId(), direction))) {
+                    return true;
+                }
             }
         }
         return false;
