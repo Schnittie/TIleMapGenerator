@@ -1,6 +1,11 @@
 import java.io.IOException;
 
 public class Main {
+    //TODO: Probability simple
+    //TODO: probability left right
+
+    //TODO: propagate possible states
+    //TODO: More Directions
     public static void main(String[] args) throws IOException {
         int trialcound = 0;
         boolean t = true;
