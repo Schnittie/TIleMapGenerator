@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Board {
-    private Tile[][] board;
-    private final int WIDTH = 88; //x
-    private final int HEIGHT = 88;//y
-    private final int NUMBEROFTILES = WIDTH * HEIGHT;
-    private int numberCollapsed = 0;
+    private final Tile[][] board;
+    private final int WIDTH = 30; //x
+    private final int HEIGHT = 100;//y
 
     public Board() {
         board = new Tile[WIDTH][HEIGHT];
@@ -30,15 +28,12 @@ public class Board {
     }
 
     public void fill() throws IllegalArgumentException {
-        while (numberCollapsed < NUMBEROFTILES) {
+        while (true) {
             Pair randomTileWithLowEntropy = getRandomTileWithLowEntropy();
-
             if (randomTileWithLowEntropy.x == -10) {
                 return;
             }
-            int x = randomTileWithLowEntropy.x;
-            int y = randomTileWithLowEntropy.y;
-            collapseATile(x, y);
+            collapseATile(randomTileWithLowEntropy.x, randomTileWithLowEntropy.y);
         }
 
     }
@@ -70,16 +65,16 @@ public class Board {
     private boolean doCoordinatesFitForDirection(int x, int y, EDirection direction) {
         switch (direction) {
             case ABOVE -> {
-                return y > 0;
+                return y >= 0;
             }
             case BELOW -> {
-                return y < HEIGHT - 1;
+                return y <= HEIGHT - 1;
             }
             case RIGHT -> {
-                return x < WIDTH - 1;
+                return x <= WIDTH - 1;
             }
             case LEFT -> {
-                return x > 0;
+                return x >= 0;
             }
             case TOPLEFT -> {
                 return doCoordinatesFitForDirection(x, y, EDirection.ABOVE) && doCoordinatesFitForDirection(x, y, EDirection.LEFT);
@@ -113,11 +108,11 @@ public class Board {
         propagationResultLists = propagateOneTile(x + 1, y + 1, EDirection.DOWNRIGHT, newTileContent, propagationResultLists);
         toPropagate = propagationResultLists.toPropagate();
         toCollapse = propagationResultLists.toCollapse();
-        for (Pair pair : toCollapse) {
-            collapseATile(pair.x(), pair.y());
-        }
         for (Pair pair : toPropagate.keySet()) {
             propagate(pair.x(), pair.y(), toPropagate.get(pair));
+        }
+        for (Pair pair : toCollapse) {
+            collapseATile(pair.x(), pair.y());
         }
     }
 
@@ -132,8 +127,8 @@ public class Board {
             for (int y = 0; y < HEIGHT; y++) {
                 if (!board[x][y].isCollapsed() && board[x][y].getPossibleTileStatesLeft() <= lowestEntropy) {
                     if (board[x][y].getPossibleTileStatesLeft() < lowestEntropy) {
-                        lowestEntropyTiles = new ArrayList<>();
-                        lowestEntropy = board[x][y].getPossibleTileStatesLeft();
+                        //lowestEntropyTiles = new ArrayList<>();
+                        //lowestEntropy = board[x][y].getPossibleTileStatesLeft();
                     }
                     lowestEntropyTiles.add(new Pair(x, y));
                 }

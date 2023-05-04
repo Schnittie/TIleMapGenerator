@@ -1,88 +1,100 @@
- M  H  L  H  L  H  L  L  L  H  H  H  H  L  H  L  L  L  L  H  H  H  L  H  H  H  L  H  H  H  L  H  H  H  H  H  L  H  H  H  L  H  L  H  H  L  H  L  H  L  H  H  H  H  L  H  H  H  L  L  H  L  H  L  H  H  H  L  L  H  L  L  H  L  H  H  L  L  C  S  R  R  R  R  R  R  S  O 
- M  H  L  H  L  L  H  H  L  L  H  H  H  H  H  H  H  H  H  L  L  L  L  L  L  H  L  L  L  L  L  H  L  H  L  L  L  H  L  L  L  H  H  L  H  H  H  L  H  L  H  L  L  L  H  H  H  L  L  H  L  H  L  L  H  H  L  H  H  H  H  L  H  H  L  H  H  L  L  L  H  L  L  L  C  C  S  O 
- M  H  L  H  H  H  H  H  H  L  H  H  L  H  H  H  L  L  H  L  L  H  L  H  H  H  H  L  L  L  H  L  H  L  H  L  L  L  L  H  H  L  H  H  H  L  L  L  H  H  L  L  H  H  L  L  H  H  L  H  L  H  L  L  H  L  H  H  H  L  L  H  H  L  L  L  L  H  H  L  H  H  H  L  C  C  S  O 
- M  H  H  H  H  L  H  L  L  L  H  L  H  H  L  L  L  H  H  L  H  L  H  L  L  L  L  H  L  L  L  H  L  H  H  L  L  H  L  L  L  L  H  H  L  H  L  H  H  L  H  H  L  H  H  L  L  L  L  H  H  H  H  H  L  L  H  H  L  H  L  H  L  H  L  H  L  H  H  L  H  L  L  L  C  S  S  O 
- M  M  H  L  L  H  L  H  L  L  L  L  H  L  L  L  H  H  L  L  H  L  H  L  L  H  L  L  H  L  L  L  H  L  L  L  H  L  H  H  L  L  L  L  H  L  H  H  L  L  H  L  L  H  H  H  L  H  L  H  H  L  L  L  H  H  H  H  H  L  L  L  L  L  H  L  H  L  L  L  H  H  L  C  C  S  S  O 
- M  M  H  L  L  L  H  H  L  L  H  L  L  L  H  L  H  H  H  L  H  L  H  L  H  H  L  L  H  L  H  L  L  L  L  L  H  H  H  L  H  L  L  H  L  H  L  L  L  L  H  H  H  L  H  H  L  L  H  L  H  L  L  L  H  L  L  L  L  H  L  L  H  L  H  L  L  L  H  H  L  H  L  L  C  C  S  O 
- M  M  H  L  H  L  H  H  H  L  L  H  H  H  H  H  L  H  L  L  H  H  H  L  H  L  H  H  H  H  L  H  L  H  L  L  H  L  H  H  H  L  L  L  L  H  H  H  H  L  L  H  H  H  L  L  H  H  H  L  H  L  L  L  L  L  H  H  L  H  L  L  L  H  L  H  H  H  H  L  H  H  H  L  C  C  S  O 
- M  H  H  H  H  L  H  L  H  H  H  H  L  H  L  H  H  H  L  H  H  H  L  H  H  L  L  L  L  H  H  H  H  H  L  H  L  H  L  L  H  L  L  L  L  H  H  H  H  H  H  L  H  L  L  L  H  H  H  L  L  L  H  H  L  L  L  L  L  H  L  H  L  L  H  H  L  L  L  H  H  L  L  L  C  S  S  O 
- M  H  H  H  L  L  H  H  H  H  H  L  L  H  H  L  L  H  L  H  L  L  H  H  H  H  H  H  L  L  H  L  L  H  L  H  L  L  L  L  L  L  L  H  L  L  L  H  L  H  L  L  H  L  L  H  L  L  L  H  L  L  H  H  L  H  L  L  L  L  L  H  L  H  H  H  L  H  L  H  H  L  H  L  C  C  S  O 
- M  H  L  L  L  H  H  L  L  L  H  L  H  H  H  L  L  H  H  L  L  H  L  L  L  L  L  H  L  H  L  L  L  H  L  L  L  L  H  L  H  L  H  L  L  H  L  H  H  L  H  H  H  H  L  L  L  L  H  L  L  H  H  L  L  H  H  L  H  H  L  L  L  H  H  H  H  L  L  L  H  L  L  L  C  C  S  O 
- M  H  H  H  H  L  L  H  H  H  L  H  H  H  H  H  L  L  L  L  L  L  L  L  H  H  H  H  L  L  H  L  L  L  H  H  H  H  H  L  H  H  L  L  H  L  H  H  L  L  L  H  H  L  H  H  L  H  H  L  L  H  H  L  L  H  L  H  H  L  L  H  L  H  L  H  L  H  H  H  L  H  L  C  C  S  S  O 
- M  H  L  H  L  H  H  L  H  L  H  L  L  L  L  L  H  H  H  H  H  H  H  H  L  H  H  H  H  L  H  H  L  H  L  L  L  L  H  H  H  H  L  H  H  H  L  H  H  L  L  L  L  L  L  L  H  H  H  H  L  H  L  L  H  L  L  L  L  H  H  L  H  L  L  H  H  L  L  L  L  H  L  C  C  C  S  O 
- M  H  H  H  L  H  H  H  L  H  H  L  H  L  L  L  H  L  H  L  H  H  H  H  L  L  L  H  H  L  H  H  H  H  H  L  L  H  H  L  H  H  H  H  H  L  H  L  H  L  L  H  H  L  H  H  L  H  L  H  L  L  L  H  L  L  H  H  H  H  H  H  H  L  L  L  H  H  H  L  L  H  L  L  L  C  S  O 
- M  M  H  L  L  H  H  H  L  H  H  H  L  L  L  H  H  L  L  H  H  H  L  H  L  L  L  L  L  H  L  L  H  H  H  H  H  H  H  L  L  H  L  H  L  L  H  L  H  H  H  L  H  H  H  H  H  L  L  L  L  L  H  L  L  L  L  H  H  H  H  H  H  H  L  L  H  H  L  H  H  L  H  L  L  C  S  O 
- M  H  H  H  L  L  H  L  L  H  H  H  H  H  H  L  L  H  H  H  H  L  L  L  L  H  L  L  L  L  H  L  H  L  L  H  H  L  H  H  H  L  L  H  L  H  H  H  H  L  L  L  L  H  H  L  L  H  L  H  H  H  L  L  H  L  H  L  H  L  L  L  L  L  L  L  L  H  L  L  H  L  L  L  L  C  S  O 
- M  H  H  L  L  L  L  L  H  H  H  L  H  H  L  L  L  H  L  H  H  H  H  H  H  L  L  H  L  L  H  H  L  H  L  L  L  L  H  L  H  L  L  H  H  H  L  H  H  L  L  H  L  L  H  H  L  H  L  H  L  H  H  H  L  L  L  L  H  L  H  L  H  L  H  L  L  H  H  L  H  L  H  H  L  C  S  O 
- M  H  H  L  L  L  H  L  H  H  L  H  L  H  H  H  L  L  L  H  L  H  H  H  L  L  H  L  H  H  L  H  L  H  H  H  H  H  H  H  L  H  H  H  H  L  H  L  L  H  H  L  L  H  L  H  L  L  H  L  H  H  L  L  L  H  H  H  L  L  L  H  H  L  H  H  H  H  H  H  L  L  H  H  L  C  S  O 
- M  M  H  H  L  L  L  L  L  L  H  L  L  H  H  L  H  H  H  H  H  H  H  H  L  H  L  L  H  L  H  H  L  H  L  H  L  H  L  H  L  L  L  L  L  H  L  L  H  H  H  H  L  L  L  H  H  H  L  L  L  L  H  H  H  H  H  L  L  H  L  L  H  H  L  L  L  H  H  H  L  H  H  H  L  C  S  O 
- M  M  M  H  L  L  L  H  L  H  H  L  L  H  H  L  H  H  H  L  H  H  H  H  L  H  H  H  H  H  L  L  L  L  L  L  L  H  L  L  L  H  H  H  L  H  H  H  H  H  L  L  H  L  H  L  L  L  L  H  H  L  H  H  H  H  H  H  H  L  H  L  H  H  L  H  L  L  L  L  H  L  L  L  L  C  S  O 
- M  M  H  H  L  L  H  H  L  L  L  L  L  L  H  H  L  L  H  H  L  H  L  L  L  H  H  H  H  H  H  L  H  L  L  L  H  L  H  L  L  L  L  L  L  H  H  H  H  L  H  H  H  H  H  H  L  L  L  L  L  H  H  L  L  L  H  L  H  H  L  H  L  L  H  L  L  H  L  H  L  L  L  L  L  C  S  O 
- M  H  H  L  L  H  L  L  H  L  H  H  L  H  L  H  H  L  L  H  H  L  H  H  H  L  L  H  H  L  H  L  H  H  H  H  L  L  L  H  H  H  H  H  H  H  L  H  H  L  H  L  H  H  H  L  L  H  H  H  L  L  H  L  L  L  H  H  L  H  L  H  L  L  H  H  L  L  H  L  L  H  L  C  C  C  S  O 
- M  H  H  L  H  H  H  L  H  H  H  H  H  H  H  L  L  L  H  H  L  H  H  H  H  H  H  H  L  H  L  L  H  H  H  L  H  L  H  L  L  L  H  H  L  H  L  L  H  L  H  H  L  L  L  H  H  H  L  L  L  L  L  L  L  L  H  L  H  H  H  H  L  H  L  L  H  H  L  H  L  H  L  C  C  S  S  O 
- M  M  H  H  H  H  L  L  L  H  L  H  L  L  H  H  H  H  H  L  H  L  L  L  H  H  L  L  L  L  L  H  L  H  H  H  H  L  L  H  L  H  H  L  H  L  H  H  H  H  H  L  L  L  L  H  H  L  L  H  H  L  H  H  L  H  H  L  H  H  H  H  H  H  L  L  L  L  L  L  L  H  L  L  C  S  R  O 
- M  H  H  L  H  L  L  L  L  L  H  H  L  H  H  H  L  L  H  H  L  L  H  H  H  H  L  H  L  H  H  H  H  L  L  L  H  L  L  H  H  H  L  L  H  H  L  L  H  H  H  L  L  L  L  H  H  L  H  H  L  L  L  L  L  H  H  H  H  H  L  H  L  H  H  L  L  L  H  H  L  H  H  L  C  S  S  O 
- M  M  H  H  L  L  H  L  L  H  L  H  H  H  H  H  L  L  H  L  L  H  H  H  L  L  H  L  L  L  L  L  H  L  L  H  L  L  L  H  L  L  L  H  H  H  L  H  H  L  H  L  L  H  H  L  L  L  H  L  H  H  L  H  L  H  H  L  L  L  L  H  L  H  H  H  L  H  H  L  H  L  H  L  C  S  S  O 
- M  M  H  L  L  H  L  L  H  H  L  L  H  H  H  L  L  L  H  L  H  H  L  H  L  H  H  H  L  L  H  H  L  L  H  L  H  L  L  H  L  L  H  H  H  L  H  H  H  L  L  L  L  L  H  H  H  H  L  H  H  L  L  H  L  L  H  H  L  L  H  L  H  L  H  H  H  H  H  L  H  H  L  L  C  C  S  O 
- M  H  H  H  L  H  L  L  H  L  L  L  H  H  L  H  L  L  H  H  L  H  L  L  H  L  L  L  L  H  L  L  L  L  H  H  L  H  L  L  H  H  H  H  H  L  H  H  L  L  H  L  L  H  L  H  L  H  H  H  L  H  L  H  H  L  H  H  L  H  L  L  L  H  H  H  H  L  H  H  L  H  H  L  L  C  S  O 
- M  H  H  H  H  H  L  L  H  L  L  L  H  H  H  L  H  H  L  H  L  L  L  H  L  L  H  H  H  H  H  L  L  H  H  H  L  L  L  L  H  L  H  H  L  L  L  L  H  L  L  H  H  H  L  L  L  H  L  L  H  H  L  H  L  H  L  L  H  L  H  L  H  L  L  H  L  L  H  H  H  H  H  L  C  C  S  O 
- M  M  H  L  H  L  H  H  H  H  L  L  L  L  L  H  H  H  L  L  H  L  H  L  L  H  H  L  H  L  L  L  H  L  H  H  H  L  L  L  H  L  H  L  H  H  L  H  L  L  H  L  L  H  L  H  H  L  H  H  H  L  L  L  L  H  H  H  H  L  H  H  L  H  L  H  H  H  L  L  H  H  H  L  C  C  S  O 
- M  M  H  H  H  L  L  L  L  L  L  H  H  H  H  L  L  H  H  H  H  H  L  H  L  L  H  H  L  H  L  H  L  L  H  L  L  L  H  H  H  H  H  H  H  H  H  H  L  L  H  L  H  L  H  H  L  L  L  L  H  L  H  H  H  H  H  H  H  L  L  H  L  L  L  L  L  H  L  L  L  H  L  L  C  S  S  O 
- M  H  H  H  H  H  H  H  L  H  L  L  L  H  L  L  L  L  L  H  L  H  H  H  H  H  L  L  H  L  L  H  H  L  L  H  H  L  H  L  H  L  H  H  L  L  L  L  H  H  L  H  L  L  H  H  L  H  H  H  H  H  L  H  H  L  L  H  L  H  H  H  H  L  H  H  L  L  L  L  H  H  L  L  C  C  S  O 
- M  H  H  H  H  H  H  H  L  L  H  H  H  L  L  L  H  L  H  H  H  L  L  L  H  L  H  L  H  H  L  L  L  L  L  H  H  L  L  H  H  L  H  H  L  L  L  H  L  H  L  L  H  H  H  L  L  H  L  H  L  L  H  H  H  L  H  H  H  L  H  L  H  H  L  H  L  H  L  L  L  H  L  L  L  C  S  O 
- M  M  H  H  H  L  H  L  H  L  L  H  L  L  L  L  H  H  L  H  H  L  L  H  L  H  H  H  H  L  L  H  L  L  L  L  L  L  L  H  L  L  L  H  H  L  H  H  H  H  H  L  L  L  H  L  H  L  L  H  H  L  L  L  H  L  H  L  H  H  L  H  L  L  H  H  H  H  H  L  L  H  H  H  L  C  S  O 
- M  H  H  H  H  L  H  H  L  L  L  H  H  H  L  L  H  H  H  H  H  H  L  L  L  H  H  H  L  H  L  H  L  H  H  H  H  L  L  L  H  L  L  L  L  H  H  H  L  L  H  L  H  H  H  L  H  L  L  L  H  H  L  L  H  L  L  H  H  L  L  L  H  H  L  H  H  H  H  H  H  L  L  L  L  C  S  O 
- M  H  H  H  H  L  H  H  L  L  H  L  H  H  H  L  H  L  H  H  L  H  L  L  H  L  L  H  H  H  L  L  L  L  H  L  L  H  L  H  H  L  L  L  L  L  L  L  L  L  H  H  H  H  H  L  H  H  H  L  L  H  H  L  H  L  L  H  L  L  H  H  L  L  L  L  H  L  H  L  L  H  L  C  C  C  S  O 
- M  H  H  L  H  L  L  L  L  L  H  H  L  L  H  L  H  H  H  L  L  L  H  L  H  L  L  H  L  H  L  L  H  L  L  L  H  H  L  L  H  L  L  L  L  L  L  L  H  L  L  L  L  H  L  L  L  H  L  L  L  H  H  L  L  L  L  L  L  L  H  H  H  H  H  L  H  H  L  L  H  H  L  C  S  S  S  O 
- M  H  L  H  H  L  H  L  L  L  L  H  H  H  H  H  H  L  L  L  L  L  H  L  H  H  L  H  L  L  L  L  L  L  H  H  H  H  L  L  L  H  H  H  L  H  L  H  L  H  L  L  L  L  L  H  H  L  H  L  H  H  H  L  H  H  H  L  L  H  L  H  L  L  H  H  H  H  H  H  L  H  L  C  C  C  S  O 
- M  H  H  L  L  H  L  H  L  L  H  H  H  L  L  L  H  L  L  L  H  H  H  H  L  H  H  H  L  H  L  L  L  H  H  L  L  L  H  H  H  H  H  L  L  L  L  H  H  H  L  L  L  L  H  H  H  L  H  L  H  L  L  L  L  L  L  H  H  L  L  H  H  H  H  L  H  H  H  L  L  H  L  L  C  S  S  O 
- M  M  H  H  H  L  H  L  H  L  L  L  H  L  H  H  L  L  H  H  L  H  L  L  L  L  L  H  H  H  L  H  L  L  H  L  H  L  L  L  H  L  L  L  H  L  H  L  L  H  L  L  H  H  L  H  L  L  L  H  H  L  H  L  L  H  L  L  H  L  H  H  H  H  H  L  L  H  L  H  L  L  H  L  C  S  R  O 
- M  M  H  L  L  H  L  H  L  H  H  L  H  L  L  L  H  H  H  H  H  H  H  H  H  L  H  L  H  L  L  H  L  L  H  H  H  L  L  H  H  L  L  H  H  L  L  H  H  L  H  L  H  H  L  L  H  H  L  L  L  H  H  H  L  L  L  L  H  H  L  L  L  L  L  L  L  L  H  H  H  H  H  L  C  S  S  O 
- M  M  H  L  H  H  L  L  H  L  H  L  L  H  H  L  H  H  L  H  L  H  L  L  L  H  L  L  L  H  L  L  L  L  L  H  H  H  L  H  L  H  L  H  H  H  H  H  L  L  H  H  L  L  L  L  H  H  H  L  H  L  L  H  H  H  H  H  H  L  L  H  H  H  L  H  H  H  H  L  H  L  L  L  C  C  S  O 
- M  M  H  L  H  L  L  L  L  H  H  L  H  H  H  H  H  L  L  H  L  H  L  L  H  H  H  H  L  H  L  L  H  L  L  L  H  L  H  H  L  L  H  H  H  L  H  L  L  L  L  L  H  L  L  H  L  H  L  H  L  L  L  L  L  L  H  L  H  L  H  H  H  L  L  H  H  H  H  H  L  H  L  C  C  S  S  O 
- M  M  H  H  L  L  H  L  H  H  L  L  L  H  L  L  L  L  L  L  H  L  H  H  L  H  H  H  H  H  L  H  H  L  L  L  H  H  H  H  L  H  H  L  L  H  H  L  L  H  H  L  L  L  H  L  L  H  H  H  L  L  L  L  H  L  H  L  H  H  H  L  H  L  H  H  H  H  L  L  L  H  L  C  C  C  S  O 
- M  M  H  L  H  H  L  H  H  L  L  H  L  L  L  H  L  L  L  L  H  L  L  H  H  L  H  L  H  L  L  H  H  H  L  L  H  H  L  L  L  H  L  H  L  H  H  H  H  L  H  H  H  H  L  H  L  L  L  H  H  H  L  H  L  H  L  L  H  H  H  H  H  L  H  L  L  H  L  L  H  H  L  C  C  C  S  O 
- M  H  H  H  H  H  L  H  L  H  L  L  L  H  L  H  H  H  H  L  H  H  L  H  L  L  H  H  H  H  L  H  L  L  L  H  L  L  H  H  L  H  L  L  L  H  H  H  H  L  H  L  L  H  H  H  H  L  L  H  L  H  L  H  L  H  L  L  L  L  L  H  H  H  H  L  L  H  H  L  H  L  L  C  C  S  S  O 
- M  M  H  H  H  L  L  H  H  H  L  H  L  H  L  L  L  H  H  L  H  L  L  L  H  H  H  L  L  L  L  L  H  L  L  L  L  L  L  L  L  H  H  L  L  L  L  L  L  L  H  H  L  H  H  L  H  L  L  L  H  H  H  H  H  L  L  L  L  L  L  L  H  H  L  L  L  H  L  H  H  L  L  L  C  C  S  O 
- M  M  H  L  L  H  L  H  H  L  H  L  H  L  L  H  L  H  H  H  H  H  L  H  L  L  H  H  H  L  L  H  L  H  L  L  H  H  L  H  H  H  L  L  H  H  L  H  L  H  H  L  L  L  L  L  L  H  L  H  H  L  H  L  L  L  H  H  L  L  L  L  L  H  L  H  H  H  H  L  L  L  H  L  L  C  S  O 
- M  H  H  L  H  H  H  L  H  L  H  H  H  H  L  H  L  H  L  L  H  H  H  H  H  H  L  H  H  L  L  H  L  H  H  L  H  L  H  H  H  L  H  L  H  H  L  H  L  H  H  H  L  H  L  H  L  L  H  L  L  H  L  H  L  H  L  L  L  L  H  H  L  L  H  L  H  L  H  L  L  H  H  L  C  C  S  O 
- M  M  H  L  L  L  H  L  H  L  L  H  L  H  L  H  H  L  H  H  H  H  L  L  L  H  L  H  H  L  L  L  H  H  L  H  L  H  L  L  L  H  L  H  L  H  L  L  L  H  H  H  H  L  L  L  L  H  L  H  L  H  H  H  H  H  L  H  L  L  H  H  L  L  L  H  L  L  H  L  L  L  L  L  C  C  S  O 
- M  M  H  L  L  L  H  L  H  H  L  L  H  L  H  H  L  L  H  H  L  L  H  H  H  H  L  H  H  H  H  H  H  L  L  H  L  H  H  L  H  H  H  H  L  H  H  H  H  L  L  L  L  L  H  H  H  H  L  L  H  L  H  L  L  H  L  H  H  H  H  L  H  L  H  H  L  L  H  H  L  L  L  L  L  C  S  O 
- M  M  H  L  H  H  L  H  H  L  H  H  L  L  H  L  H  L  H  L  H  L  L  H  L  H  L  H  L  H  H  L  H  H  L  L  H  L  L  L  L  H  H  L  L  L  L  L  H  L  H  H  H  L  L  H  L  H  H  H  H  H  L  H  H  L  L  H  H  L  H  H  L  H  H  L  H  H  L  H  H  L  L  L  C  C  S  O 
- M  M  H  H  H  H  L  H  H  L  H  L  H  H  L  H  H  H  H  H  L  H  H  H  L  L  H  L  H  L  L  H  L  L  L  L  H  H  H  H  H  H  H  L  L  H  H  H  H  H  L  L  L  L  L  H  H  H  L  L  L  H  L  H  L  H  H  L  L  H  H  H  L  H  H  H  L  L  L  L  H  H  L  C  C  C  S  O 
- M  H  H  H  L  L  H  L  H  L  H  H  L  L  L  L  L  L  H  L  L  H  H  H  H  L  H  H  L  L  L  L  L  L  H  L  H  H  L  H  L  H  H  H  L  L  L  H  L  H  L  H  L  H  L  H  H  H  L  H  H  H  L  L  L  L  L  L  H  L  L  L  L  L  H  H  H  L  H  L  H  L  L  C  S  S  S  O 
- M  H  H  L  H  L  L  H  H  H  L  H  H  H  H  L  H  H  H  L  H  L  L  L  L  L  H  L  L  H  L  L  L  L  H  L  L  H  L  H  L  H  H  H  L  H  L  L  L  L  H  L  L  H  H  H  H  H  L  L  L  L  L  L  H  H  L  L  L  L  H  H  H  L  H  H  L  H  H  L  H  L  C  C  C  S  S  O 
- M  H  H  L  H  H  H  H  L  L  H  L  H  L  H  L  H  H  L  L  H  L  H  H  H  H  L  H  L  L  H  L  H  H  H  H  L  L  H  L  H  H  H  H  H  H  L  L  H  H  H  H  L  L  L  L  L  L  H  L  H  H  H  L  L  L  L  L  L  H  H  H  H  L  H  L  L  H  L  H  L  L  C  S  S  S  O  O 
- M  H  L  H  L  L  H  H  H  H  H  H  H  L  H  L  H  L  L  L  H  L  L  L  H  L  H  H  H  L  L  L  H  L  L  L  H  L  H  H  H  L  L  H  H  L  L  L  L  L  L  H  H  H  L  L  H  L  H  L  H  L  L  H  H  L  H  H  H  L  H  L  H  L  L  H  L  H  L  L  L  L  C  S  S  R  O  O 
- M  H  H  L  H  L  H  L  L  L  H  H  H  H  H  H  H  H  L  H  L  L  L  H  L  H  L  H  L  L  H  H  H  L  L  H  H  H  H  L  L  H  L  H  L  L  H  H  L  L  H  L  H  H  H  H  H  L  H  H  H  H  L  H  L  L  H  H  L  H  H  H  H  H  H  H  L  L  L  H  L  L  C  S  S  S  R  O 
- M  M  H  L  L  H  H  H  H  L  H  L  H  H  L  L  H  L  H  L  H  H  L  H  H  L  H  L  H  H  L  H  L  L  L  L  H  L  H  L  L  H  H  H  H  H  H  L  L  H  L  H  L  H  L  H  H  H  H  H  L  H  L  H  L  H  L  L  H  H  H  H  H  L  H  L  L  L  L  H  H  L  C  C  C  S  S  O 
- M  M  H  L  H  L  L  L  H  L  L  H  L  H  L  H  L  H  H  H  H  H  L  H  L  L  L  H  L  L  L  L  H  H  L  H  L  L  L  H  L  L  L  L  H  H  L  H  L  H  L  L  H  L  L  H  H  H  L  H  L  L  H  L  L  H  H  H  L  H  L  L  H  L  L  H  L  L  H  H  L  L  L  C  C  C  S  O 
- M  H  H  L  H  H  H  L  H  H  L  H  L  H  H  H  H  L  L  H  H  H  H  H  L  H  H  H  H  H  L  L  L  L  H  H  H  L  H  L  L  H  L  L  H  L  L  H  L  L  L  L  H  L  H  H  H  L  L  H  L  H  H  H  L  L  L  H  L  H  H  L  H  L  L  H  H  H  H  L  L  L  L  L  L  C  S  O 
- M  H  L  H  L  L  H  H  H  H  H  L  H  H  H  H  H  L  H  L  L  L  H  L  L  L  H  H  H  H  H  H  H  H  H  H  H  H  H  L  H  L  L  L  H  H  L  L  L  L  H  L  L  H  L  L  H  H  H  H  H  H  H  L  H  L  L  L  L  H  L  H  L  L  H  L  H  H  L  H  H  L  H  L  L  C  S  O 
- M  H  H  H  L  L  L  H  L  H  H  L  L  H  L  H  H  H  H  L  H  L  H  L  L  L  L  H  H  L  L  H  H  H  H  H  L  L  L  L  L  L  H  H  L  L  H  L  H  L  L  L  L  H  H  L  L  H  H  H  L  L  H  L  L  L  L  L  L  L  H  L  H  H  L  H  H  L  H  L  H  H  H  H  L  C  S  O 
- M  M  H  H  H  L  H  L  L  L  H  L  L  L  H  L  L  L  L  H  L  L  L  L  L  H  L  H  L  H  L  L  H  H  H  L  L  L  H  L  H  L  H  L  H  H  H  H  L  H  H  H  H  L  H  H  L  L  H  H  L  H  H  L  L  H  L  L  H  H  H  H  L  L  L  L  H  H  H  H  L  H  L  L  L  C  S  O 
- M  M  M  H  L  L  H  H  L  H  H  L  H  H  L  L  L  H  L  L  L  H  H  H  H  L  H  H  L  L  H  L  H  L  H  L  H  H  H  H  H  L  L  H  L  L  L  H  L  L  H  H  L  L  L  H  L  L  H  H  L  L  L  L  H  L  H  L  L  L  L  L  H  H  H  H  L  L  H  L  H  L  L  C  C  C  S  O 
- M  M  M  H  L  H  L  L  L  H  H  L  L  L  H  H  L  H  H  H  H  L  H  L  H  L  L  L  L  L  L  L  L  L  L  L  H  H  H  L  H  L  L  L  L  L  H  H  L  H  L  L  H  H  H  L  H  L  H  L  H  H  H  L  L  L  L  H  L  L  L  H  H  L  L  L  L  H  L  H  L  L  C  C  S  S  S  O 
- M  M  M  H  H  L  L  H  L  L  L  L  L  H  L  H  H  L  H  L  L  L  H  H  H  L  L  H  L  L  L  L  H  L  L  H  L  H  H  H  L  H  L  L  L  L  L  H  L  L  L  H  L  H  L  L  L  H  H  H  H  H  H  L  L  L  H  H  H  L  H  H  H  H  H  H  L  H  L  H  L  L  L  C  C  C  S  O 
- M  M  M  H  L  H  H  L  L  L  H  H  H  H  L  L  L  H  H  L  L  L  H  L  H  H  H  L  H  L  L  H  H  L  H  L  H  L  H  L  H  H  H  H  L  L  H  H  H  L  L  L  H  H  L  L  L  H  H  H  H  L  H  L  H  H  H  H  H  L  H  L  L  L  H  L  H  H  L  H  L  H  L  L  C  C  S  O 
- M  M  H  H  H  L  H  H  L  L  L  H  L  H  H  L  H  H  H  H  L  L  L  H  H  L  L  L  H  L  L  H  L  H  L  L  L  H  L  H  L  L  L  L  H  L  H  H  H  L  H  L  L  L  H  L  H  H  H  H  H  H  H  H  H  H  H  H  L  L  H  L  L  H  L  H  H  L  L  H  H  H  H  L  L  C  S  O 
- M  H  H  L  L  L  L  L  L  H  H  L  L  H  H  H  L  L  H  H  H  L  L  L  L  L  H  L  L  L  L  H  L  H  H  H  H  H  H  H  L  H  L  L  L  L  H  H  H  L  L  H  L  H  L  H  H  L  L  H  L  H  H  L  H  L  H  L  H  H  L  H  L  L  H  H  L  L  L  H  H  H  H  H  L  C  S  O 
- M  H  H  H  L  L  L  L  L  H  L  H  L  H  L  L  L  H  L  H  L  L  L  H  H  H  L  H  H  H  H  L  L  H  H  H  L  H  H  H  L  L  H  H  H  H  L  H  H  H  L  L  H  H  H  L  H  L  L  L  H  L  H  H  L  L  L  L  H  L  H  L  L  L  H  H  L  H  L  L  L  H  H  H  L  C  S  O 
- M  M  H  L  H  L  L  H  L  L  L  H  H  H  L  H  H  L  L  L  L  H  H  L  H  L  H  H  L  L  H  H  L  H  L  H  L  H  L  H  H  L  H  H  L  H  L  H  H  L  H  H  L  H  H  H  L  H  H  L  H  H  L  H  H  H  H  L  L  L  H  H  H  H  H  L  H  H  H  L  H  L  L  L  L  C  S  O 
- M  M  H  L  L  H  L  L  H  H  L  L  H  H  H  H  H  H  L  H  L  H  H  H  H  L  L  L  H  L  H  H  L  H  L  H  H  L  H  L  L  L  H  L  L  H  H  L  L  H  L  H  H  H  H  L  L  H  H  L  H  L  L  H  L  L  H  L  L  L  H  H  H  L  L  L  L  H  H  L  L  L  L  L  C  C  S  O 
- M  H  H  H  H  L  H  L  H  L  H  L  H  L  H  H  H  L  L  L  L  L  L  L  L  H  H  H  H  L  H  L  H  L  H  L  H  L  H  L  L  H  H  H  L  H  L  H  L  H  L  H  L  H  H  H  L  L  L  H  H  H  L  L  H  L  H  L  H  L  L  L  H  L  L  L  L  H  L  L  L  H  H  L  C  S  S  O 
- M  H  L  H  L  L  H  H  H  H  H  L  L  L  L  H  H  H  H  H  L  H  L  L  H  L  L  H  L  H  H  L  L  L  H  H  L  L  L  L  H  L  H  L  L  H  L  H  L  H  L  L  H  H  H  L  L  L  H  H  L  L  H  H  L  L  L  H  H  H  L  H  H  L  H  L  H  L  H  H  H  H  L  L  C  C  S  O 
- M  H  L  H  L  H  L  H  H  H  H  H  L  H  H  H  H  L  H  H  L  L  L  H  H  L  H  L  H  H  L  L  H  L  L  L  L  H  L  H  H  L  H  H  L  L  L  H  L  H  H  L  H  L  L  H  H  H  H  H  L  L  H  L  L  H  H  L  L  L  H  H  H  H  H  H  H  L  L  L  H  H  L  L  C  S  S  O 
- M  H  H  L  H  L  H  L  L  H  L  L  L  H  H  H  L  L  H  L  L  H  H  L  L  H  H  L  H  H  H  H  L  L  H  L  H  H  L  H  L  L  L  L  H  L  L  L  L  H  H  H  L  L  L  L  L  L  L  L  L  L  L  H  L  L  L  H  H  L  H  H  H  L  H  H  H  L  L  H  H  H  H  L  C  S  S  O 
- M  M  H  L  H  L  H  L  L  L  L  H  L  L  L  H  H  L  H  L  L  L  L  L  H  H  L  L  H  H  H  H  L  H  H  H  H  L  L  L  L  H  L  L  H  H  H  H  H  L  L  H  H  L  H  H  H  L  L  L  H  H  L  H  L  L  H  L  H  L  L  L  H  H  L  L  H  L  L  L  L  H  L  L  C  S  S  O 
- M  M  H  L  L  L  H  H  H  L  L  L  H  L  H  H  H  L  L  L  L  L  H  H  H  L  H  H  H  H  L  H  H  H  H  L  L  H  L  H  L  L  L  H  L  H  L  L  H  L  L  H  H  H  L  L  H  L  H  H  H  H  H  L  L  H  L  H  H  L  L  H  L  H  L  L  H  L  H  L  L  H  L  C  C  C  S  O 
- M  H  H  H  L  L  H  L  L  H  H  L  H  L  L  H  H  L  L  H  L  H  L  L  H  L  L  L  H  H  L  H  L  H  H  L  L  H  H  H  L  H  H  L  H  L  L  L  H  H  H  L  H  L  H  L  L  H  H  H  L  H  H  H  H  H  L  L  L  H  H  H  L  L  H  L  L  L  L  H  H  L  L  C  C  C  S  O 
- M  M  H  L  L  H  H  L  L  H  L  H  L  L  L  L  L  H  H  L  H  H  L  H  L  L  L  H  H  H  L  L  H  L  H  H  H  H  L  L  L  H  L  L  H  H  L  H  L  H  H  L  H  H  H  L  H  H  H  L  H  L  L  H  L  L  H  L  L  L  H  H  H  L  H  H  L  H  L  L  H  L  C  C  C  S  S  O 
- M  M  H  H  H  H  H  L  H  H  L  L  L  H  H  H  L  H  L  L  H  H  L  L  L  H  H  L  H  L  H  L  L  H  L  H  H  L  L  H  L  H  L  L  L  H  H  H  L  L  L  H  H  H  L  H  H  H  L  H  H  L  L  H  L  H  L  L  L  L  H  L  L  H  L  L  L  H  H  L  L  L  C  S  S  S  S  O 
- M  M  M  H  L  L  L  H  L  H  L  H  L  H  L  H  H  L  L  L  H  H  L  H  H  H  H  H  L  H  H  H  L  L  L  H  H  H  L  H  L  H  L  L  L  L  L  H  L  L  L  L  H  H  L  L  H  H  H  H  L  H  H  L  L  H  L  H  L  L  H  L  H  L  H  L  L  H  L  H  L  L  C  C  C  C  S  O 
- M  M  H  H  H  L  L  L  H  L  H  L  H  H  H  H  H  L  L  H  H  H  L  H  L  L  H  L  H  H  H  H  L  H  L  H  L  L  L  H  H  H  H  H  L  L  L  L  H  H  L  H  L  H  H  L  L  L  L  L  L  H  H  H  L  L  L  H  L  H  L  H  H  L  H  L  H  L  L  L  L  L  L  L  L  C  S  O 
- M  H  H  L  H  L  H  L  L  H  H  H  L  L  H  L  L  L  H  H  L  H  L  L  H  L  H  L  L  H  L  H  L  L  H  H  H  L  L  L  H  L  H  L  H  L  H  H  H  L  H  H  H  L  L  L  L  L  H  H  H  H  H  L  H  H  L  H  H  L  H  L  H  L  H  H  L  H  L  L  H  L  H  L  C  C  S  O 
- M  H  H  H  L  H  H  H  H  L  H  L  L  L  H  L  H  L  L  L  L  H  L  H  H  H  H  H  L  H  H  L  L  H  H  L  H  L  L  H  L  H  H  L  L  H  L  L  H  H  L  H  L  H  L  H  H  L  H  H  H  H  H  L  H  L  H  H  H  H  L  L  L  H  L  H  L  H  H  H  H  H  L  L  L  C  S  O 
- M  H  L  H  H  H  H  H  L  L  H  L  L  L  L  L  H  H  L  H  L  H  L  H  L  L  H  H  H  H  L  L  H  H  H  H  H  H  H  L  H  L  L  L  H  L  H  L  L  H  H  L  H  L  L  L  L  H  L  L  L  H  L  L  L  L  H  H  L  L  H  L  L  H  L  L  H  L  L  H  L  L  L  L  C  C  S  O 
- M  H  L  L  H  L  L  L  L  L  L  L  L  H  H  H  L  L  L  L  L  L  H  L  L  L  H  L  L  L  H  H  L  H  L  H  L  L  H  L  L  H  H  H  H  H  L  L  H  L  L  L  L  H  L  L  L  L  L  L  L  L  L  H  H  H  L  H  L  H  L  H  H  H  H  L  L  H  L  L  H  H  L  L  C  S  S  O 
- M  H  L  L  H  L  H  H  H  L  L  L  L  H  H  H  L  H  H  L  L  L  L  H  H  H  H  L  L  L  L  L  L  H  L  L  H  L  L  L  L  H  L  L  L  H  L  H  L  L  H  H  H  L  L  H  L  L  H  L  L  L  H  L  H  L  H  H  H  L  H  L  L  L  L  H  H  L  C  C  C  S  R  S  R  R  R  O 
+ M  H  H  H  H  L  H  H  L  L  H  H  L  H  H  L  C  S  S  S  S  R  S  R  S  R  S  O  O  O 
+ M  H  H  H  L  L  L  L  L  L  L  L  L  L  L  L  C  C  S  R  R  S  S  R  S  R  R  S  O  O 
+ M  H  L  L  L  L  L  L  L  C  C  C  C  C  C  C  C  C  S  S  S  R  S  S  S  R  S  R  O  O 
+ M  H  L  C  C  C  C  C  C  C  C  C  S  S  S  S  S  S  S  R  R  R  S  R  R  S  S  O  O  O 
+ M  H  L  C  S  S  S  S  S  S  S  S  S  S  S  S  R  S  S  R  S  R  S  S  S  R  R  O  O  O 
+ M  H  L  C  C  C  C  C  C  C  S  S  S  S  S  S  S  S  S  S  S  S  R  R  R  R  R  R  O  O 
+ M  H  L  L  L  L  L  L  C  C  C  C  C  C  C  C  C  C  C  S  S  S  S  S  S  S  S  S  S  O 
+ M  H  H  H  H  H  H  L  L  L  L  L  L  L  L  L  L  L  C  C  C  C  C  C  C  C  C  C  S  O 
+ M  M  H  H  L  L  L  H  L  H  H  L  L  L  L  H  H  L  L  L  L  L  L  L  L  L  L  C  S  O 
+ M  M  M  H  H  H  H  L  H  L  L  L  L  L  L  L  L  L  L  C  C  C  C  C  C  C  C  C  S  O 
+ M  M  M  M  H  H  L  L  H  L  L  L  L  C  C  C  C  C  C  C  S  S  S  S  S  S  S  S  S  O 
+ M  M  M  M  M  H  H  L  L  L  L  C  C  C  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  O 
+ M  M  M  M  M  M  H  H  L  H  L  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  S  O 
+ M  M  M  M  M  M  M  H  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  C  S  O 
+ M  M  M  M  M  M  M  M  H  H  H  L  H  H  H  L  L  H  H  L  H  H  H  L  H  H  L  C  S  O 
+ M  M  M  M  M  M  M  M  M  H  H  L  H  L  H  L  L  L  L  H  L  H  L  H  H  H  L  C  S  O 
+ M  M  M  M  M  M  M  M  H  H  H  H  H  L  L  H  L  L  H  L  L  L  H  L  L  L  L  C  S  O 
+ M  M  M  M  M  M  M  M  H  H  L  H  L  H  L  L  L  L  L  L  L  L  L  L  L  L  L  C  S  O 
+ M  M  M  M  M  M  M  M  H  L  H  L  L  H  L  C  C  C  C  C  C  C  C  C  C  C  C  C  S  O 
+ M  M  M  M  M  M  M  M  H  H  L  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  C  S  S  O 
+ M  M  M  M  M  M  M  M  M  H  H  H  L  H  L  H  L  H  L  C  C  C  C  C  C  C  C  S  O  O 
+ M  M  M  M  M  M  M  M  M  M  H  H  H  L  L  L  H  L  L  C  S  S  S  S  S  S  S  S  R  O 
+ M  M  M  M  M  M  M  M  M  M  M  H  H  L  H  L  H  H  L  C  S  S  R  S  S  R  S  S  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  H  H  H  L  L  L  L  C  S  R  R  R  S  R  R  R  S  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  H  L  L  H  H  L  C  S  S  R  S  R  S  R  R  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  H  H  L  L  L  L  C  C  S  S  S  S  R  S  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  M  H  H  H  H  L  L  C  S  S  R  S  R  O  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  M  M  H  H  L  L  C  C  S  R  R  S  O  O  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  M  H  H  L  L  C  C  C  S  R  R  S  S  O  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  M  H  H  H  L  C  C  S  S  S  S  S  R  R  S  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  M  H  H  H  L  L  C  S  S  R  S  S  S  S  S  R  R  O  O 
+ M  M  M  M  M  M  M  M  M  M  M  H  H  H  L  L  L  C  S  S  S  S  R  S  S  S  S  O  O  O 
+ M  M  M  M  M  M  M  M  M  M  H  H  H  H  L  L  C  C  S  S  S  S  S  S  S  R  O  O  O  O 
+ M  M  M  M  M  M  M  M  M  H  H  L  L  L  L  L  C  C  C  C  C  C  C  S  R  R  R  O  O  O 
+ M  M  M  M  M  M  M  M  M  H  L  L  H  H  H  L  C  S  S  S  S  S  S  S  R  S  O  O  O  O 
+ M  M  M  M  M  M  M  M  H  H  L  H  H  L  L  L  C  C  C  S  S  S  S  R  R  O  O  O  O  O 
+ M  M  M  M  M  M  M  H  H  H  H  L  L  L  L  L  L  L  C  C  C  S  S  S  S  S  O  O  O  O 
+ M  M  M  M  M  M  H  H  H  H  H  L  C  C  C  C  C  C  C  C  S  S  S  S  S  S  S  O  O  O 
+ M  M  M  M  M  H  H  H  L  H  H  L  L  L  L  L  L  L  L  C  C  C  C  C  C  C  S  S  O  O 
+ M  M  M  M  H  H  L  H  L  L  H  H  H  L  L  H  L  H  L  L  L  L  L  L  L  C  C  S  O  O 
+ M  M  M  M  H  L  H  H  L  H  H  H  L  L  L  H  H  H  H  H  H  H  H  L  L  L  C  S  S  O 
+ M  M  M  H  H  H  L  L  L  L  H  H  H  H  L  L  L  H  H  L  L  H  H  H  L  L  C  C  S  O 
+ M  M  H  H  H  L  H  L  L  H  H  L  L  H  H  L  H  L  L  L  L  H  L  H  L  L  L  C  S  O 
+ M  H  H  L  H  H  L  L  H  L  H  H  L  H  L  L  H  H  L  H  H  L  L  L  L  C  C  C  S  O 
+ M  H  L  H  H  H  H  H  L  L  L  L  L  L  H  L  L  H  H  H  H  L  C  C  C  C  C  S  S  O 
+ M  H  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  C  C  S  S  S  S  O  O 
+ M  H  L  L  L  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  S  O  O  O 
+ M  H  L  C  C  C  C  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  O  O  O 
+ M  H  L  L  C  S  S  S  R  R  S  S  R  S  R  S  S  S  R  S  R  R  S  R  S  S  O  O  O  O 
+ M  H  H  L  C  C  S  S  R  S  R  S  R  R  R  S  R  S  R  R  R  S  R  S  R  O  O  O  O  O 
+ M  H  L  L  L  C  S  S  R  S  S  R  S  R  S  S  S  S  S  S  R  S  R  R  O  O  O  O  O  O 
+ M  H  H  L  L  C  S  R  S  R  R  R  S  S  S  S  S  S  R  R  S  R  R  O  O  O  O  O  O  O 
+ M  H  H  H  L  C  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  R  S  O  O  O  O  O  O  O 
+ M  M  H  H  L  C  C  C  C  C  C  C  C  C  S  R  R  R  R  S  S  S  O  O  O  O  O  O  O  O 
+ M  H  H  H  L  L  C  S  S  S  S  S  S  S  S  R  R  R  S  R  S  O  O  O  O  O  O  O  O  O 
+ M  M  H  H  L  C  C  S  S  R  R  S  S  R  R  R  R  S  R  R  O  O  O  O  O  O  O  O  O  O 
+ M  M  M  H  L  C  S  S  R  S  R  R  S  R  S  S  R  S  S  O  O  O  O  O  O  O  O  O  O  O 
+ M  M  H  H  L  C  S  S  S  S  S  S  S  S  R  S  S  S  O  O  O  O  O  O  O  O  O  O  O  O 
+ M  H  H  H  L  C  C  C  C  C  C  C  C  S  R  S  S  S  R  O  O  O  O  O  O  O  O  O  O  O 
+ M  H  L  H  L  L  L  C  C  C  C  C  C  S  S  S  S  S  S  R  O  O  O  O  O  O  O  O  O  O 
+ M  H  H  L  H  L  L  L  L  C  C  C  C  C  C  C  S  S  R  R  S  O  O  O  O  O  O  O  O  O 
+ M  H  H  L  L  H  L  L  L  L  L  L  L  L  C  C  C  S  S  R  R  R  O  O  O  O  O  O  O  O 
+ M  M  H  H  H  H  L  H  L  L  L  H  L  L  L  L  C  C  S  S  R  R  R  O  O  O  O  O  O  O 
+ M  H  H  H  L  H  L  L  H  H  L  L  H  H  H  L  L  C  C  S  R  R  R  S  O  O  O  O  O  O 
+ M  H  H  H  H  L  H  H  H  L  H  H  H  L  H  L  L  L  C  S  S  S  S  R  S  O  O  O  O  O 
+ M  M  H  L  H  H  H  H  L  L  L  H  L  H  L  L  C  C  C  C  C  C  S  S  R  S  O  O  O  O 
+ M  M  H  H  L  H  L  L  L  L  L  L  L  L  L  L  L  C  C  S  S  S  S  R  R  O  O  O  O  O 
+ M  M  H  H  L  H  L  C  C  C  C  C  C  C  C  C  C  C  S  S  R  S  R  R  S  S  O  O  O  O 
+ M  H  H  L  L  L  L  C  S  S  S  S  S  S  S  S  S  S  S  R  S  S  S  S  S  S  R  O  O  O 
+ M  H  L  L  C  C  C  C  C  C  S  S  R  S  S  R  S  S  S  S  S  S  R  S  R  S  S  R  O  O 
+ M  H  H  L  L  L  C  C  C  C  S  R  R  R  S  S  R  R  R  S  R  R  S  R  S  R  S  O  O  O 
+ M  H  L  L  L  L  L  L  C  S  S  S  S  S  S  S  R  R  R  R  S  R  R  S  S  S  S  R  O  O 
+ M  H  L  C  C  C  C  C  C  C  C  C  C  C  C  S  S  S  R  S  S  S  R  R  R  S  R  S  R  O 
+ M  H  L  L  L  L  C  S  S  S  S  S  S  S  S  S  S  S  S  R  R  S  S  R  S  R  S  R  O  O 
+ M  H  H  H  H  L  C  C  C  C  C  C  C  C  C  C  C  C  S  S  S  R  S  R  R  R  R  O  O  O 
+ M  H  L  L  H  L  L  L  L  L  L  L  L  L  C  C  C  C  S  S  S  S  S  S  S  S  R  S  O  O 
+ M  H  L  L  L  L  L  H  H  L  H  L  C  C  C  C  C  C  C  C  C  C  C  C  C  S  R  S  O  O 
+ M  H  H  L  H  L  L  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  L  C  C  S  R  R  R  O 
+ M  M  H  H  L  L  H  H  L  H  L  L  L  L  H  L  H  H  L  H  H  H  L  L  C  S  S  R  O  O 
+ M  M  M  H  L  L  H  H  H  L  L  H  L  L  H  H  H  H  L  L  H  L  L  L  C  C  S  S  S  O 
+ M  M  M  H  L  H  L  L  H  H  H  L  H  L  L  L  L  L  L  L  L  L  C  C  C  S  S  S  R  O 
+ M  M  H  H  L  H  H  H  H  H  H  L  L  L  C  C  C  C  C  C  C  C  C  C  C  S  R  R  R  O 
+ M  M  M  H  H  H  H  L  H  H  L  L  C  C  C  C  C  C  S  S  S  S  S  S  S  S  R  S  R  O 
+ M  M  M  M  H  H  L  H  H  L  L  L  C  C  C  C  C  C  S  R  R  S  S  S  R  R  R  S  O  O 
+ M  M  M  M  H  H  L  H  L  L  H  L  L  C  S  S  S  S  S  S  S  S  S  S  R  R  S  S  O  O 
+ M  M  M  M  M  H  H  L  L  L  L  L  L  C  C  C  C  C  C  C  C  S  S  R  S  S  R  O  O  O 
+ M  M  M  M  M  M  H  H  L  C  C  C  C  C  C  C  C  C  C  S  S  S  R  R  R  S  R  O  O  O 
+ M  M  M  M  M  M  M  H  L  C  S  S  S  S  S  S  S  S  S  S  R  S  S  R  R  S  R  O  O  O 
+ M  M  M  M  M  M  M  H  L  C  S  S  S  S  R  R  S  R  R  R  S  R  S  R  R  S  R  S  O  O 
+ M  M  M  M  M  M  H  H  L  C  S  S  R  R  R  S  R  R  S  S  R  R  R  R  S  S  S  S  R  O 
+ M  M  M  M  M  M  H  L  L  C  S  S  S  S  S  S  R  S  S  S  R  R  S  S  S  R  S  R  S  O 
+ M  M  M  M  M  H  H  L  C  C  C  C  C  S  S  S  S  S  S  S  S  S  S  S  S  S  R  R  O  O 
+ M  M  M  M  H  H  H  L  L  L  L  L  C  C  C  C  C  C  C  C  C  C  C  C  C  S  S  S  S  O 
+ M  M  M  H  H  L  H  L  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  L  C  S  S  S  R  O 
+ M  M  M  H  H  L  H  H  H  L  H  L  L  H  L  H  H  L  L  L  H  H  H  L  C  C  C  S  O  O 
+ M  M  M  M  H  H  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  L  C  S  S  S  O 
+ M  M  M  M  M  H  H  H  L  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  C  S  R  R  O 
+ M  M  M  M  M  M  H  L  L  C  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  S  R  O 
+ M  M  M  M  M  M  H  H  L  C  S  R  R  R  S  R  S  R  S  S  R  R  S  R  S  S  S  S  O  O 
+ M  M  M  M  M  M  H  L  L  C  S  R  S  S  R  R  R  R  R  R  R  S  S  R  S  R  R  S  O  O 

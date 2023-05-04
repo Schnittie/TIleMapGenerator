@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Tile {
     private int possibleTileStatesLeft = ETileContent.values().length;
-    private boolean[] canIbe;
+    private final boolean[] canIbe;
     private boolean isCollapsed = false;
     private ETileContent content;
 
@@ -18,7 +18,7 @@ public class Tile {
     }
 
     public ArrayList<ETileContent> getPossibleTileContentLeft() {
-        ArrayList<ETileContent> response = new ArrayList();
+        ArrayList<ETileContent> response = new ArrayList<>();
         if (isCollapsed) {
             response.add(content);
             return response;
@@ -46,17 +46,16 @@ public class Tile {
     }
 
     public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossbilitiesNow) {
-        PropagationResponseEntity response = new PropagationResponseEntity(false,false, new ArrayList<>());
+        PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
         for (int i = 0; i < ETileContent.values().length; i++) {
             if (canIbe[i]) {
                 if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, listOfPossbilitiesNow)) {
                     response.setHasChangedPossibility(true);
                     if (removePossibility(i)) {
-                        return new PropagationResponseEntity(true,false,null);
+                        return new PropagationResponseEntity(true, false, null);
                     }
-                }
-                else {
+                } else {
                     ArrayList<ETileContent> listOfPossibilities = response.getNewPossibilities();
                     listOfPossibilities.add(ETileContent.findById(i));
                     response.setNewPossibilities(listOfPossibilities);
@@ -72,14 +71,7 @@ public class Tile {
         if (possibleTileStatesLeft != 1) {
             return false;
         }
-        for (int i = 0; i < canIbe.length; i++) {
-            if (canIbe[i]) {
-                return true;
-            }
-        }
-        //if it gets to here there is an error
-        return false;
-
+        return true;
     }
 
     public void collapse(int i) {
