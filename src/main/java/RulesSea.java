@@ -38,13 +38,13 @@ public class RulesSea implements RuleList {
         rules.add(new Rule(RuleList.OCEANID, EDirection.DOWNLEFT));
     }
 
-    private static RulesSea rulesSea = new RulesSea();
+    private static final RulesSea rulesSea = new RulesSea();
     public static RulesSea getInstance(){
         return rulesSea;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent: listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

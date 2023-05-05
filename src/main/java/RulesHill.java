@@ -32,13 +32,13 @@ public class RulesHill implements RuleList {
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.DOWNLEFT));
 
     }
-    private static RulesHill rulesHill = new RulesHill();
+    private static final RulesHill rulesHill = new RulesHill();
     public static RulesHill getInstance(){
         return rulesHill;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent:listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

@@ -31,20 +31,6 @@ public class Tile {
         return response;
     }
 
-    public boolean propagate(EDirection whereIamRelativeToCaller, ETileContent whatItIsNow) {
-        if (isCollapsed) return false;
-        for (int i = 0; i < ETileContent.values().length; i++) {
-            if (canIbe[i]) {
-                if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, whatItIsNow)) {
-                    if (removePossibility(i)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossibilitiesNow) {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;

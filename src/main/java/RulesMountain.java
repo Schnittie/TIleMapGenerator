@@ -22,13 +22,13 @@ public class RulesMountain implements RuleList {
         rules.add(new Rule(RuleList.HILLID, EDirection.DOWNLEFT));
         rules.add(new Rule(RuleList.HILLID, EDirection.DOWNRIGHT));
     }
-    private static RulesMountain rulesMountain = new RulesMountain();
+    private static final RulesMountain rulesMountain = new RulesMountain();
     public static RulesMountain getInstance(){
         return rulesMountain;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent: listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

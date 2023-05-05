@@ -22,12 +22,6 @@ public class Board {
             }
 
         }
-//        for (int y = 0; y < HEIGHT; y++) {
-//            board[0][y].collapse(RuleList.MOUNTAINID);
-//            board[WIDTH - 1][y].collapse(RuleList.OCEANID);
-//            propagate(WIDTH - 1, y);
-//            propagate(0, y);
-//        }
     }
 
     public void fill() throws MapGenerationException {
@@ -44,9 +38,6 @@ public class Board {
     private void collapseATile(int x, int y) throws MapGenerationException {
         System.out.println(Math.divideExact(++amountCollapsed * 100, HEIGHT*WIDTH) + "%");
         board[x][y].collapse();
-//        if (!checkIfPlacedTileIsRight(x, y)) {
-//            throw new IllegalArgumentException();
-//        }
         propagate(x, y);
     }
 
@@ -124,15 +115,10 @@ public class Board {
     }
 
     private Pair getRandomTileWithLowEntropy() {
-        int lowestEntropy = ETileContent.values().length;
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                if (!board[x][y].isCollapsed() && board[x][y].getPossibleTileStatesLeft() <= lowestEntropy) {
-                    if (board[x][y].getPossibleTileStatesLeft() < lowestEntropy) {
-                        //lowestEntropyTiles = new ArrayList<>();
-                        //lowestEntropy = board[x][y].getPossibleTileStatesLeft();
-                    }
+                if (!board[x][y].isCollapsed()) {
                     lowestEntropyTiles.add(new Pair(x, y));
                 }
             }
@@ -151,38 +137,7 @@ public class Board {
         }
     }
 
-    private boolean checkIfPlacedTileIsRight(int x, int y) {
-        if (!board[x][y].isCollapsed()) {
-            return true;
-        }
-        if (((x > 0 && board[x - 1][y].isCollapsed()) && !board[x - 1][y].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((x < WIDTH - 1 && board[x + 1][y].isCollapsed()) && !board[x + 1][y].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((y > 0 && board[x][y - 1].isCollapsed()) && !board[x][y - 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((y < HEIGHT - 1 && board[x][y + 1].isCollapsed()) && !board[x][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((x > 0 && y > 0 && board[x - 1][y - 1].isCollapsed()) && !board[x - 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((x < WIDTH - 1 && y > 0 && board[x + 1][y - 1].isCollapsed()) && !board[x + 1][y - 1].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((x > 0 && y < HEIGHT - 1 && board[x - 1][y + 1].isCollapsed()) && !board[x - 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.ABOVE, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        if (((x < WIDTH - 1 && y < HEIGHT - 1 && board[x + 1][y + 1].isCollapsed()) && !board[x + 1][y + 1].getContent().getRuleList().canThisBeHere(EDirection.BELOW, board[x][y].getPossibleTileContentLeft()))) {
-            return false;
-        }
-        return true;
-    }
-
-    public String print() throws IOException {
+    public void print() throws IOException {
         System.out.println("-----------------");
         StringBuilder stringBuilder2 = new StringBuilder();
         for (int y = 0; y < HEIGHT; y++) {
@@ -200,7 +155,6 @@ public class Board {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         writer.write(stringBuilder2.toString());
         writer.close();
-        return stringBuilder2.toString();
     }
 
     public Tile[][] getBoard() {

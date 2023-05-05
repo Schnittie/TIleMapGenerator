@@ -30,13 +30,13 @@ public class RulesCoast implements RuleList {
         rules.add(new Rule(RuleList.SEAID, EDirection.DOWNRIGHT));
         rules.add(new Rule(RuleList.SEAID, EDirection.DOWNLEFT));
     }
-    private static RulesCoast rulesCoast = new RulesCoast();
+    private static final RulesCoast rulesCoast = new RulesCoast();
     public static RulesCoast getInstance(){
         return rulesCoast;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent: listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

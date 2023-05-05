@@ -23,13 +23,13 @@ public class RulesReef implements RuleList {
         rules.add(new Rule(RuleList.REEFID, EDirection.DOWNLEFT));
     }
 
-    private static RulesReef rulesReef = new RulesReef();
+    private static final RulesReef rulesReef = new RulesReef();
     public static RulesReef getInstance(){
         return rulesReef;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent: listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

@@ -20,13 +20,13 @@ public class RulesOcean implements RuleList {
         rules.add(new Rule(RuleList.SEAID, EDirection.DOWNRIGHT));
     }
 
-    private static RulesOcean rulesOcean = new RulesOcean();
+    private static final RulesOcean rulesOcean = new RulesOcean();
     public static RulesOcean getInstance(){
         return rulesOcean;
     }
-    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
         for (Rule rule : this.rules) {
-            for (ETileContent tileContent:listOfPossbilitiesNow) {
+            for (ETileContent tileContent: listOfPossibilitiesNow) {
                 if (rule.equals(new Rule(tileContent.getId(), direction))) {
                     return true;
                 }

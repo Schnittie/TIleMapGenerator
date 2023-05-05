@@ -4,7 +4,7 @@ public class Main {
 
     //TODO: More Directions
     //TODO: Tile detail
-    //TODO:Fluss
+    //TODO: River
     public static void main(String[] args) {
         int width = 100;
         int height = 100;

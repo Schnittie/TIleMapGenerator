@@ -31,6 +31,6 @@ public enum ETileContent {
                 return value;
             }
         }
-        return null;
+        throw new RuntimeException("no TileContentFound");
     }
 }

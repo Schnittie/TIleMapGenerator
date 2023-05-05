@@ -17,9 +17,9 @@ public interface RuleList {
         return false;
     }
 
-     default boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
+     default boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossibilitiesNow) {
          for (Rule rule : this.rules) {
-             for (ETileContent tileContent:listOfPossbilitiesNow) {
+             for (ETileContent tileContent:listOfPossibilitiesNow) {
                  if (rule.equals(new Rule(tileContent.getId(), direction))) {
                      return true;
                  }
