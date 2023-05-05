@@ -8,10 +8,10 @@ import java.util.Random;
 
 public class Board {
     private final Tile[][] board;
-    private final int WIDTH = 30; //x
-    private final int HEIGHT = 100;//y
+    private final int WIDTH = 50; //x
+    private final int HEIGHT = 50;//y
 
-    public Board() {
+    public Board() throws MapGenerationException {
         board = new Tile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -19,15 +19,15 @@ public class Board {
             }
 
         }
-        for (int y = 0; y < HEIGHT; y++) {
-            board[0][y].collapse(RuleList.MOUNTAINID);
-            propagate(0, y);
-            board[WIDTH - 1][y].collapse(RuleList.OCEANID);
-            propagate(WIDTH - 1, y);
-        }
+//        for (int y = 0; y < HEIGHT; y++) {
+//            board[0][y].collapse(RuleList.MOUNTAINID);
+//            board[WIDTH - 1][y].collapse(RuleList.OCEANID);
+//            propagate(WIDTH - 1, y);
+//            propagate(0, y);
+//        }
     }
 
-    public void fill() throws IllegalArgumentException {
+    public void fill() throws MapGenerationException {
         while (true) {
             Pair randomTileWithLowEntropy = getRandomTileWithLowEntropy();
             if (randomTileWithLowEntropy.x == -10) {
@@ -38,7 +38,7 @@ public class Board {
 
     }
 
-    private void collapseATile(int x, int y) throws IllegalArgumentException {
+    private void collapseATile(int x, int y) throws MapGenerationException {
         //returns the amount of collapsed tiles
         board[x][y].collapse();
 //        if (!checkIfPlacedTileIsRight(x, y)) {
@@ -94,7 +94,7 @@ public class Board {
         }
     }
 
-    private void propagate(int x, int y, ArrayList<ETileContent> newTileContent) throws IllegalArgumentException {
+    private void propagate(int x, int y, ArrayList<ETileContent> newTileContent) throws MapGenerationException {
         ArrayList<Pair> toCollapse = new ArrayList<>(8);
         HashMap<Pair, ArrayList<ETileContent>> toPropagate = new HashMap<>(8);
         PropagationResultLists propagationResultLists = new PropagationResultLists(toCollapse, toPropagate);
@@ -116,11 +116,11 @@ public class Board {
         }
     }
 
-    private void propagate(int x, int y) throws IllegalArgumentException {
+    private void propagate(int x, int y) throws MapGenerationException {
         propagate(x, y, board[x][y].getPossibleTileContentLeft());
     }
 
-    public Pair getRandomTileWithLowEntropy() {
+    private Pair getRandomTileWithLowEntropy() {
         int lowestEntropy = ETileContent.values().length;
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < WIDTH; x++) {
@@ -193,7 +193,7 @@ public class Board {
             stringBuilder2.append(stringBuilder);
             stringBuilder2.append("\n");
         }
-        File file = new File("C:\\Users\\laure\\IdeaProjects\\Lego Battles Map Generator\\output\\map.txt");
+        File file = new File("map.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         writer.write(stringBuilder2.toString());
         writer.close();

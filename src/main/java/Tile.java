@@ -45,12 +45,12 @@ public class Tile {
         return false;
     }
 
-    public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossbilitiesNow) {
+    public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossibilitiesNow) {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
         for (int i = 0; i < ETileContent.values().length; i++) {
             if (canIbe[i]) {
-                if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, listOfPossbilitiesNow)) {
+                if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, listOfPossibilitiesNow)) {
                     response.setHasChangedPossibility(true);
                     if (removePossibility(i)) {
                         return new PropagationResponseEntity(true, false, null);
@@ -81,14 +81,34 @@ public class Tile {
         }
     }
 
-    public void collapse() {
-        ArrayList<Integer> possibleStates = new ArrayList<>(3);
+    public void collapse() throws MapGenerationException {
+        if (isCollapsed) throw new MapGenerationException();
+
+        ArrayList<ETileContent> possibleStates = new ArrayList<>(ETileContent.values().length);
         for (int i = 0; i < canIbe.length; i++) {
             if (canIbe[i]) {
-                possibleStates.add(i);
+                possibleStates.add(ETileContent.findById(i));
             }
         }
+        collapse(getRandomState(possibleStates));
+    }
+
+    private int getRandomState(ArrayList<ETileContent> possibleStates) throws MapGenerationException {
+        int totalProbability = 0;
+        for (ETileContent tileContent : possibleStates) {
+            totalProbability += tileContent.getProbability();
+        }
         Random random = new Random();
-        collapse(possibleStates.get(random.nextInt(possibleStates.size())));
+        if (totalProbability <= 0) {
+            return possibleStates.get(random.nextInt(possibleStates.size())).getId();
+        }
+        int randomInt = random.nextInt(totalProbability);
+        for (ETileContent tileContent : possibleStates) {
+            randomInt -= tileContent.getProbability();
+            if (randomInt < 0) {
+                return tileContent.getId();
+            }
+        }
+        throw new MapGenerationException();
     }
 }

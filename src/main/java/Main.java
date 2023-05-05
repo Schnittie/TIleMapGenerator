@@ -1,14 +1,12 @@
 import java.io.IOException;
 
 public class Main {
-    //TODO: Probability simple
-    //TODO: probability left right
 
-    //TODO: propagate possible states
+    //TODO: Free generation
     //TODO: More Directions
 
     //TODO:Fluss
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MapGenerationException {
         int trialcound = 0;
         boolean t = true;
         Board b = new Board();
@@ -17,9 +15,8 @@ public class Main {
             try {
                 b = new Board();
                 b.fill();
-            } catch (IllegalArgumentException e) {
-                t = true;
-                trialcound++;
+            } catch (MapGenerationException e) {
+                throw new RuntimeException(e);
             }
         }
         b.print();
