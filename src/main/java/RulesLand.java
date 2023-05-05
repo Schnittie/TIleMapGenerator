@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class RulesLand implements RuleList {
     ArrayList<Rule> rules = new ArrayList<>();
-    public RulesLand(){
+    private RulesLand(){
         rules.add(new Rule(RuleList.LANDID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.LANDID, EDirection.BELOW));
         rules.add(new Rule(RuleList.LANDID, EDirection.RIGHT));
@@ -15,6 +15,7 @@ public class RulesLand implements RuleList {
         rules.add(new Rule(RuleList.COASTID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.COASTID, EDirection.BELOW));
         rules.add(new Rule(RuleList.COASTID, EDirection.LEFT));
+        rules.add(new Rule(RuleList.COASTID, EDirection.RIGHT));
         rules.add(new Rule(RuleList.COASTID, EDirection.TOPRIGHT));
         rules.add(new Rule(RuleList.COASTID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.COASTID, EDirection.DOWNRIGHT));
@@ -29,6 +30,10 @@ public class RulesLand implements RuleList {
         rules.add(new Rule(RuleList.HILLID, EDirection.DOWNRIGHT));
         rules.add(new Rule(RuleList.HILLID, EDirection.DOWNLEFT));
 
+    }
+    private static RulesLand rulesLand = new RulesLand();
+    public static RulesLand getInstance(){
+        return rulesLand;
     }
     public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
         for (Rule rule : this.rules) {

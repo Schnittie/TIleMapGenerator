@@ -2,24 +2,19 @@ import java.io.IOException;
 
 public class Main {
 
-    //TODO: Free generation
     //TODO: More Directions
-
+    //TODO: Tile detail
     //TODO:Fluss
-    public static void main(String[] args) throws IOException, MapGenerationException {
-        int trialcound = 0;
-        boolean t = true;
-        Board b = new Board();
-        while (t) {
-            t = false;
-            try {
-                b = new Board();
-                b.fill();
-            } catch (MapGenerationException e) {
-                throw new RuntimeException(e);
-            }
+    public static void main(String[] args) {
+        int width = 100;
+        int height = 100;
+        try {
+            Board b = new Board(width, height);
+            b.fill();
+            b.print();
+            BoardImageGenerator.generateBoardImage(b.getBoard(), "generatedMapRender.png", height, width);
+        } catch (MapGenerationException | IOException e) {
+            throw new RuntimeException(e);
         }
-        b.print();
-        System.out.println(trialcound);
     }
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class RulesReef implements RuleList {
     ArrayList<Rule> rules = new ArrayList<>();
 
-    public RulesReef(){
+    private RulesReef(){
         rules.add(new Rule(RuleList.SEAID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.SEAID, EDirection.BELOW));
         rules.add(new Rule(RuleList.SEAID, EDirection.RIGHT));
@@ -21,14 +21,11 @@ public class RulesReef implements RuleList {
         rules.add(new Rule(RuleList.REEFID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.REEFID, EDirection.DOWNRIGHT));
         rules.add(new Rule(RuleList.REEFID, EDirection.DOWNLEFT));
+    }
 
-        rules.add(new Rule(RuleList.OCEANID, EDirection.ABOVE));
-        rules.add(new Rule(RuleList.OCEANID, EDirection.BELOW));
-        rules.add(new Rule(RuleList.OCEANID, EDirection.LEFT));
-        rules.add(new Rule(RuleList.OCEANID, EDirection.TOPLEFT));
-        rules.add(new Rule(RuleList.OCEANID, EDirection.DOWNLEFT));
-
-
+    private static RulesReef rulesReef = new RulesReef();
+    public static RulesReef getInstance(){
+        return rulesReef;
     }
     public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
         for (Rule rule : this.rules) {

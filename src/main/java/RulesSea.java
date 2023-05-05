@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class RulesSea implements RuleList {
     ArrayList<Rule> rules = new ArrayList<>();
 
-    public RulesSea(){
+    private RulesSea(){
         rules.add(new Rule(RuleList.SEAID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.SEAID, EDirection.BELOW));
         rules.add(new Rule(RuleList.SEAID, EDirection.RIGHT));
@@ -16,6 +16,7 @@ public class RulesSea implements RuleList {
         rules.add(new Rule(RuleList.COASTID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.COASTID, EDirection.BELOW));
         rules.add(new Rule(RuleList.COASTID, EDirection.RIGHT));
+        rules.add(new Rule(RuleList.COASTID, EDirection.LEFT));
         rules.add(new Rule(RuleList.COASTID, EDirection.TOPRIGHT));
         rules.add(new Rule(RuleList.COASTID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.COASTID, EDirection.DOWNRIGHT));
@@ -35,6 +36,11 @@ public class RulesSea implements RuleList {
         rules.add(new Rule(RuleList.OCEANID, EDirection.LEFT));
         rules.add(new Rule(RuleList.OCEANID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.OCEANID, EDirection.DOWNLEFT));
+    }
+
+    private static RulesSea rulesSea = new RulesSea();
+    public static RulesSea getInstance(){
+        return rulesSea;
     }
     public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
         for (Rule rule : this.rules) {

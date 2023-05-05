@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class RulesHill implements RuleList {
     ArrayList<Rule> rules = new ArrayList<>();
 
-    public RulesHill(){
+    private RulesHill(){
         rules.add(new Rule(RuleList.HILLID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.HILLID, EDirection.BELOW));
         rules.add(new Rule(RuleList.HILLID, EDirection.RIGHT));
@@ -25,9 +25,16 @@ public class RulesHill implements RuleList {
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.BELOW));
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.RIGHT));
+        rules.add(new Rule(RuleList.MOUNTAINID, EDirection.LEFT));
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.TOPRIGHT));
+        rules.add(new Rule(RuleList.MOUNTAINID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.MOUNTAINID, EDirection.DOWNRIGHT));
+        rules.add(new Rule(RuleList.MOUNTAINID, EDirection.DOWNLEFT));
 
+    }
+    private static RulesHill rulesHill = new RulesHill();
+    public static RulesHill getInstance(){
+        return rulesHill;
     }
     public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
         for (Rule rule : this.rules) {

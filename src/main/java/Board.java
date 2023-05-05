@@ -8,10 +8,13 @@ import java.util.Random;
 
 public class Board {
     private final Tile[][] board;
-    private final int WIDTH = 50; //x
-    private final int HEIGHT = 50;//y
+    private final int WIDTH; //x
+    private final int HEIGHT;//y
+    private int amountCollapsed = 0;
 
-    public Board() throws MapGenerationException {
+    public Board(int width, int height) throws MapGenerationException {
+        WIDTH = width;
+        HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -39,7 +42,7 @@ public class Board {
     }
 
     private void collapseATile(int x, int y) throws MapGenerationException {
-        //returns the amount of collapsed tiles
+        System.out.println(Math.divideExact(++amountCollapsed * 100, HEIGHT*WIDTH) + "%");
         board[x][y].collapse();
 //        if (!checkIfPlacedTileIsRight(x, y)) {
 //            throw new IllegalArgumentException();
@@ -54,9 +57,9 @@ public class Board {
         if (doCoordinatesFitForDirection(x, y, direction)) {
             PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
             if (response.isHasCollapsed()) {
-                toCollapse.add(new Pair(x , y));
+                toCollapse.add(new Pair(x, y));
             } else if (response.isHasChangedPossibility()) {
-                toPropagate.put(new Pair(x , y), response.getNewPossibilities());
+                toPropagate.put(new Pair(x, y), response.getNewPossibilities());
             }
         }
         return new PropagationResultLists(toCollapse, toPropagate);
@@ -152,7 +155,7 @@ public class Board {
         if (!board[x][y].isCollapsed()) {
             return true;
         }
-        if (((x > 0 && board[x-1][y].isCollapsed()) && !board[x - 1][y].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
+        if (((x > 0 && board[x - 1][y].isCollapsed()) && !board[x - 1][y].getContent().getRuleList().canThisBeHere(EDirection.LEFT, board[x][y].getPossibleTileContentLeft()))) {
             return false;
         }
         if (((x < WIDTH - 1 && board[x + 1][y].isCollapsed()) && !board[x + 1][y].getContent().getRuleList().canThisBeHere(EDirection.RIGHT, board[x][y].getPossibleTileContentLeft()))) {
@@ -198,5 +201,9 @@ public class Board {
         writer.write(stringBuilder2.toString());
         writer.close();
         return stringBuilder2.toString();
+    }
+
+    public Tile[][] getBoard() {
+        return board;
     }
 }

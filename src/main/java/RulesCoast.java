@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 public class RulesCoast implements RuleList {
     ArrayList<Rule> rules = new ArrayList<>();
-    public RulesCoast() {
+    private RulesCoast() {
         rules.add(new Rule(RuleList.LANDID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.LANDID, EDirection.RIGHT));
         rules.add(new Rule(RuleList.LANDID, EDirection.BELOW));
+        rules.add(new Rule(RuleList.LANDID, EDirection.LEFT));
         rules.add(new Rule(RuleList.LANDID, EDirection.TOPRIGHT));
         rules.add(new Rule(RuleList.LANDID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.LANDID, EDirection.DOWNRIGHT));
@@ -23,10 +24,15 @@ public class RulesCoast implements RuleList {
         rules.add(new Rule(RuleList.SEAID, EDirection.ABOVE));
         rules.add(new Rule(RuleList.SEAID, EDirection.BELOW));
         rules.add(new Rule(RuleList.SEAID, EDirection.LEFT));
+        rules.add(new Rule(RuleList.SEAID, EDirection.RIGHT));
         rules.add(new Rule(RuleList.SEAID, EDirection.TOPRIGHT));
         rules.add(new Rule(RuleList.SEAID, EDirection.TOPLEFT));
         rules.add(new Rule(RuleList.SEAID, EDirection.DOWNRIGHT));
         rules.add(new Rule(RuleList.SEAID, EDirection.DOWNLEFT));
+    }
+    private static RulesCoast rulesCoast = new RulesCoast();
+    public static RulesCoast getInstance(){
+        return rulesCoast;
     }
     public boolean canThisBeHere(EDirection direction, ArrayList<ETileContent> listOfPossbilitiesNow) {
         for (Rule rule : this.rules) {
