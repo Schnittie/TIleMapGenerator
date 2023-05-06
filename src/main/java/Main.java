@@ -2,9 +2,10 @@ import java.io.IOException;
 
 public class Main {
 
-    //TODO: More Directions
-    //TODO: Tile detail
-    //TODO: River
+    //TODO: Database Rules
+    //TODO: Renderer Drawn from Tilemap
+
+    //TODO: Frontend
     public static void main(String[] args) {
         int width = 100;
         int height = 100;

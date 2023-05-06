@@ -80,6 +80,9 @@ public class Tile {
     }
 
     private int getRandomState(ArrayList<ETileContent> possibleStates) throws MapGenerationException {
+        if(possibleStates.isEmpty()){
+            throw new RuntimeException("No Possible State");
+        }
         int totalProbability = 0;
         for (ETileContent tileContent : possibleStates) {
             totalProbability += tileContent.getProbability();
