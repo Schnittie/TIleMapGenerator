@@ -2,12 +2,12 @@ import lombok.Getter;
 
 @Getter
 public enum ETileContent {
-    LAND(0, 'L',  RulesLand.getInstance(), 10,"src/main/images/land.png"),
+    LAND(0, 'L',  RulesLand.getInstance(), 20,"src/main/images/land.png"),
     COAST(1, 'C',  RulesCoast.getInstance(), 2, "src/main/images/coast.png"),
     SEA(2, 'S',  RulesSea.getInstance(), 10, "src/main/images/sea.png"),
     HILL(3, 'H',  RulesHill.getInstance(), 2, "src/main/images/hill.png"),
     REEF(4, 'R',  RulesReef.getInstance(), 3, "src/main/images/reef.png"),
-    MOUNTAIN(5, 'M', RulesMountain.getInstance(), 4,"src/main/images/mountain.png" ),
+    MOUNTAIN(5, 'M', RulesMountain.getInstance(), 10,"src/main/images/mountain.png" ),
     OCEAN(6, 'O',  RulesOcean.getInstance(), 1,"src/main/images/ocean.png" )
     ;
 

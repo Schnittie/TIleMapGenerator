@@ -1,4 +1,6 @@
 map.txt
+password.txt
+user.txt
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

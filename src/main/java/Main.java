@@ -7,8 +7,8 @@ public class Main {
 
     //TODO: Frontend
     public static void main(String[] args) {
-        int width = 100;
-        int height = 100;
+        int width = 200;
+        int height = 200;
         try {
             Board b = new Board(width, height);
             b.fill();
