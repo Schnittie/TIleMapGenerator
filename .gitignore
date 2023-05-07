@@ -1,7 +1,8 @@
 map.txt
 password.txt
 user.txt
-
+src/main/java/DataBase/password.txt
+src/main/java/DataBase/user.txt
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
