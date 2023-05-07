@@ -1,17 +1,23 @@
 package DataBase;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBinteractions {
+public class TileDBinteractions {
     private Connection conn;
 
-    public DBinteractions() throws SQLException {
-        conn = DriverManager.getConnection("LegoBattlesMapGenerator.legoBattlesMapGeneratorSchema.tile_content"
-                , DBhelper.readLine(), "2763");
+    public TileDBinteractions() throws SQLException {
+        try {
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/LegoBattlesMapGenerator"
+                    , DBhelper.readLine("C:\\Users\\laure\\Desktop\\user.txt"), DBhelper.readLine("C:\\Users\\laure\\Desktop\\password.txt"));
+            conn.setSchema("legoBattlesMapGeneratorSchema");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void close() throws SQLException {
