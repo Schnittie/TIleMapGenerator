@@ -2,6 +2,8 @@ import java.io.IOException;
 
 public class Main {
 
+    //TODO: working Directions when Creating rules
+    //TODO: Bigger Images when Creating rules
     //TODO: Database Rules
     //TODO: Renderer Drawn from Tilemap
 
