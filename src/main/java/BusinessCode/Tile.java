@@ -1,3 +1,5 @@
+package BusinessCode;
+
 import DataBase.DBinteractions;
 import lombok.Getter;
 
@@ -35,7 +37,7 @@ public class Tile {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
         for (Integer possibleTile: getPossibleTileContentLeft()) {
-                if (dBinteractions.canThisBeHere(whereIamRelativeToCaller, listOfPossibilitiesNow)) {
+                if (dBinteractions.canThisBeHere(possibleTile, whereIamRelativeToCaller, listOfPossibilitiesNow)) {
                     response.setHasChangedPossibility(true);
                     if (removePossibility(possibleTile)) {
                         return new PropagationResponseEntity(true, false, null);

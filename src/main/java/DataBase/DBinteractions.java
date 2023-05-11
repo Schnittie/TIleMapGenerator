@@ -1,5 +1,7 @@
 package DataBase;
 
+import BusinessCode.Pair;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -142,22 +144,134 @@ public class DBinteractions {
     }
 
     public int getNumberOfTiles() {
-        //TODO: Implement
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT COUNT(*) FROM tile_content");
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            throw new SQLException();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public boolean canThisBeHere(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) {
+    public boolean canThisBeHere(int tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) {
         //TODO: Implement
+        //list of Possiilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
+        //tile in question is the tile this tile could be
+        try {
+            HashMap<Integer, Integer> resultMap = new HashMap<>();
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT can_it_be FROM rule " +
+                            "WHERE this_tile = ? " +
+                            "AND next_to = ? " +
+                            "AND id IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
+
+            statement.setInt(1, tileInQuestion);
+            statement.setInt(2, whereIamRelativeToCaller);
+            for (int i = 2; i < listOfPossibilities.size(); i++) {
+                statement.setInt(i + 1, listOfPossibilities.get(i));
+            }
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getBoolean("can_it_be")){
+                    return true;
+                }
+            }
+            return false;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
-        //TODO: Implement
+        try {
+            HashMap<Integer, Integer> resultMap = new HashMap<>();
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT id, probability FROM tile_content WHERE id IN (" + getParameterPlaceholders(possibleStates.size()) + ")");
+
+            for (int i = 0; i < possibleStates.size(); i++) {
+                statement.setInt(i + 1, possibleStates.get(i));
+            }
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int probability = resultSet.getInt("probability");
+                resultMap.put(id, probability);
+            }
+            return resultMap;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public HashMap<Integer, Board.Pair> getDirectionChanges() {
-        //TODO: Implement
+    private String getParameterPlaceholders(int count) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append("?");
+            if (i < count - 1) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 
-    public int[] getPossibleTileIDs() {
-        //TODO: Implement
+    public HashMap<Integer, Pair> getDirectionChanges() {
+        try {
+            HashMap<Integer, Pair> resultMap = new HashMap<>();
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT id, x_change, y_change FROM direction");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int x_change = resultSet.getInt("x_change");
+                int y_change = resultSet.getInt("y_change");
+                resultMap.put(id, new Pair(x_change,y_change));
+            }
+            return resultMap;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int[] getPossibleTileIDs(int possibleTileSize) {
+        try {
+            int[] resultArray = new int[possibleTileSize];
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT id FROM tile_content");
+            ResultSet resultSet = statement.executeQuery();
+            int i = 0;
+            while (resultSet.next()) {
+                resultArray[i++]=resultSet.getInt("id");
+            }
+            return resultArray;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getFilePath(int content) {
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT filepath FROM tile_content WHERE id = ?");
+            statement.setInt(1, content);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("filepath");
+            }
+            throw new SQLException();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

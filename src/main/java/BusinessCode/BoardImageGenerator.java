@@ -1,3 +1,7 @@
+package BusinessCode;
+
+import DataBase.DBinteractions;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,6 +11,7 @@ import java.io.IOException;
 public class BoardImageGenerator {
 
     private static final int TILE_SIZE = 16;
+    private static DBinteractions dBinteractions = DBinteractions.getInstance();
 
     public static void generateBoardImage(Tile[][] board, String outputFilePath, int height, int width) {
         int imageWidth = width * TILE_SIZE;
@@ -19,7 +24,7 @@ public class BoardImageGenerator {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 Tile tile = board[row][col];
-                String tileImagePath = tile.getContent().getImagePath();
+                String tileImagePath = dBinteractions.getFilePath(tile.getContent());
                 BufferedImage tileImage = null;
                 try {
                     tileImage = ImageIO.read(new File(tileImagePath));

@@ -1,9 +1,7 @@
+package BusinessCode;
+
 import DataBase.DBinteractions;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +19,8 @@ public class Board {
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
-        int[] possibleTileIDs = dBinteractions.getPossibleTileIDs();
         int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
+        int[] possibleTileIDs = dBinteractions.getPossibleTileIDs(numberOfPossibleTiles);
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs);
@@ -34,10 +32,10 @@ public class Board {
     public void fill() throws MapGenerationException {
         while (true) {
             Pair randomTileWithLowEntropy = getRandomTileWithLowEntropy();
-            if (randomTileWithLowEntropy.x == -10) {
+            if (randomTileWithLowEntropy.x() == -10) {
                 return;
             }
-            collapseATile(randomTileWithLowEntropy.x, randomTileWithLowEntropy.y);
+            collapseATile(randomTileWithLowEntropy.x(), randomTileWithLowEntropy.y());
         }
 
     }
@@ -50,8 +48,8 @@ public class Board {
 
     private PropagationResultLists propagateOneTile(int x, int y, int direction,
                                                     List<Integer> newTileContent, PropagationResultLists propagationResultLists) {
-        ArrayList<Board.Pair> toCollapse = propagationResultLists.toCollapse();
-        HashMap<Board.Pair, ArrayList<Integer>> toPropagate = propagationResultLists.toPropagate();
+        ArrayList<Pair> toCollapse = propagationResultLists.toCollapse();
+        HashMap<Pair, ArrayList<Integer>> toPropagate = propagationResultLists.toPropagate();
         if (doCoordinatesFitForDirection(x, y, direction)) {
             PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
             if (response.isHasCollapsed()) {
@@ -112,13 +110,6 @@ public class Board {
         }
         Random random = new Random();
         return lowestEntropyTiles.get(random.nextInt(lowestEntropyTiles.size()));
-    }
-
-    public record Pair(int x, int y) {
-        @Override
-        public String toString() {
-            return (x + " " + y);
-        }
     }
 
     public Tile[][] getBoard() {
