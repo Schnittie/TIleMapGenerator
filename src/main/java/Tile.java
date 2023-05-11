@@ -1,58 +1,56 @@
+import DataBase.DBinteractions;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 
 public class Tile {
-    private int possibleTileStatesLeft = ETileContent.values().length;
-    private final boolean[] canIbe;
+    private int possibleTileStatesLeft;
+    private HashMap<Integer, Boolean> canIbe;
     private boolean isCollapsed = false;
-    private ETileContent content;
+    private int content;
+    private DBinteractions dBinteractions = DBinteractions.getInstance();
 
-    public Tile() {
-        canIbe = new boolean[possibleTileStatesLeft];
-        Arrays.fill(canIbe, true);
+    public Tile(int possibleTileStatesLeft, int[] possibleTileIDs) {
+        this.possibleTileStatesLeft = possibleTileStatesLeft;
+        canIbe = new HashMap<>(possibleTileStatesLeft);
+        for (int possibleTileID : possibleTileIDs) {
+            canIbe.put(possibleTileID, true);
+        }
     }
 
-    public ArrayList<ETileContent> getPossibleTileContentLeft() {
-        ArrayList<ETileContent> response = new ArrayList<>();
+    public List<Integer> getPossibleTileContentLeft() {
+        List<Integer> response = new ArrayList<>();
         if (isCollapsed) {
             response.add(content);
             return response;
         }
-        for (int i = 0; i < canIbe.length; i++) {
-            if (canIbe[i]) {
-                response.add(ETileContent.findById(i));
-            }
-        }
+        response = canIbe.keySet().stream().filter(key -> canIbe.get(key)).collect(Collectors.toList());
         return response;
     }
 
-    public PropagationResponseEntity propagate(EDirection whereIamRelativeToCaller, ArrayList<ETileContent> listOfPossibilitiesNow) {
+    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
-        for (int i = 0; i < ETileContent.values().length; i++) {
-            if (canIbe[i]) {
-                if (!ETileContent.findById(i).getRuleList().canThisBeHere(whereIamRelativeToCaller, listOfPossibilitiesNow)) {
+        for (Integer possibleTile: getPossibleTileContentLeft()) {
+                if (dBinteractions.canThisBeHere(whereIamRelativeToCaller, listOfPossibilitiesNow)) {
                     response.setHasChangedPossibility(true);
-                    if (removePossibility(i)) {
+                    if (removePossibility(possibleTile)) {
                         return new PropagationResponseEntity(true, false, null);
                     }
                 } else {
-                    ArrayList<ETileContent> listOfPossibilities = response.getNewPossibilities();
-                    listOfPossibilities.add(ETileContent.findById(i));
+                    ArrayList<Integer> listOfPossibilities = response.getNewPossibilities();
+                    listOfPossibilities.add(possibleTile);
                     response.setNewPossibilities(listOfPossibilities);
                 }
-            }
         }
         return response;
     }
 
     private boolean removePossibility(int toRemove) {
-        canIbe[toRemove] = false;
+        canIbe.replace(toRemove, false);
         possibleTileStatesLeft--;
         if (possibleTileStatesLeft != 1) {
             return false;
@@ -63,39 +61,37 @@ public class Tile {
     public void collapse(int i) {
         if (!isCollapsed) {
             isCollapsed = true;
-            content = ETileContent.findById(i);
+            content = i;
         }
     }
 
     public void collapse() throws MapGenerationException {
         if (isCollapsed) throw new MapGenerationException();
 
-        ArrayList<ETileContent> possibleStates = new ArrayList<>(ETileContent.values().length);
-        for (int i = 0; i < canIbe.length; i++) {
-            if (canIbe[i]) {
-                possibleStates.add(ETileContent.findById(i));
-            }
-        }
-        collapse(getRandomState(possibleStates));
+        collapse(getRandomState(getPossibleTileContentLeft()));
     }
 
-    private int getRandomState(ArrayList<ETileContent> possibleStates) throws MapGenerationException {
+    private int getRandomState(List<Integer> possibleStates) throws MapGenerationException {
         if(possibleStates.isEmpty()){
             throw new RuntimeException("No Possible State");
         }
+
+        HashMap<Integer, Integer> probabilities = dBinteractions.getProbabilityMap(possibleStates);
         int totalProbability = 0;
-        for (ETileContent tileContent : possibleStates) {
-            totalProbability += tileContent.getProbability();
+        for (Integer probability : probabilities.values()) {
+            totalProbability += probability;
         }
+
         Random random = new Random();
         if (totalProbability <= 0) {
-            return possibleStates.get(random.nextInt(possibleStates.size())).getId();
+            return possibleStates.get(random.nextInt(possibleStates.size()));
         }
+
         int randomInt = random.nextInt(totalProbability);
-        for (ETileContent tileContent : possibleStates) {
-            randomInt -= tileContent.getProbability();
+        for (Integer possibleState : possibleStates) {
+            randomInt -= probabilities.get(possibleState);
             if (randomInt < 0) {
-                return tileContent.getId();
+                return possibleState;
             }
         }
         throw new MapGenerationException();

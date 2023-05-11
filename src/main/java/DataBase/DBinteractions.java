@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DBinteractions {
@@ -140,4 +141,23 @@ public class DBinteractions {
         }
     }
 
+    public int getNumberOfTiles() {
+        //TODO: Implement
+    }
+
+    public boolean canThisBeHere(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) {
+        //TODO: Implement
+    }
+
+    public HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
+        //TODO: Implement
+    }
+
+    public HashMap<Integer, Board.Pair> getDirectionChanges() {
+        //TODO: Implement
+    }
+
+    public int[] getPossibleTileIDs() {
+        //TODO: Implement
+    }
 }

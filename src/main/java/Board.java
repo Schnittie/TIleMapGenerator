@@ -1,9 +1,12 @@
+import DataBase.DBinteractions;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class Board {
@@ -11,14 +14,18 @@ public class Board {
     private final int WIDTH; //x
     private final int HEIGHT;//y
     private int amountCollapsed = 0;
+    private DBinteractions dBinteractions = DBinteractions.getInstance();
+    private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
 
     public Board(int width, int height) throws MapGenerationException {
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
+        int[] possibleTileIDs = dBinteractions.getPossibleTileIDs();
+        int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile();
+                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs);
             }
 
         }
@@ -36,15 +43,15 @@ public class Board {
     }
 
     private void collapseATile(int x, int y) throws MapGenerationException {
-        System.out.println(Math.divideExact(++amountCollapsed * 100, HEIGHT*WIDTH) + "%");
+        System.out.println(Math.divideExact(++amountCollapsed * 100, HEIGHT * WIDTH) + "%");
         board[x][y].collapse();
         propagate(x, y);
     }
 
-    private PropagationResultLists propagateOneTile(int x, int y, EDirection direction,
-                                                    ArrayList<ETileContent> newTileContent, PropagationResultLists propagationResultLists) {
+    private PropagationResultLists propagateOneTile(int x, int y, int direction,
+                                                    List<Integer> newTileContent, PropagationResultLists propagationResultLists) {
         ArrayList<Board.Pair> toCollapse = propagationResultLists.toCollapse();
-        HashMap<Board.Pair, ArrayList<ETileContent>> toPropagate = propagationResultLists.toPropagate();
+        HashMap<Board.Pair, ArrayList<Integer>> toPropagate = propagationResultLists.toPropagate();
         if (doCoordinatesFitForDirection(x, y, direction)) {
             PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
             if (response.isHasCollapsed()) {
@@ -56,50 +63,27 @@ public class Board {
         return new PropagationResultLists(toCollapse, toPropagate);
     }
 
-    private boolean doCoordinatesFitForDirection(int x, int y, EDirection direction) {
-        switch (direction) {
-            case ABOVE -> {
-                return y >= 0;
-            }
-            case BELOW -> {
-                return y <= HEIGHT - 1;
-            }
-            case RIGHT -> {
-                return x <= WIDTH - 1;
-            }
-            case LEFT -> {
-                return x >= 0;
-            }
-            case TOPLEFT -> {
-                return doCoordinatesFitForDirection(x, y, EDirection.ABOVE) && doCoordinatesFitForDirection(x, y, EDirection.LEFT);
-            }
-            case TOPRIGHT -> {
-                return doCoordinatesFitForDirection(x, y, EDirection.ABOVE) && doCoordinatesFitForDirection(x, y, EDirection.RIGHT);
-            }
-            case DOWNLEFT -> {
-                return doCoordinatesFitForDirection(x, y, EDirection.BELOW) && doCoordinatesFitForDirection(x, y, EDirection.LEFT);
-            }
-            case DOWNRIGHT -> {
-                return doCoordinatesFitForDirection(x, y, EDirection.BELOW) && doCoordinatesFitForDirection(x, y, EDirection.RIGHT);
-            }
-            default -> {
-                return false;
-            }
-        }
+    private boolean doCoordinatesFitForDirection(int x, int y, int direction) {
+        Pair directionChange = directionChangeMap.get(direction);
+        int wouldBeX = directionChange.x() + x;
+        int wouldBeY = directionChange.y() + y;
+        return (wouldBeX >= 0 && wouldBeX <= WIDTH - 1 && wouldBeY >= 0 && wouldBeY <= HEIGHT);
     }
 
-    private void propagate(int x, int y, ArrayList<ETileContent> newTileContent) throws MapGenerationException {
-        ArrayList<Pair> toCollapse = new ArrayList<>(8);
-        HashMap<Pair, ArrayList<ETileContent>> toPropagate = new HashMap<>(8);
+    private void propagate(int x, int y, List<Integer> newTileContent) throws MapGenerationException {
+        ArrayList<Pair> toCollapse = new ArrayList<>();
+        HashMap<Pair, ArrayList<Integer>> toPropagate = new HashMap<>();
         PropagationResultLists propagationResultLists = new PropagationResultLists(toCollapse, toPropagate);
-        propagationResultLists = propagateOneTile(x - 1, y, EDirection.LEFT, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x + 1, y, EDirection.RIGHT, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x, y - 1, EDirection.ABOVE, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x, y + 1, EDirection.BELOW, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x - 1, y - 1, EDirection.TOPLEFT, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x - 1, y + 1, EDirection.DOWNLEFT, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x + 1, y - 1, EDirection.TOPRIGHT, newTileContent, propagationResultLists);
-        propagationResultLists = propagateOneTile(x + 1, y + 1, EDirection.DOWNRIGHT, newTileContent, propagationResultLists);
+
+        for (int directionID : directionChangeMap.keySet()) {
+            Pair directionChange = directionChangeMap.get(directionID);
+            int wouldBeX = directionChange.x() + x;
+            int wouldBeY = directionChange.y() + y;
+            if (wouldBeX >= 0 && wouldBeX <= WIDTH - 1 && wouldBeY >= 0 && wouldBeY <= HEIGHT){
+                propagationResultLists = propagateOneTile(x,y, directionID, newTileContent, propagationResultLists);
+            }
+        }
+
         toPropagate = propagationResultLists.toPropagate();
         toCollapse = propagationResultLists.toCollapse();
         for (Pair pair : toPropagate.keySet()) {
@@ -130,31 +114,11 @@ public class Board {
         return lowestEntropyTiles.get(random.nextInt(lowestEntropyTiles.size()));
     }
 
-    record Pair(int x, int y) {
+    public record Pair(int x, int y) {
         @Override
         public String toString() {
             return (x + " " + y);
         }
-    }
-
-    public void print() throws IOException {
-        System.out.println("-----------------");
-        StringBuilder stringBuilder2 = new StringBuilder();
-        for (int y = 0; y < HEIGHT; y++) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int x = 0; x < WIDTH; x++) {
-                stringBuilder.append(" ");
-                stringBuilder.append(board[x][y].isCollapsed() ? board[x][y].getContent().getCharacter() : "U");
-                stringBuilder.append(" ");
-            }
-            System.out.println(stringBuilder);
-            stringBuilder2.append(stringBuilder);
-            stringBuilder2.append("\n");
-        }
-        File file = new File("map.txt");
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        writer.write(stringBuilder2.toString());
-        writer.close();
     }
 
     public Tile[][] getBoard() {

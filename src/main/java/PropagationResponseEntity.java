@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public class PropagationResponseEntity {
     private boolean hasCollapsed;
     private boolean hasChangedPossibility;
-    private ArrayList<ETileContent> newPossibilities;
+    private ArrayList<Integer> newPossibilities;
 }
