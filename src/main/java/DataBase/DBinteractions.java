@@ -22,7 +22,7 @@ public class DBinteractions {
         }
     }
 
-    public static DBinteractions getInstance(){
+    public static DBinteractions getInstance() {
         return dBInteractions;
     }
 
@@ -130,7 +130,7 @@ public class DBinteractions {
     }
 
     public void revertRule(List<Integer> lastRule) {
-        for (Integer ruleId:lastRule) {
+        for (Integer ruleId : lastRule) {
             try {
                 PreparedStatement statement = conn.prepareStatement(
                         "DELETE FROM rule WHERE id = ?"
@@ -158,26 +158,25 @@ public class DBinteractions {
     }
 
     public boolean canThisBeHere(int tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) {
-        //TODO: Implement
         //list of Possiilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
         //tile in question is the tile this tile could be
         try {
-            HashMap<Integer, Integer> resultMap = new HashMap<>();
             PreparedStatement statement = conn.prepareStatement(
                     "SELECT can_it_be FROM rule " +
                             "WHERE this_tile = ? " +
                             "AND next_to = ? " +
-                            "AND id IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
+                            "AND that_tile IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
 
             statement.setInt(1, tileInQuestion);
             statement.setInt(2, whereIamRelativeToCaller);
-            for (int i = 2; i < listOfPossibilities.size(); i++) {
-                statement.setInt(i + 1, listOfPossibilities.get(i));
+            int i = 3;
+            for (Integer possibility : listOfPossibilities) {
+                statement.setInt(i++, possibility);
             }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                if (resultSet.getBoolean("can_it_be")){
+                if (resultSet.getBoolean("can_it_be")) {
                     return true;
                 }
             }
@@ -234,7 +233,7 @@ public class DBinteractions {
                 int id = resultSet.getInt("id");
                 int x_change = resultSet.getInt("x_change");
                 int y_change = resultSet.getInt("y_change");
-                resultMap.put(id, new Pair(x_change,y_change));
+                resultMap.put(id, new Pair(x_change, y_change));
             }
             return resultMap;
 
@@ -251,7 +250,7 @@ public class DBinteractions {
             ResultSet resultSet = statement.executeQuery();
             int i = 0;
             while (resultSet.next()) {
-                resultArray[i++]=resultSet.getInt("id");
+                resultArray[i++] = resultSet.getInt("id");
             }
             return resultArray;
 

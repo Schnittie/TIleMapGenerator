@@ -50,14 +50,13 @@ public class Board {
                                                     List<Integer> newTileContent, PropagationResultLists propagationResultLists) {
         ArrayList<Pair> toCollapse = propagationResultLists.toCollapse();
         HashMap<Pair, ArrayList<Integer>> toPropagate = propagationResultLists.toPropagate();
-        if (doCoordinatesFitForDirection(x, y, direction)) {
-            PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
-            if (response.isHasCollapsed()) {
-                toCollapse.add(new Pair(x, y));
-            } else if (response.isHasChangedPossibility()) {
-                toPropagate.put(new Pair(x, y), response.getNewPossibilities());
-            }
+        PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
+        if (response.isHasCollapsed()) {
+            toCollapse.add(new Pair(x, y));
+        } else if (response.isHasChangedPossibility()) {
+            toPropagate.put(new Pair(x, y), response.getNewPossibilities());
         }
+
         return new PropagationResultLists(toCollapse, toPropagate);
     }
 
@@ -77,8 +76,8 @@ public class Board {
             Pair directionChange = directionChangeMap.get(directionID);
             int wouldBeX = directionChange.x() + x;
             int wouldBeY = directionChange.y() + y;
-            if (wouldBeX >= 0 && wouldBeX <= WIDTH - 1 && wouldBeY >= 0 && wouldBeY <= HEIGHT){
-                propagationResultLists = propagateOneTile(x,y, directionID, newTileContent, propagationResultLists);
+            if (wouldBeX >= 0 && wouldBeX <= WIDTH - 1 && wouldBeY >= 0 && wouldBeY <= HEIGHT - 1) {
+                propagationResultLists = propagateOneTile(wouldBeX, wouldBeY, directionID, newTileContent, propagationResultLists);
             }
         }
 
