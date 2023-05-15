@@ -45,12 +45,18 @@ public class Board {
         board[x][y].collapse();
         propagate(x, y);
     }
-
     private PropagationResultLists propagateOneTile(int x, int y, int direction,
                                                     List<Integer> newTileContent, PropagationResultLists propagationResultLists) {
         ArrayList<Pair> toCollapse = propagationResultLists.toCollapse();
         HashMap<Pair, ArrayList<Integer>> toPropagate = propagationResultLists.toPropagate();
-        PropagationResponseEntity response = board[x][y].propagate(direction, newTileContent);
+        PropagationResponseEntity response;
+        try {
+            response = board[x][y].propagate(direction, newTileContent);
+        } catch (MapGenerationException e) {
+            BoardImageGenerator.generateBoardImage(board, "generatedMapRender.png", HEIGHT, WIDTH);
+            System.out.println("Das problem ist bei x: " + x + " y: " + y + "direction: " + direction);
+            throw new RuntimeException(e);
+        }
         if (response.isHasCollapsed()) {
             toCollapse.add(new Pair(x, y));
         } else if (response.isHasChangedPossibility()) {
@@ -58,13 +64,6 @@ public class Board {
         }
 
         return new PropagationResultLists(toCollapse, toPropagate);
-    }
-
-    private boolean doCoordinatesFitForDirection(int x, int y, int direction) {
-        Pair directionChange = directionChangeMap.get(direction);
-        int wouldBeX = directionChange.x() + x;
-        int wouldBeY = directionChange.y() + y;
-        return (wouldBeX >= 0 && wouldBeX <= WIDTH - 1 && wouldBeY >= 0 && wouldBeY <= HEIGHT);
     }
 
     private void propagate(int x, int y, List<Integer> newTileContent) throws MapGenerationException {
@@ -83,11 +82,11 @@ public class Board {
 
         toPropagate = propagationResultLists.toPropagate();
         toCollapse = propagationResultLists.toCollapse();
-        for (Pair pair : toPropagate.keySet()) {
-            propagate(pair.x(), pair.y(), toPropagate.get(pair));
-        }
         for (Pair pair : toCollapse) {
             collapseATile(pair.x(), pair.y());
+        }
+        for (Pair pair : toPropagate.keySet()) {
+            propagate(pair.x(), pair.y(), toPropagate.get(pair));
         }
     }
 

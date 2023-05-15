@@ -12,7 +12,7 @@ public class Tile {
     private int possibleTileStatesLeft;
     private HashMap<Integer, Boolean> canIbe;
     private boolean isCollapsed = false;
-    private int content;
+    private int content = -1;
     private DBinteractions dBinteractions = DBinteractions.getInstance();
 
     public Tile(int possibleTileStatesLeft, int[] possibleTileIDs) {
@@ -33,7 +33,7 @@ public class Tile {
         return response;
     }
 
-    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) {
+    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) throws MapGenerationException {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
         for (Integer possibleTile: getPossibleTileContentLeft()) {
@@ -54,10 +54,7 @@ public class Tile {
     private boolean removePossibility(int toRemove) {
         canIbe.replace(toRemove, false);
         possibleTileStatesLeft--;
-        if (possibleTileStatesLeft != 1) {
-            return false;
-        }
-        return true;
+        return possibleTileStatesLeft == 1;
     }
 
     public void collapse(int i) {

@@ -1,5 +1,6 @@
 package DataBase;
 
+import BusinessCode.MapGenerationException;
 import BusinessCode.Pair;
 
 import java.io.File;
@@ -157,9 +158,12 @@ public class DBinteractions {
         }
     }
 
-    public boolean canThisBeHere(int tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) {
-        //list of Possiilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
+    public boolean canThisBeHere(int tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) throws MapGenerationException {
+        //list of Possibilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
         //tile in question is the tile this tile could be
+        if (listOfPossibilities.isEmpty()) {
+            throw new MapGenerationException();
+        }
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "SELECT can_it_be FROM rule " +

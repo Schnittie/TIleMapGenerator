@@ -67,7 +67,7 @@ public class RuleCreationGUI extends JFrame implements ActionListener {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoMoreRulesException e) {
-
+            //DO nothing
         }
 
     }
@@ -91,13 +91,13 @@ public class RuleCreationGUI extends JFrame implements ActionListener {
                 break;
 
             case 3:
-                squareTopLeft.fillWithImage(currentRule.this_TileFilepath());
-                squareTopRight.fillWithImage(currentRule.that_TileFilepath());
+                squareTopRight.fillWithImage(currentRule.this_TileFilepath());
+                squareTopLeft.fillWithImage(currentRule.that_TileFilepath());
                 break;
 
             case 4:
-                squareTopRight.fillWithImage(currentRule.this_TileFilepath());
-                squareTopLeft.fillWithImage(currentRule.that_TileFilepath());
+                squareTopLeft.fillWithImage(currentRule.this_TileFilepath());
+                squareTopRight.fillWithImage(currentRule.that_TileFilepath());
                 break;
 
             case 5:
@@ -111,7 +111,7 @@ public class RuleCreationGUI extends JFrame implements ActionListener {
                 break;
 
             case 7:
-                squareDownRight.fillWithImage(currentRule.this_TileFilepath());
+                squareDownLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareTopRight.fillWithImage(currentRule.that_TileFilepath());
                 break;
 
