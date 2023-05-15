@@ -2,9 +2,10 @@ package DataBase;
 
 import BusinessCode.MapGenerationException;
 import BusinessCode.Pair;
+import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteDataSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,14 +30,14 @@ public class DBinteractions {
 
 
     private DBinteractions() throws SQLException {
-        try {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/LegoBattlesMapGenerator",
-                    DBhelper.readLine("C:\\Users\\laure\\Desktop\\user.txt"),
-                    DBhelper.readLine("C:\\Users\\laure\\Desktop\\password.txt"));
-            conn.setSchema("legoBattlesMapGeneratorSchema");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        SQLiteConfig config = new SQLiteConfig();
+        config.enforceForeignKeys(true); // Optional: Enable foreign key constraints
+        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        dataSource.setUrl("jdbc:sqlite:C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\src\\main\\LegoBattlesMapGeneratorDB.db");
+
+        // Get a connection from the data source
+        this.conn = dataSource.getConnection();
+        conn.setAutoCommit(false); // Optional: Set auto-commit behavior
     }
 
     public void close() throws SQLException {
@@ -66,7 +67,7 @@ public class DBinteractions {
         stmt.setInt(1, this_tile);
         stmt.setInt(2, next_to);
         stmt.setInt(3, that_tile);
-        stmt.setBoolean(4, can_it_be);
+        stmt.setInt(4, can_it_be ? 1 : 0);
         stmt.executeUpdate();
 
         // Get the generated rule ID(s)
@@ -180,7 +181,9 @@ public class DBinteractions {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                if (resultSet.getBoolean("can_it_be")) {
+                int intValue = resultSet.getInt("can_it_be");
+                boolean canItBe = intValue != 0;
+                if (canItBe) {
                     return true;
                 }
             }
