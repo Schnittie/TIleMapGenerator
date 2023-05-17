@@ -1,4 +1,4 @@
-package BusinessCode;
+package businesscode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

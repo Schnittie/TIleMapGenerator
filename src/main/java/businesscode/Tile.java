@@ -1,6 +1,6 @@
-package BusinessCode;
+package businesscode;
 
-import DataBase.DBinteractions;
+import database.DBinteractions;
 import lombok.Getter;
 
 import java.util.*;

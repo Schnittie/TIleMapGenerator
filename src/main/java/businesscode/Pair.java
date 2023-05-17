@@ -1,4 +1,4 @@
-package BusinessCode;
+package businesscode;
 
 public record Pair(int x, int y) {
     @Override

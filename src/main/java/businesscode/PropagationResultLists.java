@@ -1,4 +1,4 @@
-package BusinessCode;
+package businesscode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

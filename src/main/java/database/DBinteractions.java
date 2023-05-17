@@ -1,7 +1,7 @@
-package DataBase;
+package database;
 
-import BusinessCode.MapGenerationException;
-import BusinessCode.Pair;
+import businesscode.MapGenerationException;
+import businesscode.Pair;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
@@ -91,7 +91,7 @@ public class DBinteractions {
             reversedStmt.setInt(1, that_tile);
             reversedStmt.setInt(2, reverseNextTo);
             reversedStmt.setInt(3, this_tile);
-            reversedStmt.setBoolean(4, can_it_be);
+            stmt.setInt(4, can_it_be ? 1 : 0);
             reversedStmt.executeUpdate();
 
             // Get the generated rule ID(s)
@@ -181,9 +181,7 @@ public class DBinteractions {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int intValue = resultSet.getInt("can_it_be");
-                boolean canItBe = intValue != 0;
-                if (canItBe) {
+                if (resultSet.getInt("can_it_be") == 1) {
                     return true;
                 }
             }

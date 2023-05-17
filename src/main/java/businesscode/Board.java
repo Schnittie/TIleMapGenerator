@@ -1,6 +1,6 @@
-package BusinessCode;
+package businesscode;
 
-import DataBase.DBinteractions;
+import database.DBinteractions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,14 +12,14 @@ public class Board {
     private final int WIDTH; //x
     private final int HEIGHT;//y
     private int amountCollapsed = 0;
-    private DBinteractions dBinteractions = DBinteractions.getInstance();
+    private final DBinteractions dBinteractions = DBinteractions.getInstance();
     private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
+    private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
 
     public Board(int width, int height) throws MapGenerationException {
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
-        int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
         int[] possibleTileIDs = dBinteractions.getPossibleTileIDs(numberOfPossibleTiles);
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -41,10 +41,11 @@ public class Board {
     }
 
     private void collapseATile(int x, int y) throws MapGenerationException {
-        System.out.println(Math.divideExact(++amountCollapsed * 100, HEIGHT * WIDTH) + "%");
+        System.out.println(((++amountCollapsed) + "/" + (HEIGHT * WIDTH)));
         board[x][y].collapse();
         propagate(x, y);
     }
+
     private PropagationResultLists propagateOneTile(int x, int y, int direction,
                                                     List<Integer> newTileContent, PropagationResultLists propagationResultLists) {
         ArrayList<Pair> toCollapse = propagationResultLists.toCollapse();
@@ -96,10 +97,18 @@ public class Board {
 
     private Pair getRandomTileWithLowEntropy() {
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
+        int lowestEntropy = numberOfPossibleTiles;
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 if (!board[x][y].isCollapsed()) {
-                    lowestEntropyTiles.add(new Pair(x, y));
+                    int possibleTileStatesLeft = board[x][y].getPossibleTileStatesLeft();
+                    if (possibleTileStatesLeft <= lowestEntropy) {
+                        if (possibleTileStatesLeft < lowestEntropy){
+                            lowestEntropy = possibleTileStatesLeft;
+                            lowestEntropyTiles = new ArrayList<>();
+                        }
+                        lowestEntropyTiles.add(new Pair(x, y));
+                    }
                 }
             }
         }
@@ -112,5 +121,17 @@ public class Board {
 
     public Tile[][] getBoard() {
         return board;
+    }
+
+    public int getAmountCollapsed() {
+        return amountCollapsed;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
     }
 }

@@ -1,4 +1,4 @@
-package DataBase;
+package database;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,17 +13,17 @@ import java.util.List;
 
 public class RuleCreationGUI extends JFrame implements ActionListener {
 
-    private JButton fitsButton;
-    private JButton doesnFitsButton;
-    private JButton revertLastRuleButton;
-    private Square squareTopLeft;
-    private Square squareTopRight;
-    private Square squareDownLeft;
-    private Square squareDownRight;
+    private final JButton fitsButton;
+    private final JButton doesnFitsButton;
+    private final JButton revertLastRuleButton;
+    private final Square squareTopLeft;
+    private final Square squareTopRight;
+    private final Square squareDownLeft;
+    private final Square squareDownRight;
     private RuleCreationTO currentRule;
     private List<Integer> lastRule;
 
-    private DBinteractions dbInteractions = DBinteractions.getInstance();
+    private final DBinteractions dbInteractions = DBinteractions.getInstance();
 
     public RuleCreationGUI() {
         super("RuleCreationGUI");
@@ -80,49 +80,39 @@ public class RuleCreationGUI extends JFrame implements ActionListener {
 
         currentRule = dbInteractions.getNewRule();
         switch (currentRule.next_to()) {
-            case 1:
+            case 1 -> {
                 squareTopLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareDownLeft.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 squareDownLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareTopLeft.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 squareTopRight.fillWithImage(currentRule.this_TileFilepath());
                 squareTopLeft.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 4:
+            }
+            case 4 -> {
                 squareTopLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareTopRight.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 5:
+            }
+            case 5 -> {
                 squareTopLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareDownRight.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 6:
+            }
+            case 6 -> {
                 squareTopRight.fillWithImage(currentRule.this_TileFilepath());
                 squareDownLeft.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 7:
+            }
+            case 7 -> {
                 squareDownLeft.fillWithImage(currentRule.this_TileFilepath());
                 squareTopRight.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            case 8:
+            }
+            case 8 -> {
                 squareDownRight.fillWithImage(currentRule.this_TileFilepath());
                 squareTopLeft.fillWithImage(currentRule.that_TileFilepath());
-                break;
-
-            default:
-                throw new RuntimeException("no Direction found for direction id: " + currentRule.next_to());
-
+            }
+            default -> throw new RuntimeException("no Direction found for direction id: " + currentRule.next_to());
         }
     }
 
@@ -156,7 +146,7 @@ class Square extends JPanel {
     private BufferedImage image;
 
     public Square() {
-
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     public void fillWithImage(String filepath) {
