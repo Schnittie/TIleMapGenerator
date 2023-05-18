@@ -10,9 +10,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 public class FrontendGUI extends JFrame implements ActionListener {
+
+    public static final String FILES_FOLDER = "C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\";
+    // maybe consider something like this instead: String path = FrontendGUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+//    public static final String FILES_FOLDER = "/home/artur/git/LegoBattlesMapGenerator/";
 
     private final JButton generateButton;
     private final JButton addRulesButton;
@@ -67,11 +73,24 @@ public class FrontendGUI extends JFrame implements ActionListener {
                 Board b = new Board(width, height);
                 infoPanel.infoForGeneration(b);
                 b.fill();
+                /**
+                 * regarding the path, I'd suggest using the following lib:
+                 * <dependency>
+                 *      <groupId>net.harawata</groupId>
+                 *      <artifactId>appdirs</artifactId>
+                 *      <version>1.2.1</version>
+                 * </dependency>
+                 *
+                 * see here: https://github.com/harawata/appdirs#supported-directories
+                 */
                 BoardImageGenerator.generateBoardImage(b.getBoard(), "generatedMapRender.png", height, width);
-                mapPanel.fillWithImage("C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\generatedMapRender.png");
+                mapPanel.fillWithImage(FILES_FOLDER + "generatedMapRender.png");
             } catch (MapGenerationException | RuntimeException exception) {
                 System.out.println("TODO: what if an exception occurs");
-                mapPanel.fillWithImage("C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\generatedMapRender.png");
+                // NEVER EVER hide a thrown exception. at least print the stacktrace, unless you really, REALLY don't give a shit what went wrong
+                // in this case all i saw was that it didn't work...
+                exception.printStackTrace();
+                mapPanel.fillWithImage(FILES_FOLDER + "generatedMapRender.png");
             }
         }
         if (e.getSource() == addRulesButton){
@@ -80,7 +99,8 @@ public class FrontendGUI extends JFrame implements ActionListener {
         if (e.getSource() == addTilesButton){
             try {
                 DBTileLoader.loadTiles();
-            } catch (SQLException ex) {
+            } catch (SQLException | URISyntaxException | IOException ex) {
+                ex.printStackTrace();
                 throw new RuntimeException(ex);
             }
         }

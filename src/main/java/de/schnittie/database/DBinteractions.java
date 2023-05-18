@@ -2,16 +2,30 @@ package de.schnittie.database;
 
 import de.schnittie.businesscode.MapGenerationException;
 import de.schnittie.businesscode.Pair;
+import de.schnittie.frontend.FrontendGUI;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
+import org.sqlite.core.DB;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class DBinteractions {
+
+    private static String DB_FOLDER =
+            FrontendGUI.FILES_FOLDER + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
     private Connection conn;
 
     private static final DBinteractions dBInteractions;
@@ -33,10 +47,19 @@ public class DBinteractions {
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true); // Optional: Enable foreign key constraints
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\src\\main\\LegoBattlesMapGeneratorDB.db");
+        /**
+         * Regarding this: I'd suggest having an empty, prebuilt but empty DB file in the resources folder.
+         * At app-Start, you check for the existence of a copy of the DB file in an appropriate destination folder.
+         * Best case would be to choose a suitable folder using https://github.com/harawata/appdirs
+         * If the file doesn't exist yet, copy it from the resources using the Classloader.
+         * You then can fill the base data in there (in case the data depends on the target machines environment),
+         * or just prefill any kind of universal data.
+         */
+        dataSource.setUrl("jdbc:sqlite:"+ DB_FOLDER +"LegoBattlesMapGeneratorDB.db");
 
         // Get a connection from the data source
         this.conn = dataSource.getConnection();
+        // I'd set this to true tbh... for your usecase, there is no reason to not commit changes immediately.
         conn.setAutoCommit(false); // Optional: Set auto-commit behavior
     }
 
@@ -44,12 +67,16 @@ public class DBinteractions {
         conn.close();
     }
 
-    public void putTilesIntoDB(String folderFilepath) throws SQLException {
-        File folder = new File(folderFilepath);
-        File[] files = folder.listFiles();
+    public void putTilesIntoDB(String folderFilepath) throws SQLException, URISyntaxException, IOException {
 
-        for (File file : files) {
+        URI uri = getClass().getResource(folderFilepath).toURI();
+        Path myPath = Paths.get(uri);
+        Iterator<Path> iterator = Files.walk(myPath, 1).iterator();
+        while (iterator.hasNext()) {
+            Path path = iterator.next();
+            File file = path.toFile();
             if (file.isFile() && file.getName().toLowerCase().endsWith(".png")) {
+                System.out.println("Adding tile to DB: "+ path.getFileName());
                 String imageUrl = file.getAbsolutePath();
                 PreparedStatement stmt = conn.prepareStatement(
                         "INSERT INTO tile_content (filepath) VALUES (?) ON CONFLICT (filepath) DO NOTHING");

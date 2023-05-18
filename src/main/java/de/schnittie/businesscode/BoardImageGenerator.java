@@ -11,7 +11,15 @@ import java.io.IOException;
 public class BoardImageGenerator {
 
     private static final int TILE_SIZE = 16;
-    private static final String DEFAULT = "C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\src\\main\\DefaultImages\\default.png";
+    private static BufferedImage DEFAULT = null;
+    static {
+        // this way you won't need to read the image on every damn iteration in your for-loop below.
+        try {
+            DEFAULT = ImageIO.read(BoardImageGenerator.class.getClassLoader().getResourceAsStream("defaultImages/default.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private static DBinteractions dBinteractions = DBinteractions.getInstance();
 
     public static void generateBoardImage(Tile[][] board, String outputFilePath, int height, int width) {
@@ -21,18 +29,17 @@ public class BoardImageGenerator {
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = boardImage.createGraphics();
-        String tileImagePath = DEFAULT;
         for (int col = 0; col < height; col++) {
             for (int row = 0; row < width; row++) {
                 Tile tile = board[row][col];
-                if (tile.getContent() != -1) {
-                    tileImagePath = dBinteractions.getFilePath(tile.getContent());
-                } else {
-                    tileImagePath = DEFAULT;
-                }
+
                 BufferedImage tileImage = null;
                 try {
-                    tileImage = ImageIO.read(new File(tileImagePath));
+                    if (tile.getContent() != -1) {
+                        tileImage = ImageIO.read(new File(dBinteractions.getFilePath(tile.getContent())));
+                    } else {
+                        tileImage = DEFAULT;
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
