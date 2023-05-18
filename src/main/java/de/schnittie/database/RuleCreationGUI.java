@@ -1,4 +1,4 @@
-package database;
+package de.schnittie.database;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,6 +27,7 @@ public class RuleCreationGUI extends JFrame implements ActionListener {
 
     public RuleCreationGUI() {
         super("RuleCreationGUI");
+        // sure? i opened it from the main window - wanted to close it to get back there and the app just terminated
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 

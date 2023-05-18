@@ -1,4 +1,4 @@
-package businesscode;
+package de.schnittie.businesscode;
 
 public record Pair(int x, int y) {
     @Override

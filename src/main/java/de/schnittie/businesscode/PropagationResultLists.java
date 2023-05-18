@@ -1,4 +1,4 @@
-package businesscode;
+package de.schnittie.businesscode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
-package database;
+package de.schnittie.database;
 
-import businesscode.MapGenerationException;
-import businesscode.Pair;
+import de.schnittie.businesscode.MapGenerationException;
+import de.schnittie.businesscode.Pair;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 

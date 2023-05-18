@@ -1,4 +1,4 @@
-package database;
+package de.schnittie.database;
 
 import java.sql.SQLException;
 

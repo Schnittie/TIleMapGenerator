@@ -1,6 +1,6 @@
-package frontend;
+package de.schnittie.frontend;
 
-import businesscode.Board;
+import de.schnittie.businesscode.Board;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package businesscode;
+package de.schnittie.businesscode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

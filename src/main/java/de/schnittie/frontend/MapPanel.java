@@ -1,4 +1,4 @@
-package frontend;
+package de.schnittie.frontend;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

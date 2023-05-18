@@ -1,6 +1,6 @@
-package businesscode;
+package de.schnittie.businesscode;
 
-import database.DBinteractions;
+import de.schnittie.database.DBinteractions;
 
 import java.util.ArrayList;
 import java.util.HashMap;

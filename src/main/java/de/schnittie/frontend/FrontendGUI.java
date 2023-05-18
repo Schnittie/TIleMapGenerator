@@ -1,10 +1,10 @@
-package frontend;
+package de.schnittie.frontend;
 
-import businesscode.Board;
-import businesscode.BoardImageGenerator;
-import businesscode.MapGenerationException;
-import database.DBTileLoader;
-import database.RuleCreationGUI;
+import de.schnittie.businesscode.Board;
+import de.schnittie.businesscode.BoardImageGenerator;
+import de.schnittie.businesscode.MapGenerationException;
+import de.schnittie.database.DBTileLoader;
+import de.schnittie.database.RuleCreationGUI;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package businesscode;
+package de.schnittie.businesscode;
 
-import database.DBinteractions;
+import de.schnittie.database.DBinteractions;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
