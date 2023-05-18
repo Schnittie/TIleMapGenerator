@@ -22,8 +22,8 @@ public class BoardImageGenerator {
 
         Graphics2D g2d = boardImage.createGraphics();
         String tileImagePath = DEFAULT;
-        for (int col = 0; col < width; col++) {
-            for (int row = 0; row < height; row++) {
+        for (int col = 0; col < height; col++) {
+            for (int row = 0; row < width; row++) {
                 Tile tile = board[row][col];
                 if (tile.getContent() != -1) {
                     tileImagePath = dBinteractions.getFilePath(tile.getContent());

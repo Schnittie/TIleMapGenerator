@@ -4,10 +4,9 @@ public class Main {
 
     //TODO: pull Square Positions in GUI from DB
     //TODO: Nuke extra Directions
-    //TODO: Actually make Lowest Entropy Tiles return lowest Entropy Tiles
+    //TODO: Actually make Lowest Entropy Tiles return lowest Entropy Tiles (I'm not sure that works or should)
 
     //TODO: Frontend
-    //TODO: improve propagation list-list
 
     //TODO: new TIlemap (Lego Battles)
 
@@ -23,8 +22,8 @@ public class Main {
     //TODO: maybe rethink your whole rule structure ...
 
     public static void main(String[] args) {
-        int width = 10;
-        int height = 10;
+        int width = 250;
+        int height = 250;
         try {
             Board b = new Board(width, height);
             b.fill();

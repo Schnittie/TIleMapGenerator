@@ -159,7 +159,7 @@ public class DBinteractions {
         }
     }
 
-    public boolean canThisBeHere(int tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) throws MapGenerationException {
+    public List<Integer> canThisBeHere(List<Integer> tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) throws MapGenerationException {
         //list of Possibilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
         //tile in question is the tile this tile could be
         if (listOfPossibilities.isEmpty()) {
@@ -167,26 +167,27 @@ public class DBinteractions {
         }
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT can_it_be FROM rule " +
-                            "WHERE this_tile = ? " +
+                    "SELECT this_tile FROM rule " +
+                            "WHERE this_tile IN (" + getParameterPlaceholders(tileInQuestion.size()) + ") " +
                             "AND next_to = ? " +
+                            "AND can_it_be = 1 " +
                             "AND that_tile IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
 
-            statement.setInt(1, tileInQuestion);
-            statement.setInt(2, whereIamRelativeToCaller);
-            int i = 3;
+            int i = 1;
+            for (Integer tile : tileInQuestion) {
+                statement.setInt(i++, tile);
+            }
+            statement.setInt(i++, whereIamRelativeToCaller);
             for (Integer possibility : listOfPossibilities) {
                 statement.setInt(i++, possibility);
             }
             ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                if (resultSet.getInt("can_it_be") == 1) {
-                    return true;
-                }
+            List<Integer> returnList = new ArrayList<>();
+            while (resultSet.next())
+            {
+                returnList.add(resultSet.getInt("this_tile"));
             }
-            return false;
-
+            return returnList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

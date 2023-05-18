@@ -97,18 +97,10 @@ public class Board {
 
     private Pair getRandomTileWithLowEntropy() {
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
-        int lowestEntropy = numberOfPossibleTiles;
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 if (!board[x][y].isCollapsed()) {
-                    int possibleTileStatesLeft = board[x][y].getPossibleTileStatesLeft();
-                    if (possibleTileStatesLeft <= lowestEntropy) {
-                        if (possibleTileStatesLeft < lowestEntropy){
-                            lowestEntropy = possibleTileStatesLeft;
-                            lowestEntropyTiles = new ArrayList<>();
-                        }
-                        lowestEntropyTiles.add(new Pair(x, y));
-                    }
+                    lowestEntropyTiles.add(new Pair(x, y));
                 }
             }
         }

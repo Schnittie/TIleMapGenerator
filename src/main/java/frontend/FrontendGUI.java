@@ -79,7 +79,7 @@ public class FrontendGUI extends JFrame implements ActionListener {
         }
         if (e.getSource() == addTilesButton){
             try {
-                DBTileLoader.main(null);
+                DBTileLoader.loadTiles();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }

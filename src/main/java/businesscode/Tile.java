@@ -33,22 +33,36 @@ public class Tile {
         return response;
     }
 
-    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesNow) throws MapGenerationException {
+    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller) throws MapGenerationException {
         PropagationResponseEntity response = new PropagationResponseEntity(false, false, new ArrayList<>());
         if (isCollapsed) return response;
-        for (Integer possibleTile: getPossibleTileContentLeft()) {
-                if (!dBinteractions.canThisBeHere(possibleTile, whereIamRelativeToCaller, listOfPossibilitiesNow)) {
-                    response.setHasChangedPossibility(true);
-                    if (removePossibility(possibleTile)) {
-                        return new PropagationResponseEntity(true, false, null);
-                    }
-                } else {
-                    ArrayList<Integer> listOfPossibilities = response.getNewPossibilities();
-                    listOfPossibilities.add(possibleTile);
-                    response.setNewPossibilities(listOfPossibilities);
-                }
+        List<Integer> listOfPossibilitiesOfSelf = getPossibleTileContentLeft();
+        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = dBinteractions.canThisBeHere(listOfPossibilitiesOfSelf,
+                whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
+        listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
+        if (!listOfPossibilitiesOfSelf.isEmpty()) {
+            for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
+                removePossibility(discardedPossibility);
+            }
+            if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1) {
+                return new PropagationResponseEntity(true, false, null);
+            }
+            response.setHasChangedPossibility(true);
+            response.setNewPossibilities((ArrayList<Integer>) listOfPossibilitiesOfSelfAfterPropagation);
         }
         return response;
+//        for (Integer possibleTile: getPossibleTileContentLeft()) {
+//                if (!dBinteractions.canThisBeHere(possibleTile, whereIamRelativeToCaller, listOfPossibilitiesOfCaller)) {
+//                    response.setHasChangedPossibility(true);
+//                    if (removePossibility(possibleTile)) {
+//                        return new PropagationResponseEntity(true, false, null);
+//                    }
+//                } else {
+//                    ArrayList<Integer> listOfPossibilities = response.getNewPossibilities();
+//                    listOfPossibilities.add(possibleTile);
+//                    response.setNewPossibilities(listOfPossibilities);
+//                }
+//        }
     }
 
     private boolean removePossibility(int toRemove) {
@@ -70,7 +84,7 @@ public class Tile {
     }
 
     private int getRandomState(List<Integer> possibleStates) throws MapGenerationException {
-        if(possibleStates.isEmpty()){
+        if (possibleStates.isEmpty()) {
             throw new RuntimeException("No Possible State");
         }
 
