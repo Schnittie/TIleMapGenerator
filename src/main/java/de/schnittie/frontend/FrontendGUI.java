@@ -17,7 +17,8 @@ import java.sql.SQLException;
 public class FrontendGUI extends JFrame implements ActionListener {
 
     public static final String FILES_FOLDER = "C:\\Users\\laure\\Documents\\Dev\\LegoBattlesMapGenerator\\";
-    // maybe consider something like this instead: String path = FrontendGUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    // maybe consider something like this instead:
+// String path = FrontendGUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 //    public static final String FILES_FOLDER = "/home/artur/git/LegoBattlesMapGenerator/";
 
     private final JButton generateButton;
@@ -31,6 +32,7 @@ public class FrontendGUI extends JFrame implements ActionListener {
 
     public FrontendGUI() {
         super("FrontendGUI");
+        // reconsider, since the DB-Connection is never closed this way
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 
@@ -61,6 +63,8 @@ public class FrontendGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+        // consider setting a different L&F
+        // https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#themes
         FrontendGUI gui = new FrontendGUI();
     }
 

@@ -60,7 +60,7 @@ public class DBinteractions {
         // Get a connection from the data source
         this.conn = dataSource.getConnection();
         // I'd set this to true tbh... for your usecase, there is no reason to not commit changes immediately.
-        conn.setAutoCommit(false); // Optional: Set auto-commit behavior
+        conn.setAutoCommit(true); // Optional: Set auto-commit behavior
     }
 
     public void close() throws SQLException {
@@ -192,8 +192,10 @@ public class DBinteractions {
         if (listOfPossibilities.isEmpty()) {
             throw new MapGenerationException();
         }
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
-            PreparedStatement statement = conn.prepareStatement(
+            statement = conn.prepareStatement(
                     "SELECT this_tile FROM rule " +
                             "WHERE this_tile IN (" + getParameterPlaceholders(tileInQuestion.size()) + ") " +
                             "AND next_to = ? " +
@@ -208,7 +210,7 @@ public class DBinteractions {
             for (Integer possibility : listOfPossibilities) {
                 statement.setInt(i++, possibility);
             }
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             List<Integer> returnList = new ArrayList<>();
             while (resultSet.next())
             {
@@ -217,6 +219,20 @@ public class DBinteractions {
             return returnList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    private static void close(AutoCloseable closable) {
+        try {
+            if (closable != null) {
+                closable.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // do nothing
         }
     }
 

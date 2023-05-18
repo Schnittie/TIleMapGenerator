@@ -94,6 +94,7 @@ public class Tile {
             totalProbability += probability;
         }
 
+        // why always re-initialize?
         Random random = new Random();
         if (totalProbability <= 0) {
             return possibleStates.get(random.nextInt(possibleStates.size()));
