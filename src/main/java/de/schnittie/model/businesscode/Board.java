@@ -15,6 +15,7 @@ public class Board {
     private final DBinteractions dBinteractions = DBinteractions.getInstance();
     private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
     private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
+    private final Random random = new Random();
 
     public Board(int width, int height) throws MapGenerationException {
         WIDTH = width;
@@ -23,7 +24,7 @@ public class Board {
         int[] possibleTileIDs = dBinteractions.getPossibleTileIDs(numberOfPossibleTiles);
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs);
+                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs, random);
             }
 
         }
@@ -107,7 +108,6 @@ public class Board {
         if (lowestEntropyTiles.isEmpty()) {
             return new Pair(-10, -10);
         }
-        Random random = new Random();
         return lowestEntropyTiles.get(random.nextInt(lowestEntropyTiles.size()));
     }
 

@@ -13,10 +13,12 @@ public class Tile {
     private boolean isCollapsed = false;
     private int content = -1;
     private DBinteractions dBinteractions = DBinteractions.getInstance();
+    private final Random random;
 
-    public Tile(int possibleTileStatesLeft, int[] possibleTileIDs) {
+    public Tile(int possibleTileStatesLeft, int[] possibleTileIDs, Random random) {
         this.possibleTileStatesLeft = possibleTileStatesLeft;
         canIbe = new HashMap<>(possibleTileStatesLeft);
+        this.random = random;
         for (int possibleTileID : possibleTileIDs) {
             canIbe.put(possibleTileID, true);
         }
@@ -93,8 +95,6 @@ public class Tile {
             totalProbability += probability;
         }
 
-        // why always re-initialize?
-        Random random = new Random();
         if (totalProbability <= 0) {
             return possibleStates.get(random.nextInt(possibleStates.size()));
         }
