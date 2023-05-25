@@ -1,0 +1,14 @@
+//TODO: MVC architecture
+    //TODO: rethink the progressbar
+
+    //TODO: Actually make Lowest Entropy Tiles return lowest Entropy Tiles (I'm not sure that works or should)
+
+    //TODO: Frontend
+    //TODO: Thread stuff for progressbar in Frontend und das die Buttons nicht blockieren
+    //TODO: Ultra super fancy progress
+    //TODO: User changing Probability
+
+    //TODO: To propagate as board wide stack? (this isn't as big a deal as it might seem) (think about this after threads)
+    //TODO: maybe actually think about thread stuff (0,5x amount tiles seperation should cover everything)
+
+    //TODO: Hexagons!!

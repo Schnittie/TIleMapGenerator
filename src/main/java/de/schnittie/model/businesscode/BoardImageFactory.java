@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class BoardImageFactory {
 
-    private static final int TILE_SIZE = 27;
+    private static final int TILE_SIZE = 15;
     private static BufferedImage DEFAULT = null;
     static {
         // this way you won't need to read the image on every darn iteration in your for-loop below.
@@ -22,7 +22,7 @@ public class BoardImageFactory {
     }
     private static DBinteractions dBinteractions = DBinteractions.getInstance();
 
-    public static void generateBoardImage(Tile[][] board, String outputFilePath, int height, int width) {
+    public static BufferedImage generateBoardImage(Tile[][] board, String outputFilePath, int height, int width) {
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
 
@@ -54,6 +54,7 @@ public class BoardImageFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return boardImage;
     }
 }
 

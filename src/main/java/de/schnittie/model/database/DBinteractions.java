@@ -92,7 +92,7 @@ public class DBinteractions {
         ResultSet resultSet = null;
         try {
             statement = conn.prepareStatement(
-                    "SELECT this_tile FROM rule " +
+                    "SELECT DISTINCT this_tile FROM rule " +
                             "WHERE this_tile IN (" + getParameterPlaceholders(tileInQuestion.size()) + ") " +
                             "AND next_to = ? " +
                             "AND that_tile IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
@@ -280,7 +280,7 @@ public class DBinteractions {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
-                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?)");
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?) ON CONFLICT DO NOTHING");
             statement.setInt(1, this_tile);
             statement.setInt(2, that_tile);
             statement.setInt(3, direction);

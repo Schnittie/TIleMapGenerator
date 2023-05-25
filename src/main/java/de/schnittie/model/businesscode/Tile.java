@@ -34,38 +34,33 @@ public class Tile {
         return response;
     }
 
-    public PropagationResponseEntity propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller) throws MapGenerationException {
+    public ArrayList<Integer> propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller) throws MapGenerationException {
         ArrayList<Integer> responseList = new ArrayList<>();
-        PropagationResponseEntity response = new PropagationResponseEntity(false, false, responseList);
-        if (isCollapsed) return response;
-        if (possibleTileStatesLeft == 1) {
-            collapse(getPossibleTileContentLeft().get(0));
-            responseList.add(getContent());
-            return new PropagationResponseEntity(false, true, responseList);
+        if (isCollapsed) {
+            return null;
         }
         List<Integer> listOfPossibilitiesOfSelf = getPossibleTileContentLeft();
         List<Integer> listOfPossibilitiesOfSelfAfterPropagation = dBinteractions.canThisBeHere(listOfPossibilitiesOfSelf,
                 whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
         listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
-        if (!listOfPossibilitiesOfSelf.isEmpty()) {
-            for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
-                removePossibility(discardedPossibility);
-            }
-            if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1) {
-                collapse(getPossibleTileContentLeft().get(0));
-                responseList.add(getContent());
-                return new PropagationResponseEntity(false, true, responseList);
-            }
-            response.setHasChangedPossibility(true);
-            response.setNewPossibilities((ArrayList<Integer>) listOfPossibilitiesOfSelfAfterPropagation);
+        if (listOfPossibilitiesOfSelf.isEmpty()) {
+            return null;
         }
-        return response;
+        for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
+            removePossibility(discardedPossibility);
+        }
+        if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1) {
+            collapse(getPossibleTileContentLeft().get(0));
+            responseList.add(getContent());
+            return responseList;
+        }
+        return (ArrayList<Integer>) listOfPossibilitiesOfSelfAfterPropagation;
+
     }
 
-    private boolean removePossibility(int toRemove) {
+    private void removePossibility(int toRemove) {
         canIbe.replace(toRemove, false);
         possibleTileStatesLeft--;
-        return possibleTileStatesLeft == 1;
     }
 
     public void collapse(int i) {

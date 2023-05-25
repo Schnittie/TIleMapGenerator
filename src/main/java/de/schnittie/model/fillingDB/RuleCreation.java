@@ -14,10 +14,12 @@ public class RuleCreation {
     private static HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
     private static ArrayList<Socket> socketSet = new ArrayList<>();
     private static ArrayList<Integer> colourSet = new ArrayList<>();
-    private static final HashMap<Integer, Integer> directionChanges = dBinteractions.getReverseDirection();
-    private static final int TOLERANCE = 100;
+    private static HashMap<Integer, Integer> directionChanges;
+    private static final int TOLERANCE = 50;
 
     public static void generateRules() {
+        DirectionCreation.putDirectionsIntoDB();
+        directionChanges = dBinteractions.getReverseDirection();
         for (Integer tileId : dBinteractions.getPossibleTileIDs(dBinteractions.getNumberOfTiles())) {
             try {
                 BufferedImage tileImage = ImageIO.read(new File(dBinteractions.getFilePath(tileId)));
@@ -42,10 +44,10 @@ public class RuleCreation {
 
     private static void putTileIntoLists(BufferedImage tileImage, Integer tileId) {
         ArrayList<Integer> sockets = new ArrayList<>(4);
-        sockets.add(getSocketId(tileImage, 4, 0, 13, 0, 22, 0));
-        sockets.add(getSocketId(tileImage, 26, 4, 26, 13, 26, 22));
-        sockets.add(getSocketId(tileImage, 4, 26, 13, 26, 22, 26));
-        sockets.add(getSocketId(tileImage, 0, 4, 0, 13, 0, 22));
+        sockets.add(getSocketId(tileImage, 2, 0, 7, 0, 12, 0));
+        sockets.add(getSocketId(tileImage, 14, 2, 14, 7, 14, 12));
+        sockets.add(getSocketId(tileImage, 2, 14, 7, 14, 12, 14));
+        sockets.add(getSocketId(tileImage, 0, 2, 0, 7, 0, 12));
         tileSocketList.put(tileId, sockets);
     }
 
