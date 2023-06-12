@@ -17,8 +17,7 @@ import java.util.List;
 public class DBinteractions {
 
 
-    private static final String DB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate()
-            + File.separator;
+    private static final String DB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator;
 
     private static final String TILEFOLDER = DB_FOLDER + File.separator + "TileImages" + File.separator;
 
@@ -48,15 +47,14 @@ public class DBinteractions {
 
 
     private DBinteractions() throws SQLException {
-        SQLiteConfig config = new SQLiteConfig();
-        config.enforceForeignKeys(true); // Optional: Enable foreign key constraints
-        SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "LegoBattlesMapGeneratorDB.db");
 
-        // Get a connection from the data source
+        SQLiteConfig config = new SQLiteConfig();
+        config.enforceForeignKeys(true);
+        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "TileMapGeneratorDB.db");
+
         this.conn = dataSource.getConnection();
-        // I'd set this to true tbh... for your usecase, there is no reason to not commit changes immediately.
-        conn.setAutoCommit(true); // Optional: Set auto-commit behavior
+        conn.setAutoCommit(true);
     }
 
     public void close() throws SQLException {
@@ -83,8 +81,8 @@ public class DBinteractions {
     }
 
     public List<Integer> canThisBeHere(List<Integer> tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) throws MapGenerationException {
-        //list of Possibilities Now is the List of the possibilities the Tile from where the propagation is coming from can be
-        //tile in question is the tile this tile could be
+        //listOfPossibilities is the List of the possibilities the Tile from where the propagation is coming from can be
+        //tileInQuestion is the tile this tile could be
         if (listOfPossibilities.isEmpty()) {
             throw new MapGenerationException();
         }
@@ -92,6 +90,7 @@ public class DBinteractions {
         ResultSet resultSet = null;
         try {
             statement = conn.prepareStatement(
+
                     "SELECT DISTINCT this_tile FROM rule " +
                             "WHERE this_tile IN (" + getParameterPlaceholders(tileInQuestion.size()) + ") " +
                             "AND next_to = ? " +
@@ -101,18 +100,22 @@ public class DBinteractions {
             for (Integer tile : tileInQuestion) {
                 statement.setInt(i++, tile);
             }
+
             statement.setInt(i++, whereIamRelativeToCaller);
             for (Integer possibility : listOfPossibilities) {
                 statement.setInt(i++, possibility);
             }
             resultSet = statement.executeQuery();
+
             List<Integer> returnList = new ArrayList<>();
             while (resultSet.next()) {
                 returnList.add(resultSet.getInt("this_tile"));
             }
-            if (returnList.isEmpty()){
+
+            if (returnList.isEmpty()) {
                 throw new MapGenerationException();
             }
+
             return returnList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -134,12 +137,16 @@ public class DBinteractions {
     }
 
     public HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
+        //Mappes Tiles to their probability
+
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             HashMap<Integer, Integer> resultMap = new HashMap<>();
             statement = conn.prepareStatement(
-                    "SELECT id, probability FROM tile WHERE id IN (" + getParameterPlaceholders(possibleStates.size()) + ")");
+
+                    "SELECT id, probability FROM tile WHERE id IN ("
+                            + getParameterPlaceholders(possibleStates.size()) + ")");
 
             for (int i = 0; i < possibleStates.size(); i++) {
                 statement.setInt(i + 1, possibleStates.get(i));
@@ -162,23 +169,17 @@ public class DBinteractions {
         }
     }
 
-    private String getParameterPlaceholders(int count) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            sb.append("?");
-            if (i < count - 1) {
-                sb.append(",");
-            }
-        }
-        return sb.toString();
-    }
-    public HashMap<Integer, Integer> getReverseDirection(){
+    public HashMap<Integer, Integer> getReverseDirection() {
+        //Mapps Directions with their reverse
+
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             HashMap<Integer, Integer> resultMap = new HashMap<>();
             statement = conn.prepareStatement(
+
                     "SELECT id, reverse_id FROM direction");
+
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -197,12 +198,16 @@ public class DBinteractions {
     }
 
     public HashMap<Integer, Pair> getDirectionChanges() {
+        //Mapps a direction to what the direction means in terms of Coordinates
+
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             HashMap<Integer, Pair> resultMap = new HashMap<>();
             statement = conn.prepareStatement(
-                    "SELECT id, x_change, y_change FROM direction");
+
+                    "SELECT id, x_change, y_change FROM direction"
+            );
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -222,6 +227,8 @@ public class DBinteractions {
     }
 
     public int[] getPossibleTileIDs(int possibleTileSize) {
+        //Returns an Array of all possible Tiles
+
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -243,30 +250,11 @@ public class DBinteractions {
         }
     }
 
-    public String getFilePath(int content) {
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = conn.prepareStatement("SELECT filepath FROM tile WHERE id = ?");
-            statement.setInt(1, content);
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return TILEFOLDER + File.separator + (resultSet.getString("filepath"));
-            }
-            throw new SQLException();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(statement);
-            close(resultSet);
-        }
-    }
-
     public void putTileIntoDB(String imageUrl) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
+
                     "INSERT INTO tile (filepath) VALUES (?) ON CONFLICT (filepath) DO NOTHING");
             statement.setString(1, imageUrl);
             statement.executeUpdate();
@@ -276,6 +264,7 @@ public class DBinteractions {
             close(statement);
         }
     }
+
     public void putRuleIntoDB(int this_tile, int that_tile, int direction) {
         PreparedStatement statement = null;
         try {
@@ -308,5 +297,41 @@ public class DBinteractions {
         } finally {
             close(statement);
         }
+    }
+
+    public HashMap<Integer, String> getFilePathMap() {
+        //Mapps TileIDs to their filepaths
+
+        HashMap<Integer, String> returnMap = new HashMap<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement("SELECT id,filepath FROM tile");
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                returnMap.put(resultSet.getInt(1),
+                        (TILEFOLDER + File.separator + (resultSet.getString("filepath"))));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+        return returnMap;
+    }
+
+    private String getParameterPlaceholders(int count) {
+        // helper method to make SQL statements
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append("?");
+            if (i < count - 1) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 }

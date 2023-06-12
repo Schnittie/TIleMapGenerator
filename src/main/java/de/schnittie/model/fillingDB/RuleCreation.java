@@ -10,19 +10,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RuleCreation {
-    private static DBinteractions dBinteractions = DBinteractions.getInstance();
+    private static final DBinteractions dBinteractions = DBinteractions.getInstance();
     private static HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
     private static ArrayList<Socket> socketSet = new ArrayList<>();
     private static ArrayList<Integer> colourSet = new ArrayList<>();
-    private static HashMap<Integer, Integer> directionChanges;
     private static final int TOLERANCE = 50;
 
     public static void generateRules() {
+        //Each side of a Tile has a Socket
+        //the Sockets are based on Pixel colours
+        //if the Socket of a Tile matches with the Socket of another Tile on the reverse Side it fits
+        //a socket matches with another if it is the same (comparison by id)
+
         DirectionCreation.putDirectionsIntoDB();
-        directionChanges = dBinteractions.getReverseDirection();
+        HashMap<Integer, Integer> directionChanges = dBinteractions.getReverseDirection();
+        HashMap<Integer, String> tilePathMap = dBinteractions.getFilePathMap();
+
         for (Integer tileId : dBinteractions.getPossibleTileIDs(dBinteractions.getNumberOfTiles())) {
             try {
-                BufferedImage tileImage = ImageIO.read(new File(dBinteractions.getFilePath(tileId)));
+                BufferedImage tileImage = ImageIO.read(new File(tilePathMap.get(tileId)));
                 putTileIntoLists(tileImage, tileId);
             } catch (IOException e) {
                 System.out.println("error reading file for " + tileId);
@@ -43,6 +49,7 @@ public class RuleCreation {
     }
 
     private static void putTileIntoLists(BufferedImage tileImage, Integer tileId) {
+        //We save compare Sockets by ID
         ArrayList<Integer> sockets = new ArrayList<>(4);
         sockets.add(getSocketId(tileImage, 2, 0, 7, 0, 12, 0));
         sockets.add(getSocketId(tileImage, 14, 2, 14, 7, 14, 12));
@@ -52,6 +59,7 @@ public class RuleCreation {
     }
 
     private static int getSocketId(BufferedImage tileImage, int x1, int y1, int x2, int y2, int x3, int y3) {
+        //if there is no Socket, with the colours, a new one is created
         int[] colours = new int[3];
         colours[0] = getColourId(tileImage, x1, y1);
         colours[1] = getColourId(tileImage, x2, y2);
@@ -66,6 +74,7 @@ public class RuleCreation {
 
 
     private static int getColourId(BufferedImage tileImage, int x, int y) {
+        //like Sockets, we compare colours by ID not by the values
         int colour = tileImage.getRGB(x, y);
         int colourId = colourIsInSet(colour);
         if (colourId == -1) {
@@ -76,6 +85,7 @@ public class RuleCreation {
     }
 
     private static int colourIsInSet(int colour) {
+        //because colours are weird we grant a Tolerance of how much a Colour can be different before it's a new colour
         for (int colourFromSet : colourSet) {
             int redDiff = Math.abs((colour >> 16) & 0xFF - (colourFromSet >> 16) & 0xFF);
             int greenDiff = Math.abs((colour >> 8) & 0xFF - (colourFromSet >> 8) & 0xFF);

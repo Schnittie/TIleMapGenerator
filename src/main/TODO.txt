@@ -7,8 +7,12 @@
     //TODO: Thread stuff for progressbar in Frontend und das die Buttons nicht blockieren
     //TODO: Ultra super fancy progress
     //TODO: User changing Probability
+    //TODO: User changing Rules
 
     //TODO: To propagate as board wide stack? (this isn't as big a deal as it might seem) (think about this after threads)
-    //TODO: maybe actually think about thread stuff (0,5x amount tiles seperation should cover everything)
+    //TODO: maybe actually think about thread stuff (0,5x amount tiles seperation should cover everything) <- doesn't make sense, more thought needed
 
     //TODO: Hexagons!!
+
+    //TODO: Can I do propagation as Multithreading
+    //TODO: Installation DBinteractions as Bulk operations

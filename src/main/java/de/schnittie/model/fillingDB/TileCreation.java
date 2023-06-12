@@ -16,6 +16,7 @@ public class TileCreation {
     private static final String TILEFOLDER = DBinteractions.getTILEFOLDER();
 
     public static void addTiles(HashMap<File, Integer> tilemapMap) {
+        //receives a Map that mapps a file to how often it should rotate
         for (File tilemap : tilemapMap.keySet()) {
             try {
                 TileCreation.splitImage(tilemap, tilemapMap.get(tilemap));
@@ -41,9 +42,8 @@ public class TileCreation {
     }
 
     private static void splitImage(File inputFile, int shouldRotate) throws IOException {
-        if (shouldRotate < 0 || shouldRotate > 3) {
-            shouldRotate = 0;
-        }
+        //splits a Tilemap into the individual images and rotates it the specified amount, then saves it
+        shouldRotate = shouldRotate < 0 || shouldRotate > 3 ? 0 : shouldRotate;
         BufferedImage inputImage = ImageIO.read(inputFile);
 
         int numCols = inputImage.getWidth() / TILE_SIZE;
@@ -56,7 +56,7 @@ public class TileCreation {
 
                 BufferedImage outputImage = inputImage.getSubimage(x, y, TILE_SIZE, TILE_SIZE);
 
-                // Check if all pixels in the subimage are transparent
+
                 if (isSubimageTransparent(outputImage)) {
                     continue;  // Skip empty (transparent) subimages
                 }
@@ -69,7 +69,8 @@ public class TileCreation {
 
 
                     for (int rotation = 1; rotation <= shouldRotate; rotation++) {
-                        outputImage = rotateImage(outputImage);  // Rotate the image by 90 degrees
+                        // Rotate the image by 90 degrees for
+                        outputImage = rotateImage(outputImage);
                         outputFilePath = baseOutputFilePath + rotation + ".png";
                         ImageIO.write(outputImage, "png", new File(outputFilePath));
                     }
@@ -87,6 +88,7 @@ public class TileCreation {
     }
 
     private static boolean isSubimageTransparent(BufferedImage image) {
+        // Check if all pixels in the subimage are transparent
         int width = image.getWidth();
         int height = image.getHeight();
 

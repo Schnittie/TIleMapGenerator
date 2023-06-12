@@ -26,7 +26,7 @@ public class Model {
         } catch (MapGenerationException e) {
             notifyListeners(new GenerationErrorEvent("An Error occurred"));
         }
-        lastMap = BoardImageFactory.generateBoardImage(board.getBoard(), "generatedMapRender.png", height, width);
+        lastMap = BoardImageFactory.generateBoardImage(board.getBoard(), "generatedMapRender.png");
         notifyListeners(new NewMapEvent(lastMap));
         return lastMap;
     }
