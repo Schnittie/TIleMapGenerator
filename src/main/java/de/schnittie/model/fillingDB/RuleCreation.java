@@ -26,7 +26,7 @@ public class RuleCreation {
         HashMap<Integer, Integer> directionChanges = dBinteractions.getReverseDirection();
         HashMap<Integer, String> tilePathMap = dBinteractions.getFilePathMap();
 
-        for (Integer tileId : dBinteractions.getPossibleTileIDs(dBinteractions.getNumberOfTiles())) {
+        for (Integer tileId : dBinteractions.getPossibleTileIDs()) {
             try {
                 BufferedImage tileImage = ImageIO.read(new File(tilePathMap.get(tileId)));
                 putTileIntoLists(tileImage, tileId);

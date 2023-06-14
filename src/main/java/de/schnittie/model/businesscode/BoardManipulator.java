@@ -1,5 +1,7 @@
 package de.schnittie.model.businesscode;
 
+import de.schnittie.model.businesscode.Tile.Tile;
+import de.schnittie.model.businesscode.Tile.TileSingeltonService;
 import de.schnittie.model.database.DBinteractions;
 
 import java.util.ArrayList;
@@ -12,17 +14,19 @@ public class BoardManipulator {
     private final DBinteractions dBinteractions = DBinteractions.getInstance();
     private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
     private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
-    private final int[] possibleTileIDs = dBinteractions.getPossibleTileIDs(numberOfPossibleTiles);
+    private final ArrayList possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private final Random random = new Random();
+    private final TileSingeltonService tileSingeltonService = new TileSingeltonService();
 
     public BoardManipulator(int width, int height) throws MapGenerationException {
-        board = new Board(width, height, numberOfPossibleTiles, possibleTileIDs, random);
+        board = new Board(width, height, numberOfPossibleTiles, possibleTileIDs, tileSingeltonService);
     }
 
     public void fill() throws MapGenerationException {
         while (true) {
             Pair randomTileWithLowEntropy = getRandomTileWithLowEntropy();
             if (randomTileWithLowEntropy.x() == -10) {
+                //this means all Tiles are collapsed
                 return;
             }
             collapseATile(randomTileWithLowEntropy.x(), randomTileWithLowEntropy.y());
@@ -77,7 +81,7 @@ public class BoardManipulator {
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < board.getWIDTH(); x++) {
             for (int y = 0; y < board.getHEIGHT(); y++) {
-                if (!board.getTile(x,y).isCollapsed()) {
+                if (!board.getTile(x, y).isCollapsed()) {
                     lowestEntropyTiles.add(new Pair(x, y));
                 }
             }
@@ -98,7 +102,7 @@ public class BoardManipulator {
 
         for (int x = damageAreaBorderMinX + 1; x < damageAreaBorderMaxX - 1; x++) {
             for (int y = damageAreaBorderMinY + 1; y < damageAreaBorderMaxY - 1; y++) {
-                board.setTile(x,y,new Tile(numberOfPossibleTiles, possibleTileIDs, random));
+                board.setTile(x, y, new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingeltonService));
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
@@ -114,7 +118,8 @@ public class BoardManipulator {
     public Board getBoard() {
         return board;
     }
-    public BoardTO getBoardTO(){
+
+    public BoardTO getBoardTO() {
         return board.getBoardTO().setFilePathMap(dBinteractions.getFilePathMap());
     }
 

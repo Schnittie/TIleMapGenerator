@@ -226,21 +226,21 @@ public class DBinteractions {
         }
     }
 
-    public int[] getPossibleTileIDs(int possibleTileSize) {
+    public ArrayList<Integer> getPossibleTileIDs() {
         //Returns an Array of all possible Tiles
 
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            int[] resultArray = new int[possibleTileSize];
+            ArrayList<Integer> resultList = new ArrayList<>();
             statement = conn.prepareStatement(
                     "SELECT id FROM tile");
             resultSet = statement.executeQuery();
             int i = 0;
             while (resultSet.next()) {
-                resultArray[i++] = resultSet.getInt("id");
+                resultList.add(resultSet.getInt("id"));
             }
-            return resultArray;
+            return resultList;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

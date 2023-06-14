@@ -16,3 +16,6 @@
 
     //TODO: Can I do propagation as Multithreading
     //TODO: Installation DBinteractions as Bulk operations
+    //TODO: ProbabilityMap as a Global variable in Tile (Bad idea, every tile would have more data)
+    //TODO: Tile Singelton Service (including ProbabilityMap)
+    //TODO: Tile splitting in Data and logic like board (contains the Singelton service)

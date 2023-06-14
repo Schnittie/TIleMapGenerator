@@ -1,18 +1,22 @@
 package de.schnittie.model.businesscode;
 
-import java.util.Random;
+import de.schnittie.model.businesscode.Tile.Tile;
+import de.schnittie.model.businesscode.Tile.TileSingeltonService;
+
+import java.util.ArrayList;
 
 public class Board {
     private Tile[][] board;
     private final int WIDTH; //x
     private final int HEIGHT;//y
-    public Board(int width, int height, int numberOfPossibleTiles, int[] possibleTileIDs, Random random){
+    public Board(int width, int height, int numberOfPossibleTiles, ArrayList possibleTileIDs, TileSingeltonService tileSingeltonService){
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
+
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs, random);
+                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingeltonService);
             }
 
         }
