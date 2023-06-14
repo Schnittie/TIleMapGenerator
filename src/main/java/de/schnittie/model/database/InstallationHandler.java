@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 public class InstallationHandler {
     private final static AppDirs appDirs = AppDirsFactory.getInstance();
@@ -34,11 +35,11 @@ public class InstallationHandler {
             //copying over Resources
             ClassLoader classLoader = InstallationHandler.class.getClassLoader();
 
-            URI absoluteSourcePath = classLoader.getResource("default.png").toURI();
+            URI absoluteSourcePath = Objects.requireNonNull(classLoader.getResource("default.png")).toURI();
             Files.copy(Path.of(absoluteSourcePath), Path.of(
                     pathString + File.separator + "default.png"), StandardCopyOption.REPLACE_EXISTING);
 
-            absoluteSourcePath = classLoader.getResource("TileMapGeneratorDB.db").toURI();
+            absoluteSourcePath = Objects.requireNonNull(classLoader.getResource("TileMapGeneratorDB.db")).toURI();
             Files.copy(Path.of(absoluteSourcePath), Path.of(
                     pathString + File.separator + "TileMapGeneratorDB.db"), StandardCopyOption.REPLACE_EXISTING);
 

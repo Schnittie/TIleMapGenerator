@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TileRandomCollapsingService {
-    private Random random = new Random();
+    private final Random random = new Random();
     private final DBinteractions dBinteractions = DBinteractions.getInstance();
     public int getRandomState(List<Integer> possibleStates)
             throws MapGenerationException {

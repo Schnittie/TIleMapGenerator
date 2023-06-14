@@ -28,6 +28,9 @@ public class TileCreation {
         File folder = new File(TILEFOLDER);
         File[] files = folder.listFiles();
 
+        if (files == null){
+            throw new RuntimeException("files not found");
+        }
         putTilesInDB(files);
         RuleCreation.generateRules();
     }
@@ -58,7 +61,7 @@ public class TileCreation {
 
 
                 if (isSubimageTransparent(outputImage)) {
-                    continue;  // Skip empty (transparent) subimages
+                    continue;  // Skip empty (transparent) sub-images
                 }
                 String rotateFileName = "rotated_" + shouldRotate +"_times";
                 String baseOutputFilePath = TILEFOLDER + rotateFileName + "_" + row + "_" + col + "_";

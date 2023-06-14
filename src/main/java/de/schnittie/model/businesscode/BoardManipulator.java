@@ -1,7 +1,7 @@
 package de.schnittie.model.businesscode;
 
 import de.schnittie.model.businesscode.Tile.Tile;
-import de.schnittie.model.businesscode.Tile.TileSingeltonService;
+import de.schnittie.model.businesscode.Tile.TileSingletonService;
 import de.schnittie.model.database.DBinteractions;
 
 import java.util.ArrayList;
@@ -14,12 +14,12 @@ public class BoardManipulator {
     private final DBinteractions dBinteractions = DBinteractions.getInstance();
     private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
     private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
-    private final ArrayList possibleTileIDs = dBinteractions.getPossibleTileIDs();
+    private final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private final Random random = new Random();
-    private final TileSingeltonService tileSingeltonService = new TileSingeltonService();
+    private final TileSingletonService tileSingletonService = TileSingletonService.getInstance();
 
     public BoardManipulator(int width, int height) throws MapGenerationException {
-        board = new Board(width, height, numberOfPossibleTiles, possibleTileIDs, tileSingeltonService);
+        board = new Board(width, height, numberOfPossibleTiles, possibleTileIDs, tileSingletonService);
     }
 
     public void fill() throws MapGenerationException {
@@ -58,7 +58,7 @@ public class BoardManipulator {
         }
     }
 
-    private void propagate(int x, int y, List<Integer> newTileContent) throws MapGenerationException {
+    private void propagate(int x, int y, List<Integer> newTileContent) {
         HashMap<Pair, ArrayList<Integer>> propagationResultLists = new HashMap<>();
         for (int directionID : directionChangeMap.keySet()) {
             Pair directionChange = directionChangeMap.get(directionID);
@@ -73,7 +73,7 @@ public class BoardManipulator {
         }
     }
 
-    private void propagate(int x, int y) throws MapGenerationException {
+    private void propagate(int x, int y) {
         propagate(x, y, board.getTile(x, y).getPossibleTileContentLeft());
     }
 
@@ -102,7 +102,7 @@ public class BoardManipulator {
 
         for (int x = damageAreaBorderMinX + 1; x < damageAreaBorderMaxX - 1; x++) {
             for (int y = damageAreaBorderMinY + 1; y < damageAreaBorderMaxY - 1; y++) {
-                board.setTile(x, y, new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingeltonService));
+                board.setTile(x, y, new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingletonService));
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
@@ -113,10 +113,6 @@ public class BoardManipulator {
             propagate(damageAreaBorderMinX, y);
             propagate(damageAreaBorderMaxX - 1, y);
         }
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public BoardTO getBoardTO() {

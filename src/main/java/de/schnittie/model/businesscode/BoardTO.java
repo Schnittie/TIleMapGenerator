@@ -3,10 +3,10 @@ package de.schnittie.model.businesscode;
 import java.util.HashMap;
 
 public class BoardTO {
-    private int[][] boardOfIDs;
+    private final int[][] boardOfIDs;
 
-    private int WIDTH; //x
-    private int HEIGHT;//y
+    private final int WIDTH; //x
+    private final int HEIGHT;//y
     private HashMap<Integer, String> filePathMap;
     public BoardTO(int[][] boardOfIDs, int WIDTH, int HEIGHT, HashMap<Integer, String> filePathMap) {
         this.boardOfIDs = boardOfIDs;

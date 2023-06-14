@@ -11,9 +11,9 @@ import java.util.HashMap;
 
 public class RuleCreation {
     private static final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private static HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
-    private static ArrayList<Socket> socketSet = new ArrayList<>();
-    private static ArrayList<Integer> colourSet = new ArrayList<>();
+    private static final HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
+    private static final ArrayList<Socket> socketSet = new ArrayList<>();
+    private static final ArrayList<Integer> colourSet = new ArrayList<>();
     private static final int TOLERANCE = 50;
 
     public static void generateRules() {

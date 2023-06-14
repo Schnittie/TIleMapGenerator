@@ -29,7 +29,7 @@ public class DBinteractions {
         return DB_FOLDER;
     }
 
-    private Connection conn;
+    private final Connection conn;
 
     private static final DBinteractions dBInteractions;
 
@@ -55,10 +55,6 @@ public class DBinteractions {
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
-    }
-
-    public void close() throws SQLException {
-        conn.close();
     }
 
     public int getNumberOfTiles() {
@@ -236,7 +232,6 @@ public class DBinteractions {
             statement = conn.prepareStatement(
                     "SELECT id FROM tile");
             resultSet = statement.executeQuery();
-            int i = 0;
             while (resultSet.next()) {
                 resultList.add(resultSet.getInt("id"));
             }
@@ -300,7 +295,7 @@ public class DBinteractions {
     }
 
     public HashMap<Integer, String> getFilePathMap() {
-        //Mapps TileIDs to their filepaths
+        //Mapps TileIDs to their file paths
 
         HashMap<Integer, String> returnMap = new HashMap<>();
         PreparedStatement statement = null;
