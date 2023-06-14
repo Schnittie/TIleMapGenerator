@@ -21,40 +21,39 @@ public class BoardImageFactory {
             e.printStackTrace();
         }
     }
-    private static final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private static final HashMap<Integer, String> filePathMap = dBinteractions.getFilePathMap();
-
-    public static BufferedImage generateBoardImage(Tile[][] board, String outputFilePath) {
-        int width = board.length;
-        int height = board[0].length;
+    public static BufferedImage generateBoardImage(BoardTO board) {
+        int width = board.getWIDTH();
+        int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
+        HashMap<Integer, String> filePathMap = board.getFilePathMap();
 
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();
-        for (int col = 0; col < height; col++) {
+        for (int colum = 0; colum < height; colum++) {
             for (int row = 0; row < width; row++) {
-                Tile tile = board[row][col];
+                int tileID = board.getIDat(row, colum);
 
                 BufferedImage tileImage = null;
                 try {
-                    if (tile.getContent() != -1) {
-                        tileImage = ImageIO.read(new File(filePathMap.get(tile.getContent())));
+                    if (tileID != -1) {
+                        tileImage = ImageIO.read(new File(filePathMap.get(tileID)));
                     } else {
                         tileImage = DEFAULT;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                graphics2D.drawImage(tileImage, row * TILE_SIZE, col * TILE_SIZE, null);
+                graphics2D.drawImage(tileImage, row * TILE_SIZE, colum * TILE_SIZE, null);
             }
         }
 
         graphics2D.dispose();
 
         try {
-            ImageIO.write(boardImage, "png", new File(outputFilePath));
+            ImageIO.write(boardImage, "png", new File(
+                    DBinteractions.getDbFolder() + File.separator + "generatedMapRender.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

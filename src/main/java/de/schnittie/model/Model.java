@@ -1,6 +1,6 @@
 package de.schnittie.model;
 
-import de.schnittie.model.businesscode.Board;
+import de.schnittie.model.businesscode.BoardManipulator;
 import de.schnittie.model.businesscode.BoardImageFactory;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.fillingDB.TileCreation;
@@ -15,18 +15,18 @@ import java.util.List;
 public class Model {
 
     private List<ModelListener> listeners = new ArrayList<>();
-    private Board board;
+    private BoardManipulator boardManipulator;
     private HashMap<File, Integer> tilesToAdd = new HashMap<>();
     private BufferedImage lastMap;
 
     public BufferedImage generateMap(int width, int height) {
         try {
-            board = new Board(width, height);
-            board.fill();
+            boardManipulator = new BoardManipulator(width, height);
+            boardManipulator.fill();
         } catch (MapGenerationException e) {
             notifyListeners(new GenerationErrorEvent("An Error occurred"));
         }
-        lastMap = BoardImageFactory.generateBoardImage(board.getBoard(), "generatedMapRender.png");
+        lastMap = BoardImageFactory.generateBoardImage(boardManipulator.getBoardTO());
         notifyListeners(new NewMapEvent(lastMap));
         return lastMap;
     }
