@@ -1,7 +1,6 @@
 package de.schnittie.model.businesscode.Tile;
 
 import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.database.DBinteractions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,12 @@ import java.util.Random;
 
 public class TileRandomCollapsingService {
     private final Random random = new Random();
-    private final DBinteractions dBinteractions = DBinteractions.getInstance();
+    private final HashMap<Integer, Integer> probabilitMap;
+
+    public TileRandomCollapsingService(HashMap<Integer, Integer> probabilityMap) {
+        this.probabilitMap = probabilityMap;
+    }
+
     public int getRandomState(List<Integer> possibleStates)
             throws MapGenerationException {
         if (possibleStates.isEmpty()) {
@@ -19,7 +23,7 @@ public class TileRandomCollapsingService {
             return possibleStates.get(0);
         }
 
-        HashMap<Integer, Integer> probabilities = dBinteractions.getProbabilityMap(possibleStates);
+        HashMap<Integer, Integer> probabilities = getProbabilityMap(possibleStates);
         int totalProbability = 0;
         for (Integer probability : probabilities.values()) {
             totalProbability += probability;
@@ -37,5 +41,13 @@ public class TileRandomCollapsingService {
             }
         }
         throw new MapGenerationException();
+    }
+
+    private HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
+        HashMap<Integer, Integer> returnMap = new HashMap<>(possibleStates.size());
+        for (Integer tileId : possibleStates) {
+            returnMap.put(tileId, probabilitMap.get(tileId));
+        }
+        return returnMap;
     }
 }
