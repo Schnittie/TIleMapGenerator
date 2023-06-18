@@ -10,10 +10,13 @@
     //TODO: Hexagons!!
 
     //TODO: To propagate as board wide stack? (this isn't as big a deal as it might seem) (think about this after threads)
-    //TODO: maybe actually think about thread stuff (0,5x amount tiles seperation should cover everything) <- doesn't make sense, more thought needed
+    //TODO: actually think about thread stuff (0,5x amount tiles seperation should cover everything) <- doesn't make sense, more thought needed
 
     //TODO: Can I do propagation as Multithreading
+	//TODO: Multithreading idea: every board first generates it's borders <- implications for the Damage Control unit
     //TODO: Installation DBinteractions as Bulk operations
-    //TODO: GetProbabilityMap rework??
     //TODO: Actually make Lowest Entropy Tiles return lowest Entropy Tiles (I'm not sure that works or should)
     //TODO: Split tile into TIle and TileManipulator
+
+    //TODO: CanIBe in Tile as Hashset where existance = true
+    //todo: look into using RetainAll in propagation (it returns true if things have changed)

@@ -316,6 +316,31 @@ public class DBinteractions {
         }
         return returnMap;
     }
+    public ArrayList<RuleTO> getAllRules(){
+            //Returns an Array of all Rules
+            PreparedStatement statement = null;
+            ResultSet resultSet = null;
+            try {
+                ArrayList<RuleTO> resultList = new ArrayList<>();
+                statement = conn.prepareStatement(
+                        "SELECT * FROM rule ORDER BY that_tile, next_to");
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    resultList.add(new RuleTO(
+                            resultSet.getInt("id"),
+                            resultSet.getInt("this_tile"),
+                            resultSet.getInt("that_tile"),
+                            resultSet.getInt("next_to")));
+                }
+                return resultList;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close(statement);
+                close(resultSet);
+            }
+    }
 
     private String getParameterPlaceholders(int count) {
         // helper method to make SQL statements

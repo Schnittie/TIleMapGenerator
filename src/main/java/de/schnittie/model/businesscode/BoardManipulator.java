@@ -1,7 +1,7 @@
 package de.schnittie.model.businesscode;
 
 import de.schnittie.model.businesscode.Tile.Tile;
-import de.schnittie.model.businesscode.Tile.TileSingletonService;
+import de.schnittie.model.businesscode.Tile.TileDataProvider;
 import de.schnittie.model.database.DBinteractions;
 
 import java.util.ArrayList;
@@ -14,12 +14,11 @@ public class BoardManipulator {
     private final DBinteractions dBinteractions = DBinteractions.getInstance();
     private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
     private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
-    private final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private final Random random = new Random();
-    private final TileSingletonService tileSingletonService = TileSingletonService.getInstance();
+    private final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
 
     public BoardManipulator(int width, int height) throws MapGenerationException {
-        board = new Board(width, height, numberOfPossibleTiles, possibleTileIDs, tileSingletonService);
+        board = new Board(width, height, numberOfPossibleTiles, tileDataProvider);
     }
 
     public void fill() throws MapGenerationException {
@@ -102,7 +101,7 @@ public class BoardManipulator {
 
         for (int x = damageAreaBorderMinX + 1; x < damageAreaBorderMaxX - 1; x++) {
             for (int y = damageAreaBorderMinY + 1; y < damageAreaBorderMaxY - 1; y++) {
-                board.setTile(x, y, new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingletonService));
+                board.setTile(x, y, new Tile(numberOfPossibleTiles, tileDataProvider));
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {

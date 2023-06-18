@@ -12,13 +12,13 @@ public class Tile {
     private final HashMap<Integer, Boolean> canIbe;
     private boolean isCollapsed = false;
     private int content = -1; //the default ID. to be overwritten when collapsed
-    private final TileSingletonService tileSingletonService;
+    private final TileDataProvider tileDataProvider;
 
-    public Tile(int possibleTileStatesLeft, ArrayList<Integer> possibleTileIDs, TileSingletonService tileSingletonService) {
+    public Tile(int possibleTileStatesLeft, TileDataProvider tileDataProvider) {
         this.possibleTileStatesLeft = possibleTileStatesLeft;
         canIbe = new HashMap<>(possibleTileStatesLeft);
-        this.tileSingletonService = tileSingletonService;
-        for (Integer possibleTileID : possibleTileIDs) {
+        this.tileDataProvider = tileDataProvider;
+        for (Integer possibleTileID : tileDataProvider.getPossibleTileIDs()) {
             canIbe.put(possibleTileID, true);
         }
     }
@@ -43,7 +43,7 @@ public class Tile {
         }
 
         List<Integer> listOfPossibilitiesOfSelf = getPossibleTileContentLeft();
-        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = tileSingletonService.getdBinteractions().canThisBeHere(listOfPossibilitiesOfSelf,
+        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = tileDataProvider.getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
                 whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
         listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
         //all the possibilities that I can now be are removed, leaving listOfPossibilitiesOfSelf a
@@ -81,7 +81,7 @@ public class Tile {
     public void collapse() throws MapGenerationException {
         //collapsing, but the caller doesn't care which possible state the Tile ends up in
         if (!isCollapsed) {
-            collapse(tileSingletonService.getTileRandomCollapsingService().getRandomState(getPossibleTileContentLeft()));
+            collapse(tileDataProvider.getTileRandomCollapsingService().getRandomState(getPossibleTileContentLeft()));
         }
     }
 

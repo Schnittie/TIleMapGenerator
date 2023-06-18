@@ -1,22 +1,20 @@
 package de.schnittie.model.businesscode;
 
 import de.schnittie.model.businesscode.Tile.Tile;
-import de.schnittie.model.businesscode.Tile.TileSingletonService;
-
-import java.util.ArrayList;
+import de.schnittie.model.businesscode.Tile.TileDataProvider;
 
 public class Board {
     private final Tile[][] board;
     private final int WIDTH; //x
     private final int HEIGHT;//y
-    public Board(int width, int height, int numberOfPossibleTiles, ArrayList<Integer> possibleTileIDs, TileSingletonService tileSingletonService){
+    public Board(int width, int height, int numberOfPossibleTiles, TileDataProvider tileDataProvider){
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
 
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile(numberOfPossibleTiles, possibleTileIDs, tileSingletonService);
+                board[x][y] = new Tile(numberOfPossibleTiles, tileDataProvider);
             }
 
         }
