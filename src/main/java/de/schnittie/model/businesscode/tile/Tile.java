@@ -21,7 +21,10 @@ public class Tile {
             canIbe.put(possibleTileID, true);
         }
     }
-
+    public ArrayList<Integer> propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
+            throws MapGenerationException {
+        return TilePropagationService.propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
+    }
     public List<Integer> getPossibleTileContentLeft() {
         //returns List of all the possibilities that this Tile can still be
         List<Integer> response = new ArrayList<>();
@@ -33,39 +36,7 @@ public class Tile {
         return response;
     }
 
-    public ArrayList<Integer> propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
-            throws MapGenerationException {
-
-        ArrayList<Integer> responseList = new ArrayList<>();
-        if (isCollapsed) {
-            return null;
-        }
-
-        List<Integer> listOfPossibilitiesOfSelf = getPossibleTileContentLeft();
-        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = tileDataProvider.getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
-                whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
-        listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
-        //all the possibilities that I can now be are removed, leaving listOfPossibilitiesOfSelf a
-        // list of Possibilities that the Tile can no longer be
-
-        if (listOfPossibilitiesOfSelf.isEmpty()) {
-            //the possibilities didn't change
-            return null;
-        }
-        for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
-            removePossibility(discardedPossibility);
-        }
-        if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1) {
-            //A tile with only one Possibility left has to collapse
-            collapse(getPossibleTileContentLeft().get(0));
-            responseList.add(getContent());
-            return responseList;
-        }
-        return (ArrayList<Integer>) listOfPossibilitiesOfSelfAfterPropagation;
-
-    }
-
-    private void removePossibility(int toRemove) {
+    public void removePossibility(int toRemove) {
         canIbe.replace(toRemove, false);
         possibleTileStatesLeft--;
     }
