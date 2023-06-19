@@ -1,7 +1,6 @@
 package de.schnittie.model.businesscode.board;
 
 import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.tile.Tile;
 
 public class BoardDamageControlService {
     public static void controlDamage(int problemTileX, int problemTileY, Board board) throws MapGenerationException {
@@ -13,16 +12,16 @@ public class BoardDamageControlService {
 
         for (int x = damageAreaBorderMinX + 1; x < damageAreaBorderMaxX - 1; x++) {
             for (int y = damageAreaBorderMinY + 1; y < damageAreaBorderMaxY - 1; y++) {
-                board.setTile(x, y, new Tile());
+                board.newTileAt(x, y);
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
-           BoardPropagaionService.propagate(x, damageAreaBorderMinY, board);
-            BoardPropagaionService.propagate(x, damageAreaBorderMaxY - 1, board);
+           BoardPropagationService.propagate(x, damageAreaBorderMinY, board);
+            BoardPropagationService.propagate(x, damageAreaBorderMaxY - 1, board);
         }
         for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
-            BoardPropagaionService.propagate(damageAreaBorderMinX, y, board);
-            BoardPropagaionService.propagate(damageAreaBorderMaxX - 1, y, board);
+            BoardPropagationService.propagate(damageAreaBorderMinX, y, board);
+            BoardPropagationService.propagate(damageAreaBorderMaxX - 1, y, board);
         }
     }
 }

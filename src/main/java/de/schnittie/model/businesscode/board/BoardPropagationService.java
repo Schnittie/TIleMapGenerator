@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardPropagaionService {
+public class BoardPropagationService {
     private static final HashMap<Integer, Pair> directionChangeMap = Configuration.getDirectionChanges();
-    public static void propagateOneTile(
+    public static void propagate(int x, int y, Board board) {
+        propagate(x, y, board.getTile(x, y).getPossibleTileContentLeft(), board);
+    }
+
+    private static void propagateOneTile(
             int x, int y, int direction, List<Integer> newTileContent,
             HashMap<Pair, ArrayList<Integer>> propagationResultLists, Board board) {
         try {
@@ -27,7 +31,7 @@ public class BoardPropagaionService {
         }
     }
 
-    public static void propagate(int x, int y, List<Integer> newTileContent, Board board) {
+    private static void propagate(int x, int y, List<Integer> newTileContent, Board board) {
         HashMap<Pair, ArrayList<Integer>> propagationResultLists = new HashMap<>();
         for (int directionID : directionChangeMap.keySet()) {
             Pair directionChange = directionChangeMap.get(directionID);
@@ -40,9 +44,5 @@ public class BoardPropagaionService {
         for (Pair pair : propagationResultLists.keySet()) {
             propagate(pair.x(), pair.y(), propagationResultLists.get(pair),board);
         }
-    }
-
-    public static void propagate(int x, int y, Board board) {
-        propagate(x, y, board.getTile(x, y).getPossibleTileContentLeft(), board);
     }
 }

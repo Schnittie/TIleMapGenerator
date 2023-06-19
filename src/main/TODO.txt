@@ -13,11 +13,10 @@
     //TODO: actually think about thread stuff (0,5x amount tiles separation should cover everything) <- doesn't make sense, more thought needed
 
     //TODO: Can I do propagation as Multithreading
-	//TODO: Multithreading idea: every board first generates it's borders <- implications for the Damage Control unit
+	//TODO: Multithreading idea: every board first generates its borders <- implications for the Damage Control unit
     //TODO: Installation DBinteractions as Bulk operations
-    //TODO: Actually make Lowest Entropy Tiles return lowest Entropy Tiles (I'm not sure that works or should)
     //TODO: Split tile into TIle and TileManipulator
-    //TODO: getRandomTileWIthLowEntropy should be in Board
+    //TODO: which version of NextTile is the one I want
 
-    //TODO: CanIBe in Tile as Hashset where existance = true
+    //TODO: CanIBe in Tile as Hashset where existence = true
     //todo: look into using RetainAll in propagation (it returns true if things have changed)
