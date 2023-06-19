@@ -1,13 +1,11 @@
 package de.schnittie.model.businesscode.board;
 
-import java.util.HashMap;
-
 public class BoardTO {
     private final int[][] boardOfIDs;
 
     private final int WIDTH; //x
     private final int HEIGHT;//y
-    public BoardTO(int[][] boardOfIDs, int WIDTH, int HEIGHT, HashMap<Integer, String> filePathMap) {
+    public BoardTO(int[][] boardOfIDs, int WIDTH, int HEIGHT) {
         this.boardOfIDs = boardOfIDs;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;

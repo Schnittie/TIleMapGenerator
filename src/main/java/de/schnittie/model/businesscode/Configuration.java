@@ -16,6 +16,7 @@ public class Configuration {
     private static final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
     private static final String dbFolder = DBinteractions.getDbFolder();
 
+
     public static ArrayList<RuleTO> getRules(){
         return rules;
     }

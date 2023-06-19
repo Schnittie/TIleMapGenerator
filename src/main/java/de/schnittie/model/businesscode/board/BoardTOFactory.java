@@ -8,6 +8,6 @@ public class BoardTOFactory {
                 ids[x][y] = board.getTile(x, y).getContent();
             }
         }
-        return new BoardTO(ids, board.getWIDTH(), board.getHEIGHT(), null);
+        return new BoardTO(ids, board.getWIDTH(), board.getHEIGHT());
     }
 }

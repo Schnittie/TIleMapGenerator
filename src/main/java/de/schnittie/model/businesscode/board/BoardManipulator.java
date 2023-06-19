@@ -1,13 +1,9 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
-
-import java.util.HashMap;
 
 public class BoardManipulator {
     private final Board board;
-    private final HashMap<Integer, Pair> directionChangeMap = Configuration.getDirectionChanges();
     public BoardManipulator(int width, int height) throws MapGenerationException {
         board = new Board(width, height);
     }

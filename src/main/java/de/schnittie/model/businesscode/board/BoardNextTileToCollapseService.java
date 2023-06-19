@@ -10,8 +10,8 @@ public class BoardNextTileToCollapseService {
     public static final int MAX_ENTROPY = 100;
 
     public static Pair getNextTile(Board board){
-        return getNextTileWithLowestEntropy(board);
-        //return getRandomNonCollapsedTile(board);
+        //return getNextTileWithLowestEntropy(board);
+        return getRandomNonCollapsedTile(board);
     }
 
     public static Pair getRandomNonCollapsedTile(Board board) {

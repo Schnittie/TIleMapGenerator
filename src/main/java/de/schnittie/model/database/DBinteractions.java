@@ -1,6 +1,5 @@
 package de.schnittie.model.database;
 
-import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Pair;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
@@ -12,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DBinteractions {
 
@@ -55,70 +53,6 @@ public class DBinteractions {
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
-    }
-
-    public int getNumberOfTiles() {
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = conn.prepareStatement("SELECT COUNT(*) FROM tile");
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-            throw new SQLException();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(statement);
-            close(resultSet);
-        }
-    }
-
-    public List<Integer> canThisBeHere(List<Integer> tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities) throws MapGenerationException {
-        //listOfPossibilities is the List of the possibilities the Tile from where the propagation is coming from can be
-        //tileInQuestion is the tile this tile could be
-        if (listOfPossibilities.isEmpty()) {
-            throw new MapGenerationException();
-        }
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = conn.prepareStatement(
-
-                    "SELECT DISTINCT this_tile FROM rule " +
-                            "WHERE this_tile IN (" + getParameterPlaceholders(tileInQuestion.size()) + ") " +
-                            "AND next_to = ? " +
-                            "AND that_tile IN (" + getParameterPlaceholders(listOfPossibilities.size()) + ")");
-
-            int i = 1;
-            for (Integer tile : tileInQuestion) {
-                statement.setInt(i++, tile);
-            }
-
-            statement.setInt(i++, whereIamRelativeToCaller);
-            for (Integer possibility : listOfPossibilities) {
-                statement.setInt(i++, possibility);
-            }
-            resultSet = statement.executeQuery();
-
-            List<Integer> returnList = new ArrayList<>();
-            while (resultSet.next()) {
-                returnList.add(resultSet.getInt("this_tile"));
-            }
-
-            if (returnList.isEmpty()) {
-                throw new MapGenerationException();
-            }
-
-            return returnList;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(statement);
-            close(resultSet);
-        }
     }
 
     private static void close(AutoCloseable closable) {
@@ -336,18 +270,5 @@ public class DBinteractions {
                 close(statement);
                 close(resultSet);
             }
-    }
-
-    private String getParameterPlaceholders(int count) {
-        // helper method to make SQL statements
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            sb.append("?");
-            if (i < count - 1) {
-                sb.append(",");
-            }
-        }
-        return sb.toString();
     }
 }
