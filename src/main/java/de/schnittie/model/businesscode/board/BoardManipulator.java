@@ -113,7 +113,7 @@ public class BoardManipulator {
     }
 
     public BoardTO getBoardTO() {
-        return board.getBoardTO().setFilePathMap(Configuration.getFilePathMap());
+        return board.getBoardTO();
     }
 
     public int getWIDTH() {

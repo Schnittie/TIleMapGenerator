@@ -28,7 +28,7 @@ public class BoardImageFactory {
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
-        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(board.getFilePathMap());
+        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(Configuration.getFilePathMap());
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();
