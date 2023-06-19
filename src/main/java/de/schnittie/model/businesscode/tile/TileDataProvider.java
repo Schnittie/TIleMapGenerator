@@ -5,7 +5,7 @@ import de.schnittie.model.businesscode.Configuration;
 import java.util.ArrayList;
 
 public class TileDataProvider {
-    public static final TileDataProvider tileDataProvider = new TileDataProvider();
+    private static final TileDataProvider tileDataProvider = new TileDataProvider();
 
     public static TileDataProvider getInstance() {
         return tileDataProvider;

@@ -12,12 +12,11 @@ public class Tile {
     private final HashMap<Integer, Boolean> canIbe;
     private boolean isCollapsed = false;
     private int content = -1; //the default ID. to be overwritten when collapsed
-    private final TileDataProvider tileDataProvider;
+    private final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
 
-    public Tile(TileDataProvider tileDataProvider) {
+    public Tile() {
         possibleTileStatesLeft = tileDataProvider.getPossibleTileIDs().size();
         canIbe = new HashMap<>(possibleTileStatesLeft);
-        this.tileDataProvider = tileDataProvider;
         for (Integer possibleTileID : tileDataProvider.getPossibleTileIDs()) {
             canIbe.put(possibleTileID, true);
         }

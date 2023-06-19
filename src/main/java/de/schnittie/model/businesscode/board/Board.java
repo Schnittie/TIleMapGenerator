@@ -7,14 +7,15 @@ public class Board {
     private final Tile[][] board;
     private final int WIDTH; //x
     private final int HEIGHT;//y
-    public Board(int width, int height, TileDataProvider tileDataProvider){
+    private final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
+    public Board(int width, int height){
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
 
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile(tileDataProvider);
+                board[x][y] = new Tile();
             }
 
         }
@@ -40,5 +41,8 @@ public class Board {
     }
     public void setTile(int x, int y, Tile tile){
         board[x][y] = tile;
+    }
+    public void newTileAt(int x, int y){
+        board[x][y] = new Tile();
     }
 }
