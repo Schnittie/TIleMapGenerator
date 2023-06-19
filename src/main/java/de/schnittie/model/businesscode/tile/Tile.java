@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.Tile;
+package de.schnittie.model.businesscode.tile;
 
 import de.schnittie.model.businesscode.MapGenerationException;
 import lombok.Getter;
@@ -14,8 +14,8 @@ public class Tile {
     private int content = -1; //the default ID. to be overwritten when collapsed
     private final TileDataProvider tileDataProvider;
 
-    public Tile(int possibleTileStatesLeft, TileDataProvider tileDataProvider) {
-        this.possibleTileStatesLeft = possibleTileStatesLeft;
+    public Tile(TileDataProvider tileDataProvider) {
+        possibleTileStatesLeft = tileDataProvider.getPossibleTileIDs().size();
         canIbe = new HashMap<>(possibleTileStatesLeft);
         this.tileDataProvider = tileDataProvider;
         for (Integer possibleTileID : tileDataProvider.getPossibleTileIDs()) {

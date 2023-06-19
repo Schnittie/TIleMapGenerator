@@ -1,6 +1,6 @@
 package de.schnittie.controller;
 
-import de.schnittie.model.Model;
+import de.schnittie.model.mvcStuffs.Model;
 import de.schnittie.view.MapFrontend;
 
 public class Controller {
@@ -15,7 +15,7 @@ public class Controller {
     public static void main(String[] args) {
         Controller controller = new Controller();
 //        Model model = new Model();
-//        if (false) {
+//        if (true) {
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\Tilemap.png", 3);
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\TilemapNonRotate.png", 0);
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\6Brown0Green3Blue.png", 1);

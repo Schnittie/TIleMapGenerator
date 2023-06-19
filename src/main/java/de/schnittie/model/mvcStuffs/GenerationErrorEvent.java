@@ -1,4 +1,4 @@
-package de.schnittie.model;
+package de.schnittie.model.mvcStuffs;
 
 public class GenerationErrorEvent extends MapGeneratorEvent {
     private final String errorMessage;

@@ -28,7 +28,7 @@ public class TileCreation {
         File folder = new File(TILEFOLDER);
         File[] files = folder.listFiles();
 
-        if (files == null){
+        if (files == null) {
             throw new RuntimeException("files not found");
         }
         putTilesInDB(files);
@@ -39,9 +39,17 @@ public class TileCreation {
         for (File file : files) {
             if (file.isFile() && file.getName().toLowerCase().endsWith(".png")) {
                 String imageUrl = file.getName();
-                dbinteractions.putTileIntoDB(imageUrl);
+                dbinteractions.putTileIntoDB(imageUrl, getProbabilityForTile(imageUrl));
             }
         }
+    }
+
+    private static int getProbabilityForTile(String imageUrl) {
+        for (char c :
+                imageUrl.toCharArray()) {
+            if (Character.isDigit(c)) return 4 - Integer.parseInt(String.valueOf(c));
+        }
+        return 1;
     }
 
     private static void splitImage(File inputFile, int shouldRotate) throws IOException {
@@ -63,7 +71,7 @@ public class TileCreation {
                 if (isSubimageTransparent(outputImage)) {
                     continue;  // Skip empty (transparent) sub-images
                 }
-                String rotateFileName = "rotated_" + shouldRotate +"_times";
+                String rotateFileName = "rotated_" + shouldRotate + "_times";
                 String baseOutputFilePath = TILEFOLDER + rotateFileName + "_" + row + "_" + col + "_";
 
                 // Save the original subimage
@@ -71,12 +79,12 @@ public class TileCreation {
                 ImageIO.write(outputImage, "png", new File(outputFilePath));
 
 
-                    for (int rotation = 1; rotation <= shouldRotate; rotation++) {
-                        // Rotate the image by 90 degrees for
-                        outputImage = rotateImage(outputImage);
-                        outputFilePath = baseOutputFilePath + rotation + ".png";
-                        ImageIO.write(outputImage, "png", new File(outputFilePath));
-                    }
+                for (int rotation = 1; rotation <= shouldRotate; rotation++) {
+                    // Rotate the image by 90 degrees for
+                    outputImage = rotateImage(outputImage);
+                    outputFilePath = baseOutputFilePath + rotation + ".png";
+                    ImageIO.write(outputImage, "png", new File(outputFilePath));
+                }
 
             }
         }

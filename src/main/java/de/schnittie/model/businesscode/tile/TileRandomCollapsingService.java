@@ -1,5 +1,6 @@
-package de.schnittie.model.businesscode.Tile;
+package de.schnittie.model.businesscode.tile;
 
+import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 
 import java.util.HashMap;
@@ -8,10 +9,9 @@ import java.util.Random;
 
 public class TileRandomCollapsingService {
     private final Random random = new Random();
-    private final HashMap<Integer, Integer> probabilitMap;
+    private final HashMap<Integer, Integer> probabilitMap = Configuration.getProbabilityMap();
 
-    public TileRandomCollapsingService(HashMap<Integer, Integer> probabilityMap) {
-        this.probabilitMap = probabilityMap;
+    public TileRandomCollapsingService() {
     }
 
     public int getRandomState(List<Integer> possibleStates)

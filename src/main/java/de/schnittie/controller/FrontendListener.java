@@ -1,6 +1,6 @@
 package de.schnittie.controller;
 
-import de.schnittie.model.Model;
+import de.schnittie.model.mvcStuffs.Model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

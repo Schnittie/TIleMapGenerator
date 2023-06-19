@@ -1,8 +1,9 @@
-package de.schnittie.model.businesscode;
+package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.Tile.Tile;
-import de.schnittie.model.businesscode.Tile.TileDataProvider;
-import de.schnittie.model.database.DBinteractions;
+import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.businesscode.tile.Tile;
+import de.schnittie.model.businesscode.tile.TileDataProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +12,12 @@ import java.util.Random;
 
 public class BoardManipulator {
     private final Board board;
-    private final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
-    private final int numberOfPossibleTiles = dBinteractions.getNumberOfTiles();
+    private final HashMap<Integer, Pair> directionChangeMap = Configuration.getDirectionChanges();
     private final Random random = new Random();
     private final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
 
     public BoardManipulator(int width, int height) throws MapGenerationException {
-        board = new Board(width, height, numberOfPossibleTiles, tileDataProvider);
+        board = new Board(width, height, tileDataProvider);
     }
 
     public void fill() throws MapGenerationException {
@@ -50,7 +49,6 @@ public class BoardManipulator {
             try {
                 System.out.println("I need to control damage");
                 controlDamage(x, y);
-                throw new MapGenerationException();
             } catch (MapGenerationException ex) {
                 throw new RuntimeException(ex);
             }
@@ -76,7 +74,7 @@ public class BoardManipulator {
         propagate(x, y, board.getTile(x, y).getPossibleTileContentLeft());
     }
 
-    private Pair getRandomTileWithLowEntropy() { //TODO this should be in board
+    private Pair getRandomTileWithLowEntropy() {
         ArrayList<Pair> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < board.getWIDTH(); x++) {
             for (int y = 0; y < board.getHEIGHT(); y++) {
@@ -101,7 +99,7 @@ public class BoardManipulator {
 
         for (int x = damageAreaBorderMinX + 1; x < damageAreaBorderMaxX - 1; x++) {
             for (int y = damageAreaBorderMinY + 1; y < damageAreaBorderMaxY - 1; y++) {
-                board.setTile(x, y, new Tile(numberOfPossibleTiles, tileDataProvider));
+                board.setTile(x, y, new Tile(tileDataProvider));
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
@@ -115,7 +113,7 @@ public class BoardManipulator {
     }
 
     public BoardTO getBoardTO() {
-        return board.getBoardTO().setFilePathMap(dBinteractions.getFilePathMap());
+        return board.getBoardTO().setFilePathMap(Configuration.getFilePathMap());
     }
 
     public int getWIDTH() {

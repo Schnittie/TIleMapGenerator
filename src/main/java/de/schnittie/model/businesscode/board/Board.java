@@ -1,20 +1,20 @@
-package de.schnittie.model.businesscode;
+package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.Tile.Tile;
-import de.schnittie.model.businesscode.Tile.TileDataProvider;
+import de.schnittie.model.businesscode.tile.Tile;
+import de.schnittie.model.businesscode.tile.TileDataProvider;
 
 public class Board {
     private final Tile[][] board;
     private final int WIDTH; //x
     private final int HEIGHT;//y
-    public Board(int width, int height, int numberOfPossibleTiles, TileDataProvider tileDataProvider){
+    public Board(int width, int height, TileDataProvider tileDataProvider){
         WIDTH = width;
         HEIGHT = height;
         board = new Tile[WIDTH][HEIGHT];
 
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                board[x][y] = new Tile(numberOfPossibleTiles, tileDataProvider);
+                board[x][y] = new Tile(tileDataProvider);
             }
 
         }

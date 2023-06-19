@@ -1,4 +1,4 @@
-package de.schnittie.model;
+package de.schnittie.model.mvcStuffs;
 
 import java.awt.image.BufferedImage;
 

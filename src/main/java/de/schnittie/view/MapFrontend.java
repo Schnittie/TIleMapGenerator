@@ -1,8 +1,8 @@
 package de.schnittie.view;
 
-import de.schnittie.model.GenerationErrorEvent;
-import de.schnittie.model.MapGeneratorEvent;
-import de.schnittie.model.NewMapEvent;
+import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
+import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
+import de.schnittie.model.mvcStuffs.NewMapEvent;
 
 import javax.swing.*;
 import java.awt.*;

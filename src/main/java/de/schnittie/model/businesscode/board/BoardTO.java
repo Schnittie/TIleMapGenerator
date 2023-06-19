@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode;
+package de.schnittie.model.businesscode.board;
 
 import java.util.HashMap;
 

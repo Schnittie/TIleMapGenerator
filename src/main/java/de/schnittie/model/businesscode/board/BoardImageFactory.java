@@ -1,5 +1,6 @@
-package de.schnittie.model.businesscode;
+package de.schnittie.model.businesscode.board;
 
+import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.database.DBinteractions;
 
 import javax.imageio.ImageIO;
@@ -16,36 +17,25 @@ public class BoardImageFactory {
 
     static {
         try {
-            DEFAULT = ImageIO.read(new File(DBinteractions.getDbFolder() + File.separator + "default.png"));
+            DEFAULT = ImageIO.read(new File(Configuration.getDbFolder() + File.separator + "default.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public static BufferedImage generateBoardImage(BoardTO board) {
         int width = board.getWIDTH();
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
-        HashMap<Integer, String> filePathMap = board.getFilePathMap();
-
+        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(board.getFilePathMap());
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();
         for (int colum = 0; colum < height; colum++) {
             for (int row = 0; row < width; row++) {
                 int tileID = board.getIDat(row, colum);
-
-                BufferedImage tileImage = null;
-                try {
-                    if (tileID != -1) {
-                        tileImage = ImageIO.read(new File(filePathMap.get(tileID)));
-                    } else {
-                        tileImage = DEFAULT;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                graphics2D.drawImage(tileImage, row * TILE_SIZE, colum * TILE_SIZE, null);
+                graphics2D.drawImage(imageById.get(tileID), row * TILE_SIZE, colum * TILE_SIZE, null);
             }
         }
 
@@ -58,6 +48,19 @@ public class BoardImageFactory {
             e.printStackTrace();
         }
         return boardImage;
+    }
+
+    private static HashMap<Integer, BufferedImage> getImageMapFromFilepathMap(HashMap<Integer, String> filePathMap) {
+        HashMap<Integer, BufferedImage> imageById = new HashMap<>(filePathMap.size() + 1);
+        try {
+            for (Integer id : filePathMap.keySet()) {
+                imageById.put(id, ImageIO.read(new File(filePathMap.get(id))));
+            }
+            imageById.put(-1, DEFAULT);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return imageById;
     }
 }
 

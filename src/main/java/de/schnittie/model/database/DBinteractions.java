@@ -1,7 +1,7 @@
 package de.schnittie.model.database;
 
 import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.Pair;
+import de.schnittie.model.businesscode.board.Pair;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
@@ -132,7 +132,7 @@ public class DBinteractions {
         }
     }
 
-    public HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
+    public HashMap<Integer, Integer> getProbabilityMap() {
         //Mappes Tiles to their probability
 
         PreparedStatement statement = null;
@@ -141,12 +141,7 @@ public class DBinteractions {
             HashMap<Integer, Integer> resultMap = new HashMap<>();
             statement = conn.prepareStatement(
 
-                    "SELECT id, probability FROM tile WHERE id IN ("
-                            + getParameterPlaceholders(possibleStates.size()) + ")");
-
-            for (int i = 0; i < possibleStates.size(); i++) {
-                statement.setInt(i + 1, possibleStates.get(i));
-            }
+                    "SELECT id, probability FROM tile");
 
             resultSet = statement.executeQuery();
 
@@ -245,13 +240,14 @@ public class DBinteractions {
         }
     }
 
-    public void putTileIntoDB(String imageUrl) {
+    public void putTileIntoDB(String imageUrl, int probability) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
 
-                    "INSERT INTO tile (filepath) VALUES (?) ON CONFLICT (filepath) DO NOTHING");
+                    "INSERT INTO tile (filepath, probability) VALUES (?,?) ON CONFLICT (filepath) DO NOTHING");
             statement.setString(1, imageUrl);
+            statement.setInt(2, probability);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

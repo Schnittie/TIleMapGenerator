@@ -1,7 +1,7 @@
-package de.schnittie.model;
+package de.schnittie.model.mvcStuffs;
 
-import de.schnittie.model.businesscode.BoardManipulator;
-import de.schnittie.model.businesscode.BoardImageFactory;
+import de.schnittie.model.businesscode.board.BoardManipulator;
+import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.fillingDB.TileCreation;
 import de.schnittie.view.ModelListener;
