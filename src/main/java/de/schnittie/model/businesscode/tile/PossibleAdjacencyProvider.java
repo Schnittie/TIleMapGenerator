@@ -31,7 +31,7 @@ public class PossibleAdjacencyProvider {
                     that_tile = ruleTO.that_tile();
                 }
             }
-            adjacentIDListForOneDirection.add(ruleTO.this_tile());//this tile
+            adjacentIDListForOneDirection.add(ruleTO.this_tile());
         }
         possibleAdjacencyWIP.put(next_to,adjacentIDListForOneDirection);
         adjacencyByID.put(that_tile, new PossibleAdjacencyHolderForOneTile(possibleAdjacencyWIP));
