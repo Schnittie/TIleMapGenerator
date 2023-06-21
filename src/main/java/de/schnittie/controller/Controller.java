@@ -19,8 +19,14 @@ public class Controller {
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\Tilemap.png", 3);
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\TilemapNonRotate.png", 0);
 //            model.addTiles("C:\\Users\\laure\\Desktop\\TilesTestingSockets\\6Brown0Green3Blue.png", 1);
+//            model.addTiles("C:\Users\eddi3\OneDrive\Dokumente\Uni\FemboyTileMaps\TilesTestingSockets\\Tilemap.png", 3);
+//            model.addTiles("C:\Users\eddi3\OneDrive\Dokumente\Uni\FemboyTileMaps\TilesTestingSockets\\TilemapNonRotate.png", 0);
+//            model.addTiles("C:\Users\eddi3\OneDrive\Dokumente\Uni\FemboyTileMaps\TilesTestingSockets\\6Brown0Green3Blue.png", 1);
 //            model.generateRules();
 //        }
 //        model.generateMap(100,100);
+
+
     }
+
 }
