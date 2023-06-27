@@ -21,3 +21,4 @@
     //TODO: CanIBe in Tile as Hashset where existence = true
     //todo: look into using RetainAll in propagation (it returns true if things have changed)
     //TODO: fix bs controller
+    //TODO: I can't call everything in BoardPropagation propagate()

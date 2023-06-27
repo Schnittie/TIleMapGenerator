@@ -1,6 +1,7 @@
 package de.schnittie.model.businesscode.board;
 
 import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.businesscode.board.propagation.BoardPropagationService;
 
 public class BoardManipulator {
     private final Board board;
@@ -8,10 +9,12 @@ public class BoardManipulator {
         board = new Board(width, height);
     }
     public void fill() throws MapGenerationException {
+        long timeAtStartOfTest = System.currentTimeMillis();
         while (true) {
-            Pair nextTile = BoardNextTileToCollapseService.getNextTile(board);
+            PairOfCoordinates nextTile = BoardNextTileToCollapseService.getNextTile(board);
             if (nextTile.x() == -10) {
                 //this means all Tiles are collapsed
+                System.out.println("Map creation completed in: " + (System.currentTimeMillis() - timeAtStartOfTest) + " Millisecond");
                 return;
             }
             collapseATile(nextTile.x(), nextTile.y());

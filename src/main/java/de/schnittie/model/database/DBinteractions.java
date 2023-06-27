@@ -1,6 +1,6 @@
 package de.schnittie.model.database;
 
-import de.schnittie.model.businesscode.board.Pair;
+import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
@@ -122,13 +122,13 @@ public class DBinteractions {
         }
     }
 
-    public HashMap<Integer, Pair> getDirectionChanges() {
+    public HashMap<Integer, PairOfCoordinates> getDirectionChanges() {
         //Mapps a direction to what the direction means in terms of Coordinates
 
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            HashMap<Integer, Pair> resultMap = new HashMap<>();
+            HashMap<Integer, PairOfCoordinates> resultMap = new HashMap<>();
             statement = conn.prepareStatement(
 
                     "SELECT id, x_change, y_change FROM direction"
@@ -139,7 +139,7 @@ public class DBinteractions {
                 int id = resultSet.getInt("id");
                 int x_change = resultSet.getInt("x_change");
                 int y_change = resultSet.getInt("y_change");
-                resultMap.put(id, new Pair(x_change, y_change));
+                resultMap.put(id, new PairOfCoordinates(x_change, y_change));
             }
             return resultMap;
 

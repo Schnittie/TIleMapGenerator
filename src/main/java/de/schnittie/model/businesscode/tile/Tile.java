@@ -21,7 +21,7 @@ public class Tile {
             canIbe.put(possibleTileID, true);
         }
     }
-    public ArrayList<Integer> propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
+    public boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
             throws MapGenerationException {
         return TilePropagationService.propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
     }

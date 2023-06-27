@@ -7,12 +7,12 @@ import java.util.List;
 
 public class TilePropagationService {
     private static final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
-    public static ArrayList<Integer> propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, Tile tile)
+    public static boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, Tile tile)
             throws MapGenerationException {
 
         ArrayList<Integer> responseList = new ArrayList<>();
         if (tile.isCollapsed()) {
-            return null;
+            return false;
         }
 
         List<Integer> listOfPossibilitiesOfSelf = tile.getPossibleTileContentLeft();
@@ -24,7 +24,7 @@ public class TilePropagationService {
 
         if (listOfPossibilitiesOfSelf.isEmpty()) {
             //the possibilities didn't change
-            return null;
+            return false;
         }
         for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
             tile.removePossibility(discardedPossibility);
@@ -33,9 +33,9 @@ public class TilePropagationService {
             //A tile with only one Possibility left has to collapse
             tile.collapse(listOfPossibilitiesOfSelfAfterPropagation.get(0));
             responseList.add(tile.getContent());
-            return responseList;
+            return true;
         }
-        return (ArrayList<Integer>) listOfPossibilitiesOfSelfAfterPropagation;
+        return true;
 
     }
 }

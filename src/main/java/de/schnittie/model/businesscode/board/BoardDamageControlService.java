@@ -1,6 +1,7 @@
 package de.schnittie.model.businesscode.board;
 
 import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.businesscode.board.propagation.BoardPropagationService;
 
 public class BoardDamageControlService {
     public static void controlDamage(int problemTileX, int problemTileY, Board board) throws MapGenerationException {

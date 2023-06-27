@@ -1,6 +1,6 @@
 package de.schnittie.model.businesscode;
 
-import de.schnittie.model.businesscode.board.Pair;
+import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import de.schnittie.model.database.DBinteractions;
 import de.schnittie.model.database.RuleTO;
 
@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Configuration {
     private static final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private static final HashMap<Integer, Pair> directionChangeMap = dBinteractions.getDirectionChanges();
+    private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = dBinteractions.getDirectionChanges();
     private static final HashMap<Integer, String> filePathMap = dBinteractions.getFilePathMap();
     private static final ArrayList<RuleTO> rules = dBinteractions.getAllRules();
     private static final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
@@ -26,7 +26,7 @@ public class Configuration {
     public static ArrayList<Integer> getPossibleTileIDs() {
         return possibleTileIDs;
     }
-    public static HashMap<Integer, Pair> getDirectionChanges() {
+    public static HashMap<Integer, PairOfCoordinates> getDirectionChanges() {
         return directionChangeMap;
     }
     public static HashMap<Integer, String> getFilePathMap() {
