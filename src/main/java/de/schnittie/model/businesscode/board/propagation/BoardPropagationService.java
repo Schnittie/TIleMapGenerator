@@ -5,6 +5,8 @@ import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.businesscode.tile.Tile;
+import de.schnittie.model.businesscode.tile.TileCollapsed;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,13 +40,19 @@ public class BoardPropagationService {
 
     private static void propagate(BoardPropagationToDo boardPropagationToDo, BoardPropagationQueue boardPropagationQueue, Board board) throws MapGenerationException {
         boolean propagationRecieverHasChangedPossibilites = false;
+        Tile tile = board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y());
+        if (tile.isCollapsed()){
+            return;
+        }
         for (int direction : boardPropagationToDo.instruction().getAffectedDirections()) {
-            if (board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).
-                    propagate(direction, boardPropagationToDo.instruction().getNewTileContentForDirection(direction))){
+            if (tile.propagate(direction, boardPropagationToDo.instruction().getNewTileContentForDirection(direction))){
                 propagationRecieverHasChangedPossibilites = true;
             }
         }
         if (propagationRecieverHasChangedPossibilites) {
+            if (tile.isCollapsed()){
+                board.setTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y(), new TileCollapsed(tile.getContent()));
+            }
             addNewEntriesToQueue(boardPropagationToDo.coordinates(), boardPropagationQueue, board, board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).getPossibleTileContentLeft());
         }
     }

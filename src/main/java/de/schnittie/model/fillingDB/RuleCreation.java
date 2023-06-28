@@ -17,9 +17,9 @@ public class RuleCreation {
     private static final int TOLERANCE = 50;
 
     public static void generateRules() {
-        //Each side of a Tile has a Socket
+        //Each side of a TileInProgress has a Socket
         //the Sockets are based on Pixel colours
-        //if the Socket of a Tile matches with the Socket of another Tile on the reverse Side it fits
+        //if the Socket of a TileInProgress matches with the Socket of another TileInProgress on the reverse Side it fits
         //a socket matches with another if it is the same (comparison by id)
 
         DirectionCreation.putDirectionsIntoDB();

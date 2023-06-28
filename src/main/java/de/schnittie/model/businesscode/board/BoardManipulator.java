@@ -21,7 +21,7 @@ public class BoardManipulator {
         }
     }
     private void collapseATile(int x, int y) throws MapGenerationException {
-        board.getTile(x, y).collapse();
+        board.setTile(x,y, board.getTile(x, y).collapse()) ;
         BoardPropagationService.propagate(x, y, board);
     }
     public BoardTO getBoardTO() {
