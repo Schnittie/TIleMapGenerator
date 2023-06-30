@@ -55,17 +55,11 @@ public class InstallationHandler {
     }
 
     public static void generateRulesAndTilesForDefaultMapIfNotPresent() throws URISyntaxException {
-        if (!DBinteractions.getInstance().getPossibleTileIDs().isEmpty()) {
-            return;
-        }
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(3);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateNone.png")).toURI())), 0);
-        tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateOnce.png")).toURI())), 1);
-        tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateThrice.png")).toURI())), 3);
+                "Tiles.png")).toURI())), 0);
+
         TileCreation.addTiles(tilemapMap, tileFolder + File.separator);
     }
 
