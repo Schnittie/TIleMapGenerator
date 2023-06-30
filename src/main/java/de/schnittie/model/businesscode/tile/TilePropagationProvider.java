@@ -5,9 +5,8 @@ import de.schnittie.model.businesscode.MapGenerationException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TilePropagationService {
-    private static final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
-    public static boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, Tile tile)
+public class TilePropagationProvider {
+    public boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, Tile tile)
             throws MapGenerationException {
 
         ArrayList<Integer> responseList = new ArrayList<>();
@@ -16,7 +15,7 @@ public class TilePropagationService {
         }
 
         List<Integer> listOfPossibilitiesOfSelf = tile.getPossibleTileContentLeft();
-        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = tileDataProvider.getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
+        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = TileDataProvider.getInstance().getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
                 whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
         listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
         //all the possibilities that I can now be are removed, leaving listOfPossibilitiesOfSelf a

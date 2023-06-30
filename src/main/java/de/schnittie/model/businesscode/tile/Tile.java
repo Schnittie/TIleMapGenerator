@@ -23,7 +23,8 @@ public class Tile {
     }
     public boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
             throws MapGenerationException {
-        return TilePropagationService.propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
+        return tileDataProvider.getTilePropagationProvider()
+                .propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
     }
     public List<Integer> getPossibleTileContentLeft() {
         //returns List of all the possibilities that this Tile can still be

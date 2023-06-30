@@ -1,4 +1,4 @@
-package de.schnittie.model.fillingDB;
+package de.schnittie.model.database.fillingDB;
 
 import java.util.Arrays;
 

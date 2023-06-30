@@ -1,4 +1,4 @@
-package de.schnittie.model.fillingDB;
+package de.schnittie.model.database.fillingDB;
 
 import de.schnittie.model.database.DBinteractions;
 
@@ -13,19 +13,18 @@ import java.util.HashMap;
 public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();
-    private static final String TILEFOLDER = DBinteractions.getTILEFOLDER();
 
-    public static void addTiles(HashMap<File, Integer> tilemapMap) {
+    public static void addTiles(HashMap<File, Integer> tilemapMap, String tileFolder) {
         //receives a Map that mapps a file to how often it should rotate
         for (File tilemap : tilemapMap.keySet()) {
             try {
-                TileCreation.splitImage(tilemap, tilemapMap.get(tilemap));
+                TileCreation.splitImage(tilemap, tilemapMap.get(tilemap), tileFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
         }
-        File folder = new File(TILEFOLDER);
+        File folder = new File(tileFolder);
         File[] files = folder.listFiles();
 
         if (files == null) {
@@ -52,7 +51,7 @@ public class TileCreation {
         return 1;
     }
 
-    private static void splitImage(File inputFile, int shouldRotate) throws IOException {
+    private static void splitImage(File inputFile, int shouldRotate, String tileFolder) throws IOException {
         //splits a Tilemap into the individual images and rotates it the specified amount, then saves it
         shouldRotate = shouldRotate < 0 || shouldRotate > 3 ? 0 : shouldRotate;
         BufferedImage inputImage = ImageIO.read(inputFile);
@@ -72,7 +71,7 @@ public class TileCreation {
                     continue;  // Skip empty (transparent) sub-images
                 }
                 String rotateFileName = "rotated_" + shouldRotate + "_times";
-                String baseOutputFilePath = TILEFOLDER + rotateFileName + "_" + row + "_" + col + "_";
+                String baseOutputFilePath = tileFolder + rotateFileName + "_" + row + "_" + col + "_";
 
                 // Save the original subimage
                 String outputFilePath = baseOutputFilePath + "0.png";

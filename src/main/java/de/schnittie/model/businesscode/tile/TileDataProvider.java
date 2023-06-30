@@ -10,16 +10,15 @@ public class TileDataProvider {
         return tileDataProvider;
     }
 
-    private final ArrayList<Integer> possibleTileIDs = Configuration.getPossibleTileIDs();
-
-    private final TileRandomCollapsingService tileRandomCollapsingService = new TileRandomCollapsingService();
     private final PossibleAdjacencyProvider possibleAdjacencyProvider = new PossibleAdjacencyProvider();
+    private final TilePropagationProvider tilePropagationProvider = new TilePropagationProvider();
+    private final TileRandomCollapsingService tileRandomCollapsingService = new TileRandomCollapsingService();
 
     public TileDataProvider() {
     }
 
     public ArrayList<Integer> getPossibleTileIDs() {
-        return possibleTileIDs;
+        return Configuration.getInstance().getPossibleTileIDs();
     }
 
     public PossibleAdjacencyProvider getPossibleAdjacencyProvider() {
@@ -28,5 +27,9 @@ public class TileDataProvider {
 
     public TileRandomCollapsingService getTileRandomCollapsingService() {
         return tileRandomCollapsingService;
+    }
+
+    public TilePropagationProvider getTilePropagationProvider() {
+        return tilePropagationProvider;
     }
 }

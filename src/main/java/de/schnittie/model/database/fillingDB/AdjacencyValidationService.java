@@ -1,4 +1,4 @@
-package de.schnittie.model.fillingDB;
+package de.schnittie.model.database.fillingDB;
 
 import de.schnittie.model.database.RuleTO;
 
@@ -15,6 +15,7 @@ public class AdjacencyValidationService {
             }
             tileIdToPresentDirectionIDs.get(rule.this_tile()).add(rule.next_to());
         }
+        //TODO: mach da mal besser
         int goalDirectionAmount = tileIdToPresentDirectionIDs.get(rules.get(0).this_tile()).size();
         for (Integer tileID : tileIdToPresentDirectionIDs.keySet()) {
             if (goalDirectionAmount != tileIdToPresentDirectionIDs.get(tileID).size()){

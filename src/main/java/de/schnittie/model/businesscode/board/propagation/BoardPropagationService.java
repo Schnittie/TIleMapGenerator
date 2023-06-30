@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPropagationService {
-    private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getDirectionChanges();
 
     public static void propagate(int x, int y, Board board) {
         try {
@@ -50,6 +49,7 @@ public class BoardPropagationService {
     }
 
     private static void addNewEntriesToQueue(PairOfCoordinates coordinates, BoardPropagationQueue boardPropagationQueue, Board board, List<Integer> newContentOfPropagationSender) throws MapGenerationException {
+        HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
         for (int directionID : directionChangeMap.keySet()) {
             PairOfCoordinates directionChange = directionChangeMap.get(directionID);
             int wouldBeX = directionChange.x() + coordinates.x();

@@ -1,4 +1,4 @@
-package de.schnittie.model.fillingDB;
+package de.schnittie.model.database.fillingDB;
 
 import de.schnittie.model.database.DBinteractions;
 import de.schnittie.model.database.RuleTO;

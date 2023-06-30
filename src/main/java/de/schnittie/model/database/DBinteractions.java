@@ -15,11 +15,11 @@ import java.util.HashMap;
 public class DBinteractions {
 
 
-    private static final String DB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator;
+    private static final String DB_FOLDER = InstallationHandler.getDefaultResourcesURLandIfNotExistsCreate() + File.separator;
 
     private static final String TILEFOLDER = DB_FOLDER + File.separator + "TileImages" + File.separator;
 
-    public static String getTILEFOLDER() {
+    public static String getTileFolder() {
         return TILEFOLDER;
     }
 
@@ -49,7 +49,7 @@ public class DBinteractions {
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true);
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "TileMapGeneratorDB.db");
+        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "TileMapGeneratorDefaultDB.db");
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
