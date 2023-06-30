@@ -174,6 +174,34 @@ public class DBinteractions {
         }
     }
 
+    public HashMap<Integer, String> getDirectionNameMap() {
+        //Mappes direction to their name
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            HashMap<Integer, String> resultMap = new HashMap<>();
+            statement = conn.prepareStatement(
+
+                    "SELECT id, name FROM direction");
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                resultMap.put(id, name);
+            }
+            return resultMap;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
     public void putTileIntoDB(String imageUrl, int probability) {
         PreparedStatement statement = null;
         try {
@@ -190,14 +218,14 @@ public class DBinteractions {
         }
     }
 
-    public void putRuleIntoDB(int this_tile, int that_tile, int direction) {
+    public void putRulesIntoDB(RuleTO rule) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
                     "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?) ON CONFLICT DO NOTHING");
-            statement.setInt(1, this_tile);
-            statement.setInt(2, that_tile);
-            statement.setInt(3, direction);
+            statement.setInt(1, rule.this_tile());
+            statement.setInt(2, rule.that_tile());
+            statement.setInt(3, rule.next_to());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

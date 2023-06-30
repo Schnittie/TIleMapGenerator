@@ -1,6 +1,7 @@
 package de.schnittie.model.fillingDB;
 
 import de.schnittie.model.database.DBinteractions;
+import de.schnittie.model.database.RuleTO;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,16 +36,28 @@ public class RuleCreation {
                 throw new RuntimeException(e);
             }
         }
+        ArrayList<RuleTO> listOfRulesToCreate = new ArrayList<>();
         for (Integer this_tile_Id : tileSocketList.keySet()) {
             for (Integer direction : directionChanges.keySet()) {
                 for (Integer that_tile_Id : tileSocketList.keySet()) {
                     if (tileSocketList.get(this_tile_Id).get(direction).equals
                             (tileSocketList.get(that_tile_Id).get(directionChanges.get(direction)))) {
-                        dBinteractions.putRuleIntoDB(this_tile_Id, that_tile_Id, directionChanges.get(direction));
+                        listOfRulesToCreate.add(new RuleTO(-1, this_tile_Id, that_tile_Id, directionChanges.get(direction)));
                     }
                 }
             }
         }
+        try {
+            AdjacencyValidationService.areRulesValid(listOfRulesToCreate);
+        } catch (InvalidAdjacencyException e) {
+            //TODO what if the rules are bad
+            e.printFaultyTiles();
+            throw new RuntimeException(e);
+        }
+        for (RuleTO rule : listOfRulesToCreate) {
+            dBinteractions.putRulesIntoDB(rule);
+        }
+
 
     }
 
