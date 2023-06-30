@@ -8,6 +8,9 @@ import java.util.List;
 
 public class AdjacencyValidationService {
     public static void areRulesValid(List<RuleTO> rules) throws InvalidAdjacencyException {
+        if (rules.isEmpty()){
+            return;
+        }
         HashMap<Integer, HashSet<Integer>> tileIdToPresentDirectionIDs = new HashMap<>(rules.size());
         for (RuleTO rule : rules) {
             if (!tileIdToPresentDirectionIDs.containsKey(rule.this_tile())){
@@ -15,7 +18,6 @@ public class AdjacencyValidationService {
             }
             tileIdToPresentDirectionIDs.get(rule.this_tile()).add(rule.next_to());
         }
-        //TODO: mach da mal besser
         int goalDirectionAmount = tileIdToPresentDirectionIDs.get(rules.get(0).this_tile()).size();
         for (Integer tileID : tileIdToPresentDirectionIDs.keySet()) {
             if (goalDirectionAmount != tileIdToPresentDirectionIDs.get(tileID).size()){

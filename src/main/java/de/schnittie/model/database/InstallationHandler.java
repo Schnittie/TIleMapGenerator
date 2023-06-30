@@ -58,6 +58,7 @@ public class InstallationHandler {
         if (!DBinteractions.getInstance().getPossibleTileIDs().isEmpty()) {
             return;
         }
+
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(3);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
