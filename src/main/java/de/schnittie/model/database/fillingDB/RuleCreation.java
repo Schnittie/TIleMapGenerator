@@ -17,7 +17,7 @@ public class RuleCreation {
     private static final ArrayList<Integer> colourSet = new ArrayList<>();
     private static final int TOLERANCE = 50;
 
-    public static void generateRules() {
+    public static void generateRulesBasedOnColour() {
         //Each side of a Tile has a Socket
         //the Sockets are based on Pixel colours
         //if the Socket of a Tile matches with the Socket of another Tile on the reverse Side it fits
@@ -40,21 +40,27 @@ public class RuleCreation {
         for (Integer this_tile_Id : tileSocketList.keySet()) {
             for (Integer direction : directionChanges.keySet()) {
                 for (Integer that_tile_Id : tileSocketList.keySet()) {
-                    if (tileSocketList.get(this_tile_Id).get(direction).equals
-                            (tileSocketList.get(that_tile_Id).get(directionChanges.get(direction)))) {
+                    int neighbourValidity = AdjacencyByFilePathHelperService.extraRuleValidly(this_tile_Id, that_tile_Id, direction, tilePathMap);
+                    if (neighbourValidity == 1 || (tileSocketList.get(this_tile_Id).get(direction).equals
+                            (tileSocketList.get(that_tile_Id).get(directionChanges.get(direction))))&& neighbourValidity==0) {
                         listOfRulesToCreate.add(new RuleTO(-1, this_tile_Id, that_tile_Id, directionChanges.get(direction)));
                     }
                 }
             }
         }
         try {
+            System.out.println("I'm checking rules");
             AdjacencyValidationService.areRulesValid(listOfRulesToCreate);
+            System.out.println("I'm done checking rules");
         } catch (InvalidAdjacencyException e) {
             //TODO what if the rules are bad
             e.printFaultyTiles();
             throw new RuntimeException(e);
         }
+        System.out.println(listOfRulesToCreate.size());
+        int i = 0;
         for (RuleTO rule : listOfRulesToCreate) {
+            System.out.println(i++);
             dBinteractions.putRulesIntoDB(rule);
         }
 

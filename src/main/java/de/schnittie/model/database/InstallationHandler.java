@@ -62,11 +62,9 @@ public class InstallationHandler {
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(3);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateNone.png")).toURI())), 0);
+                "Tiles.png")).toURI())), -10);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateOnce.png")).toURI())), 1);
-        tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "DefaultTilemapRotateThrice.png")).toURI())), 3);
+                "TestTiles_V01.png")).toURI())), 0);
         TileCreation.addTiles(tilemapMap, tileFolder + File.separator);
     }
 
