@@ -16,10 +16,10 @@ import java.util.Objects;
 
 public class InstallationHandler {
     private final static AppDirs appDirs = AppDirsFactory.getInstance();
-    private final static String DEFAULT_FOLDER_NAME = "defaultMapConfig";
+    private final static String DEFAULT_Fantasy_NAME = "defaultFantasyConfig";
     private final static String pathString = appDirs.getUserDataDir("TileMapGenerator", null, "CatboyMaps");
-    private static final String defaultMapPathString = pathString + File.separator + DEFAULT_FOLDER_NAME;
-    private static final String tileFolder = defaultMapPathString + File.separator + "TileImages";
+    private static final String defaultMapPathString = pathString + File.separator + DEFAULT_Fantasy_NAME;
+    private static final String tileFolderName = defaultMapPathString + File.separator + "TileImages";
 
     public static Path getDefaultResourcesURLandIfNotExistsCreate() {
         Path path = Path.of(defaultMapPathString);
@@ -30,7 +30,7 @@ public class InstallationHandler {
             //creating the Directory
             Files.createDirectories(Path.of(pathString));
             Files.createDirectories(path);
-            Files.createDirectories(Path.of(tileFolder));
+            Files.createDirectories(Path.of(tileFolderName));
             System.out.println("Directory created successfully");
         } catch (IOException e) {
             System.out.println("failed to create directory");
@@ -65,7 +65,7 @@ public class InstallationHandler {
                 "Tiles.png")).toURI())), -10);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
                 "TestTiles_V01.png")).toURI())), 0);
-        TileCreation.addTiles(tilemapMap, tileFolder + File.separator);
+        TileCreation.addTiles(tilemapMap, tileFolderName + File.separator);
     }
 
     private static void copyFileFromResourcesToDefaultDirectory(ClassLoader classLoader, String filename) throws URISyntaxException, IOException {
