@@ -46,7 +46,6 @@ public class AdjacencyByFilePathHelperService {
         }
         if ((tilePathMap.get(thisTileId).contains("NeighbourRules") && tilePathMap.get(thatTileId).contains("NeighbourRules"))){
             if (thisTileNumbers.get(0) + pairOfCoordinates.x() == thatTileNumbers.get(0) && thisTileNumbers.get(1) + pairOfCoordinates.y() == thatTileNumbers.get(1)) {
-                System.out.println("true " + thisTileId + " "+ thatTileId + " "+ direction);
                 return 1;
             }
             return -1;

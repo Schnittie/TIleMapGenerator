@@ -49,20 +49,18 @@ public class RuleCreation {
             }
         }
         try {
-            System.out.println("I'm checking rules");
+            System.out.println("Validating rules...");
             AdjacencyValidationService.areRulesValid(listOfRulesToCreate);
-            System.out.println("I'm done checking rules");
         } catch (InvalidAdjacencyException e) {
             //TODO what if the rules are bad
             e.printFaultyTiles();
             throw new RuntimeException(e);
         }
-        System.out.println(listOfRulesToCreate.size());
-        int i = 0;
+        System.out.println("putting " + listOfRulesToCreate.size() + " Entries into the DB...");
         for (RuleTO rule : listOfRulesToCreate) {
-            System.out.println(i++);
             dBinteractions.putRulesIntoDB(rule);
         }
+        System.out.println("Done putting entries into DB");
 
 
     }
