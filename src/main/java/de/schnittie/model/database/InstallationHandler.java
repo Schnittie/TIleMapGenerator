@@ -32,6 +32,7 @@ public class InstallationHandler {
         if (Files.exists(path)) {
             return path;
         }
+        System.out.println("Creating Resources at " + pathString);
         try {
             Files.createDirectories(path);
             ClassLoader classLoader = InstallationHandler.class.getClassLoader();
