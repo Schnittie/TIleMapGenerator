@@ -31,7 +31,7 @@ public class TileCreation {
             throw new RuntimeException("files not found");
         }
         putTilesInDB(files);
-        RuleCreation.generateRules();
+        RuleCreation.generateRulesBasedOnColour();
     }
 
     private static void putTilesInDB(File[] files) {
@@ -46,14 +46,18 @@ public class TileCreation {
     private static int getProbabilityForTile(String imageUrl) {
         for (char c :
                 imageUrl.toCharArray()) {
-            if (Character.isDigit(c)) return 4 - Integer.parseInt(String.valueOf(c));
+            if (Character.isDigit(c)) {
+                if (Integer.parseInt(String.valueOf(c)) < 0) {
+                    return Math.abs(Integer.parseInt(String.valueOf(c)));
+                }
+                return 4 - Integer.parseInt(String.valueOf(c));
+            }
         }
         return 1;
     }
 
     private static void splitImage(File inputFile, int shouldRotate, String tileFolder) throws IOException {
         //splits a Tilemap into the individual images and rotates it the specified amount, then saves it
-        shouldRotate = shouldRotate < 0 || shouldRotate > 3 ? 0 : shouldRotate;
         BufferedImage inputImage = ImageIO.read(inputFile);
 
         int numCols = inputImage.getWidth() / TILE_SIZE;
@@ -70,8 +74,28 @@ public class TileCreation {
                 if (isSubimageTransparent(outputImage)) {
                     continue;  // Skip empty (transparent) sub-images
                 }
+                if (shouldRotate < 0) {
+                    StringBuilder edgeMarker = new StringBuilder();
+                    if (row == numRows - 1) {
+                        edgeMarker.append("Below");
+                    }
+                    if (row == 0) {
+                        edgeMarker.append("Above");
+                    }
+                    if (col == numCols - 1) {
+                        edgeMarker.append("Right");
+                    }
+                    if (col == 0) {
+                        edgeMarker.append("Left");
+                    }
+                    String baseOutputFilePath = tileFolder + "NeighbourRules Based on " + inputFile.getName() + " p" + shouldRotate + edgeMarker + "_" + col + "_" + row + ".png";
+
+                    ImageIO.write(outputImage, "png", new File(baseOutputFilePath));
+                    continue;
+                }
                 String rotateFileName = "rotated_" + shouldRotate + "_times";
-                String baseOutputFilePath = tileFolder + rotateFileName + "_" + row + "_" + col + "_";
+                String baseOutputFilePath = tileFolder + rotateFileName + "_" + col + "_" + row + "_";
+
 
                 // Save the original subimage
                 String outputFilePath = baseOutputFilePath + "0.png";

@@ -58,8 +58,9 @@ public class InstallationHandler {
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(3);
         tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
-                "Tiles.png")).toURI())), 0);
-
+                "Tiles.png")).toURI())), -10);
+        tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
+                "TestTiles_V01.png")).toURI())), 0);
         TileCreation.addTiles(tilemapMap, tileFolder + File.separator);
     }
 
