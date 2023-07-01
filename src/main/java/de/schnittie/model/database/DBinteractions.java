@@ -15,19 +15,19 @@ import java.util.HashMap;
 public class DBinteractions {
 
 
-    private static final String DB_FOLDER = InstallationHandler.getDefaultResourcesURLandIfNotExistsCreate() + File.separator;
+    private static final String DefaultDB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator;
 
-    private static final String TILEFOLDER = DB_FOLDER + File.separator + "TileImages" + File.separator;
 
-    public static String getTileFolder() {
-        return TILEFOLDER;
+    public String getTileFolder() {
+        return (dbFolder + File.separator + InstallationHandler.getTileFolderName());
     }
 
-    public static String getDbFolder() {
-        return DB_FOLDER;
+    public String getDbFolder() {
+        return dbFolder;
     }
 
-    private final Connection conn;
+    private Connection conn;
+    private String dbFolder  = DBinteractions.DefaultDB_FOLDER;
 
     private static final DBinteractions dBInteractions;
 
@@ -49,10 +49,21 @@ public class DBinteractions {
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true);
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "TileMapGeneratorDefaultDB.db");
+        dataSource.setUrl("jdbc:sqlite:" + dbFolder + "TileMapGeneratorDB.db");
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
+    }
+    public DBinteractions setDbFolder(String dbFolder) throws SQLException {
+        this.dbFolder = dbFolder;
+        SQLiteConfig config = new SQLiteConfig();
+        config.enforceForeignKeys(true);
+        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        dataSource.setUrl("jdbc:sqlite:" + dbFolder + File.separator +"TileMapGeneratorDB.db");
+
+        this.conn = dataSource.getConnection();
+        conn.setAutoCommit(true);
+        return this;
     }
 
     private static void close(AutoCloseable closable) {
@@ -264,7 +275,7 @@ public class DBinteractions {
 
             while (resultSet.next()) {
                 returnMap.put(resultSet.getInt(1),
-                        (TILEFOLDER + File.separator + (resultSet.getString("filepath"))));
+                        (getTileFolder() + File.separator + (resultSet.getString("filepath"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

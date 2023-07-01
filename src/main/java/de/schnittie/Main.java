@@ -4,16 +4,10 @@ import de.schnittie.controller.Controller;
 import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.database.InstallationHandler;
 
-import java.net.URISyntaxException;
-
 public class Main {
     public static void main(String[] args) {
         //uncomment this to run normally
-        try {
-            InstallationHandler.generateRulesAndTilesForDefaultMapIfNotPresent();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        InstallationHandler.generateTilesForDefaultMapIfNotPresent();
         Configuration.ReloadConfiguration();
         Controller controller = new Controller();
 

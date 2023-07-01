@@ -21,7 +21,7 @@ public class Configuration {
     private  final ArrayList<RuleTO> rules = dBinteractions.getAllRules();
     private  final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private  final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
-    private  final String dbFolder = DBinteractions.getDbFolder();
+    private  final String dbFolder = DBinteractions.getInstance().getDbFolder();
 
 
     public  ArrayList<RuleTO> getRules(){

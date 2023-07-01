@@ -34,7 +34,7 @@ public class BoardImageFactory {
 
         try {
             ImageIO.write(boardImage, "png", new File(
-                    DBinteractions.getDbFolder() + File.separator + "generatedMapRender.png"));
+                    DBinteractions.getInstance().getDbFolder() + File.separator + "generatedMapRender.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
