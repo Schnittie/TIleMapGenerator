@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class AdjacencyValidationService {
+public class RuleValidationService {
     public static void areRulesValid(List<RuleTO> rules) throws InvalidAdjacencyException {
         if (rules.isEmpty()){
             return;

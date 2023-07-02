@@ -50,7 +50,7 @@ public class RuleCreation {
         }
         try {
             System.out.println("Validating rules...");
-            AdjacencyValidationService.areRulesValid(listOfRulesToCreate);
+            RuleValidationService.areRulesValid(listOfRulesToCreate);
         } catch (InvalidAdjacencyException e) {
             //TODO what if the rules are bad
             e.printFaultyTiles();

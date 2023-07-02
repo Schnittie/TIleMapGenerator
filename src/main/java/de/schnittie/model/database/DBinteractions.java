@@ -27,7 +27,7 @@ public class DBinteractions {
     }
 
     private Connection conn;
-    private String dbFolder  = DBinteractions.DefaultDB_FOLDER;
+    private String dbFolder = DBinteractions.DefaultDB_FOLDER;
 
     private static final DBinteractions dBInteractions;
 
@@ -54,12 +54,13 @@ public class DBinteractions {
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
     }
+
     public DBinteractions setDbFolder(String dbFolder) throws SQLException {
         this.dbFolder = dbFolder;
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true);
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:" + dbFolder + File.separator +"TileMapGeneratorDB.db");
+        dataSource.setUrl("jdbc:sqlite:" + dbFolder + File.separator + "TileMapGeneratorDB.db");
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
@@ -285,29 +286,88 @@ public class DBinteractions {
         }
         return returnMap;
     }
-    public ArrayList<RuleTO> getAllRules(){
-            //Returns an Array of all Rules
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-            try {
-                ArrayList<RuleTO> resultList = new ArrayList<>();
-                statement = conn.prepareStatement(
-                        "SELECT * FROM rule ORDER BY that_tile, next_to");
-                resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    resultList.add(new RuleTO(
-                            resultSet.getInt("id"),
-                            resultSet.getInt("this_tile"),
-                            resultSet.getInt("that_tile"),
-                            resultSet.getInt("next_to")));
-                }
-                return resultList;
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                close(statement);
-                close(resultSet);
+    public ArrayList<RuleTO> getAllRules() {
+        //Returns an Array of all Rules
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            ArrayList<RuleTO> resultList = new ArrayList<>();
+            statement = conn.prepareStatement(
+                    "SELECT * FROM rule ORDER BY that_tile, next_to");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultList.add(new RuleTO(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("this_tile"),
+                        resultSet.getInt("that_tile"),
+                        resultSet.getInt("next_to")));
             }
+            return resultList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    public RuleTO getRuleById(int ruleID) {
+        //Returns one Rule
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "SELECT * FROM rule WHERE id = ?");
+            statement.setInt(1, ruleID);
+            resultSet = statement.executeQuery();
+            return new RuleTO(
+                    resultSet.getInt("id"),
+                    resultSet.getInt("this_tile"),
+                    resultSet.getInt("that_tile"),
+                    resultSet.getInt("next_to"));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+
+    public void removeRule(int ruleToRemove) {
+        //Returns one Rule
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "DELETE * FROM rule WHERE id = ?");
+            statement.setInt(1, ruleToRemove);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    public void setProbabilityForTile(int tileID, int probability) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "UPDATE tile SET probability = ? FROM tile WHERE id = ?");
+            statement.setInt(1, probability);
+            statement.setInt(2, tileID);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
     }
 }
