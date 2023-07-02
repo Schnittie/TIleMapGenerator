@@ -3,6 +3,7 @@ package de.schnittie.model.businesscode.board.propagation;
 import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
+import de.schnittie.model.businesscode.board.BoardDamageControlService;
 import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 
@@ -17,16 +18,14 @@ public class BoardPropagationService {
             addNewEntriesToQueue(new PairOfCoordinates(x, y), boardPropagationQueue, board, board.getTile(x, y).getPossibleTileContentLeft());
             propagate(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
-            System.out.println("damage");
             BoardImageFactory.generateBoardImage(board.getBoardTO());
-            throw new RuntimeException();
-//            try {
-//                System.out.println("I need to control damage");
-//                e.printStackTrace();
-//                BoardDamageControlService.controlDamage(x, y, board);
-//            } catch (MapGenerationException ex) {
-//                throw new RuntimeException(ex);
-//            }
+            try {
+                System.out.println("I need to control damage");
+                e.printStackTrace();
+                BoardDamageControlService.controlDamage(x, y, board);
+            } catch (MapGenerationException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 

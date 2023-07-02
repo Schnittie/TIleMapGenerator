@@ -12,9 +12,10 @@ public class Configuration {
     public static Configuration getInstance() {
         return configuration;
     }
-    public static void ReloadConfiguration(){
+    public static void reloadConfiguration(){
         configuration = new Configuration();
     }
+
     private  final DBinteractions dBinteractions = DBinteractions.getInstance();
     private  final HashMap<Integer, PairOfCoordinates> directionChangeMap = dBinteractions.getDirectionChanges();
     private  final HashMap<Integer, String> filePathMap = dBinteractions.getFilePathMap();

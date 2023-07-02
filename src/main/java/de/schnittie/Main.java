@@ -7,7 +7,7 @@ import de.schnittie.model.database.InstallationHandler;
 public class Main {
     public static void main(String[] args) {
         InstallationHandler.generateTilesForDefaultMapIfNotPresent();
-        Configuration.ReloadConfiguration();
+        Configuration.reloadConfiguration();
         Controller controller = new Controller();
     }
 }

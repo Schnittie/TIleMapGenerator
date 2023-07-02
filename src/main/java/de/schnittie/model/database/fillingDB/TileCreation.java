@@ -16,6 +16,8 @@ public class TileCreation {
 
     public static void addTiles(HashMap<File, Integer> tilemapMap, String tileFolder) {
         //receives a Map that mapps a file to how often it should rotate
+
+        System.out.println("Creating Tiles...");
         for (File tilemap : tilemapMap.keySet()) {
             try {
                 TileCreation.splitImage(tilemap, tilemapMap.get(tilemap), tileFolder);

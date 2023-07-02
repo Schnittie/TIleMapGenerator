@@ -5,9 +5,12 @@ import de.schnittie.model.businesscode.Configuration;
 import java.util.ArrayList;
 
 public class TileDataProvider {
-    private static final TileDataProvider tileDataProvider = new TileDataProvider();
+    private static TileDataProvider tileDataProvider = new TileDataProvider();
     public static TileDataProvider getInstance() {
         return tileDataProvider;
+    }
+    public static void reloadTileDataProvider(){
+        tileDataProvider = new TileDataProvider();
     }
 
     private final PossibleAdjacencyProvider possibleAdjacencyProvider = new PossibleAdjacencyProvider();
