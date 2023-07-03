@@ -62,7 +62,7 @@ public class BoardPropagationService {
             PairOfCoordinates directionChange = directionChangeMap.get(directionID);
             int wouldBeX = directionChange.x() + coordinates.x();
             int wouldBeY = directionChange.y() + coordinates.y();
-            if (wouldBeX >= 0 && wouldBeX <= board.getWIDTH() - 1 && wouldBeY >= 0 && wouldBeY <= board.getHEIGHT() - 1) {
+            if (wouldBeX >= 0 && wouldBeX <= board.getWidth() - 1 && wouldBeY >= 0 && wouldBeY <= board.getHeight() - 1) {
                 boardPropagationQueue.enqueue(new PairOfCoordinates(wouldBeX, wouldBeY), directionID, newContentOfPropagationSender);
 
             }

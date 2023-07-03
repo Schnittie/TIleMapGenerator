@@ -5,43 +5,59 @@ import de.schnittie.model.businesscode.tile.Tile;
 import java.util.ArrayList;
 
 public class BoardFusionFactory {
-    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) {
+    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException {
         //taking two already formed Boards and fusing them
-        if (innerBoard.getWIDTH() != outerBoard.getWIDTH()) {
-            throw new RuntimeException("These boards don't have the right Dimensions to fit");
+        if (innerBoard.getWidth() != outerBoard.getWidth()) {
+            throw new BoardFusionException("These boards don't have the right Dimensions to fit");
         }
-
+        for (int x = 0; x < getLowerXEdge(innerBoard).size(); x++) {
+            if (getLowerXEdge(innerBoard).get(x) != getUpperXEdge(outerBoard).get(x)){
+                throw new BoardFusionException("These Boards don't match on the X axis");
+            }
+        }
+        for (int y = 1; y < outerBoard.getHeight(); y++) {
+            innerBoard.addRows(outerBoard.getBoardAsListofArrayList());
+        }
+        return innerBoard;
     }
 
-    public ArrayList<Tile> getLeftYEdge(Board board) {
-        ArrayList<Tile> leftYEdge = new ArrayList<>(board.getHEIGHT());
-        for (int i = 0; i < board.getHEIGHT(); i++) {
+    private static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException {
+        //taking two already formed Boards and fusing them
+        if (innerBoard.getHeight() != outerBoard.getHeight()) {
+            throw new BoardFusionException("These boards don't have the right Dimensions to fit");
+        }
+        for (int y = 0; y < getRightYEdge(innerBoard).size(); y++) {
+            if (getRightYEdge(innerBoard).get(y) != getLeftYEdge(outerBoard).get(y)){
+                throw new BoardFusionException("These Boards don't match on the Y axis");
+            }
+        }
+        for (int y = 1; y < outerBoard.getHeight(); y++) {
+            innerBoard.extendRow(y, outerBoard.getRow(y));
+        }
+        return innerBoard;
+    }
+
+    public static ArrayList<Tile> getLeftYEdge(Board board) {
+        ArrayList<Tile> leftYEdge = new ArrayList<>(board.getHeight());
+        for (int i = 0; i < board.getHeight(); i++) {
             leftYEdge.add(board.getTile(0, i));
         }
         return leftYEdge;
     }
 
-    public ArrayList<Tile> getRightYEdge(Board board) {
-        ArrayList<Tile> rightYEdge = new ArrayList<>(board.getHEIGHT());
-        for (int i = 0; i < board.getHEIGHT(); i++) {
-            rightYEdge.add(board.getTile(board.getWIDTH() - 1, i));
+    public static ArrayList<Tile> getRightYEdge(Board board) {
+        ArrayList<Tile> rightYEdge = new ArrayList<>(board.getHeight());
+        for (int i = 0; i < board.getHeight(); i++) {
+            rightYEdge.add(board.getTile(board.getWidth() - 1, i));
         }
         return rightYEdge;
     }
 
-    public ArrayList<Tile> getLowerXEdge(Board board) {
-        ArrayList<Tile> lowerXEdge = new ArrayList<>(board.getWIDTH());
-        for (int i = 0; i < board.getWIDTH(); i++) {
-            lowerXEdge.add(board.getTile(i, board.getHEIGHT() - 1));
-        }
-        return lowerXEdge;
+    public static ArrayList<Tile> getLowerXEdge(Board board) {
+        return (ArrayList<Tile>) board.getRow(board.getHeight()-1);
     }
 
-    public ArrayList<Tile> getUpperXEdge(Board board) {
-        ArrayList<Tile> upperXEdge = new ArrayList<>(board.getWIDTH());
-        for (int i = 0; i < board.getWIDTH(); i++) {
-            upperXEdge.add(board.getTile(i, 0));
-        }
-        return upperXEdge;
+    public static ArrayList<Tile> getUpperXEdge(Board board) {
+        return (ArrayList<Tile>) board.getRow(0);
     }
 }

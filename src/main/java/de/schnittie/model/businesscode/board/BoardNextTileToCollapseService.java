@@ -16,8 +16,8 @@ public class BoardNextTileToCollapseService {
 
     public static PairOfCoordinates getRandomNonCollapsedTile(Board board) {
         ArrayList<PairOfCoordinates> lowestEntropyTiles = new ArrayList<>();
-        for (int x = 0; x < board.getWIDTH(); x++) {
-            for (int y = 0; y < board.getHEIGHT(); y++) {
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
                 if (!board.getTile(x, y).isCollapsed()) {
                     lowestEntropyTiles.add(new PairOfCoordinates(x, y));
                 }
@@ -33,8 +33,8 @@ public class BoardNextTileToCollapseService {
     public static PairOfCoordinates getNextTileWithLowestEntropy(Board board) {
         ArrayList<PairOfCoordinates> lowestEntropyTiles = new ArrayList<>();
         int minEntropy = MAX_ENTROPY;
-        for (int x = 0; x < board.getWIDTH(); x++) {
-            for (int y = 0; y < board.getHEIGHT(); y++) {
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
                 Tile tile = board.getTile(x, y);
                 if (!tile.isCollapsed()) {
                     if (tile.getPossibleTileStatesLeft() == minEntropy) {
