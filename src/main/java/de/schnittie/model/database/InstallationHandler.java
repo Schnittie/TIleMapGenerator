@@ -1,5 +1,6 @@
 package de.schnittie.model.database;
 
+import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService;
 import de.schnittie.model.database.defaultConfigurations.DefaultConfigurationHolder;
 import de.schnittie.model.database.defaultConfigurations.DefaultConfigurationService;
 import de.schnittie.model.database.fillingDB.TileCreation;
@@ -23,7 +24,8 @@ public class InstallationHandler {
     private final static String pathString = appDirs.getUserDataDir("TileMapGenerator", null, "CatboyMaps");
     private static final String TILE_FOLDER_NAME = "TileImages";
     private static final HashSet<DefaultConfigurationHolder> defaultConfigs = DefaultConfigurationService.getDefaultConfigurations();
-    public static String getTileFolderName(){
+
+    public static String getTileFolderName() {
         return TILE_FOLDER_NAME;
     }
 
@@ -36,19 +38,19 @@ public class InstallationHandler {
         try {
             Files.createDirectories(path);
             ClassLoader classLoader = InstallationHandler.class.getClassLoader();
-            for (DefaultConfigurationHolder defaultConfig: defaultConfigs) {
+            for (DefaultConfigurationHolder defaultConfig : defaultConfigs) {
                 //creating the Directory
                 String pathStringToDirectory = pathString + File.separator + defaultConfig.nameOfConfiguration();
                 Files.createDirectories(Path.of(pathStringToDirectory));
                 Files.createDirectories(Path.of(pathStringToDirectory + File.separator + TILE_FOLDER_NAME));
 
                 //copying over Resources
-                copyFileFromResourcesToDefaultDirectories( "default.png", pathStringToDirectory);
-                copyFileFromResourcesToDefaultDirectories( "TileMapGeneratorDB.db", pathStringToDirectory);
+                copyFileFromResourcesToDefaultDirectories("default.png", pathStringToDirectory);
+                copyFileFromResourcesToDefaultDirectories("TileMapGeneratorDB.db", pathStringToDirectory);
             }
 
             System.out.println("Directory created and Resources copied successfully");
-        } catch (IOException  | URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             System.out.println("failed to create directory or copy Resources");
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -56,8 +58,8 @@ public class InstallationHandler {
         return path;
     }
 
-    public static void generateTilesForDefaultMapIfNotPresent(){
-        for (DefaultConfigurationHolder defaultConfig:defaultConfigs) {
+    public static void generateTilesForDefaultMapIfNotPresent() {
+        for (DefaultConfigurationHolder defaultConfig : defaultConfigs) {
             try {
                 generateTilesForOneDefaultMapIfNotPresent(defaultConfig);
             } catch (URISyntaxException | SQLException e) {
@@ -75,13 +77,19 @@ public class InstallationHandler {
 
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(defaultConfig.filepathToRotateInstructionMap().size());
-        for (String fileName:defaultConfig.filepathToRotateInstructionMap().keySet()) {
+        for (String fileName : defaultConfig.filepathToRotateInstructionMap().keySet()) {
             tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
                     fileName)).toURI())), defaultConfig.filepathToRotateInstructionMap().get(fileName));
         }
-        System.out.println("Resources for "+ defaultConfig.nameOfConfiguration() + " successfully copied");
-        TileCreation.addTiles(tilemapMap, pathStringToDirectory + File.separator + TILE_FOLDER_NAME+ File.separator);
-        System.out.println("Rules for "+ defaultConfig.nameOfConfiguration() + " successfully Generated");
+        System.out.println("Resources for " + defaultConfig.nameOfConfiguration() + " successfully copied");
+        TileCreation.addTiles(tilemapMap, pathStringToDirectory + File.separator + TILE_FOLDER_NAME + File.separator);
+        System.out.println("Applying custom Rule changes...");
+        for (Integer probabilityChangeId : defaultConfig.probabilityChange().keySet()) {
+            ManuallyChangingRulesAndProbabilitiesService.changeProbability(probabilityChangeId,
+                    defaultConfig.probabilityChange().get(probabilityChangeId));
+        }
+        System.out.println("Rules for " + defaultConfig.nameOfConfiguration() + " successfully Generated");
+
     }
 
     private static void copyFileFromResourcesToDefaultDirectories(String filename, String pathStringToDirectory) throws URISyntaxException, IOException {

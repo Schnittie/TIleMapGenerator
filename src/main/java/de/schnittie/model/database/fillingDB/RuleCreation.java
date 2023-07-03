@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 public class RuleCreation {
     private static final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private static final HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
     private static final ArrayList<Socket> socketSet = new ArrayList<>();
     private static final ArrayList<Integer> colourSet = new ArrayList<>();
     private static final int TOLERANCE = 50;
@@ -26,11 +25,12 @@ public class RuleCreation {
         DirectionCreation.putDirectionsIntoDB();
         HashMap<Integer, Integer> directionChanges = dBinteractions.getReverseDirection();
         HashMap<Integer, String> tilePathMap = dBinteractions.getFilePathMap();
+        HashMap<Integer, ArrayList<Integer>> tileSocketList = new HashMap<>();
 
         for (Integer tileId : dBinteractions.getPossibleTileIDs()) {
             try {
                 BufferedImage tileImage = ImageIO.read(new File(tilePathMap.get(tileId)));
-                putTileIntoLists(tileImage, tileId);
+                putTileIntoLists(tileImage, tileId, tileSocketList);
             } catch (IOException e) {
                 System.out.println("error reading file for " + tileId);
                 throw new RuntimeException(e);
@@ -40,7 +40,10 @@ public class RuleCreation {
         for (Integer this_tile_Id : tileSocketList.keySet()) {
             for (Integer direction : directionChanges.keySet()) {
                 for (Integer that_tile_Id : tileSocketList.keySet()) {
-                    int neighbourValidity = AdjacencyByFilePathHelperService.extraRuleValidly(this_tile_Id, that_tile_Id, direction, tilePathMap);
+
+                    int neighbourValidity = AdjacencyByFilePathHelperService.extraRuleValidly(this_tile_Id, that_tile_Id,
+                            direction, tilePathMap);
+
                     if (neighbourValidity == 1 || (tileSocketList.get(this_tile_Id).get(direction).equals
                             (tileSocketList.get(that_tile_Id).get(directionChanges.get(direction))))&& neighbourValidity==0) {
                         listOfRulesToCreate.add(new RuleTO(-1, this_tile_Id, that_tile_Id, directionChanges.get(direction)));
@@ -65,7 +68,8 @@ public class RuleCreation {
 
     }
 
-    private static void putTileIntoLists(BufferedImage tileImage, Integer tileId) {
+    private static void putTileIntoLists(BufferedImage tileImage, Integer tileId,
+                                         HashMap<Integer, ArrayList<Integer>> tileSocketList ) {
         //We save compare Sockets by ID
         ArrayList<Integer> sockets = new ArrayList<>(4);
         sockets.add(getSocketId(tileImage, 2, 0, 7, 0, 12, 0));

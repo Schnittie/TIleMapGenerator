@@ -345,7 +345,7 @@ public class DBinteractions {
             statement = conn.prepareStatement(
                     "DELETE * FROM rule WHERE id = ?");
             statement.setInt(1, ruleToRemove);
-            resultSet = statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -356,18 +356,16 @@ public class DBinteractions {
 
     public void setProbabilityForTile(int tileID, int probability) {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = conn.prepareStatement(
-                    "UPDATE tile SET probability = ? FROM tile WHERE id = ?");
+                    "UPDATE tile SET probability = ? WHERE id = ?");
             statement.setInt(1, probability);
             statement.setInt(2, tileID);
-            resultSet = statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(statement);
-            close(resultSet);
         }
     }
 }
