@@ -37,7 +37,6 @@ public class InstallationHandler {
         System.out.println("Creating Resources at " + pathString);
         try {
             Files.createDirectories(path);
-            ClassLoader classLoader = InstallationHandler.class.getClassLoader();
             for (DefaultConfigurationHolder defaultConfig : defaultConfigs) {
                 //creating the Directory
                 String pathStringToDirectory = pathString + File.separator + defaultConfig.nameOfConfiguration();
@@ -77,17 +76,21 @@ public class InstallationHandler {
 
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
         HashMap<File, Integer> tilemapMap = new HashMap<>(defaultConfig.filepathToRotateInstructionMap().size());
+
         for (String fileName : defaultConfig.filepathToRotateInstructionMap().keySet()) {
             tilemapMap.put(new File(Objects.requireNonNull(Objects.requireNonNull(classLoader.getResource(
                     fileName)).toURI())), defaultConfig.filepathToRotateInstructionMap().get(fileName));
         }
+
         System.out.println("Resources for " + defaultConfig.nameOfConfiguration() + " successfully copied");
         TileCreation.addTiles(tilemapMap, pathStringToDirectory + File.separator + TILE_FOLDER_NAME + File.separator);
         System.out.println("Applying custom Rule changes...");
+
         for (Integer probabilityChangeId : defaultConfig.probabilityChange().keySet()) {
             ManuallyChangingRulesAndProbabilitiesService.changeProbability(probabilityChangeId,
                     defaultConfig.probabilityChange().get(probabilityChangeId));
         }
+
         System.out.println("Rules for " + defaultConfig.nameOfConfiguration() + " successfully Generated");
 
     }
