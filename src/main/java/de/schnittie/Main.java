@@ -6,10 +6,8 @@ import de.schnittie.model.database.InstallationHandler;
 
 public class Main {
     public static void main(String[] args) {
-        long timeBefore = System.currentTimeMillis();
         InstallationHandler.generateTilesForDefaultMapIfNotPresent();
         Configuration.reloadConfiguration();
-        System.out.println(System.currentTimeMillis() - timeBefore);
         Controller controller = new Controller();
     }
 }
