@@ -9,7 +9,7 @@ public class Main {
         long timeBefore = System.currentTimeMillis();
         InstallationHandler.generateTilesForDefaultMapIfNotPresent();
         Configuration.reloadConfiguration();
-        System.out.println(System.currentTimeMillis() - timeBefore); //162729 | 144709
+        System.out.println(System.currentTimeMillis() - timeBefore);
         Controller controller = new Controller();
     }
 }

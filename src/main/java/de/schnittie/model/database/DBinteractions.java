@@ -251,27 +251,42 @@ public class DBinteractions {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
-                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?) ON CONFLICT DO NOTHING");
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES " + getParameterPlaceholders(rules.size(), 3) +"ON CONFLICT DO NOTHING");
 
-            final int batchSize = 100; // Set an appropriate batch size
 
-            int count = 0;
+            int count = 1;
             for (RuleTO rule : rules) {
-                statement.setInt(1, rule.this_tile());
-                statement.setInt(2, rule.that_tile());
-                statement.setInt(3, rule.next_to());
-                statement.addBatch(); // Add the statement to the batch
-                if (++count % batchSize == 0) {
-                    statement.executeBatch(); // Execute the batch of statements
-                }
+                statement.setInt(count++, rule.this_tile());
+                statement.setInt(count++, rule.that_tile());
+                statement.setInt(count++, rule.next_to());
             }
+            statement.executeUpdate();
 
-            statement.executeBatch(); // Execute any remaining statements in the batch
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(statement);
         }
+    }
+
+    private String getParameterPlaceholders(int amountOfValues , int sizeOfValueSet) {
+        if (amountOfValues == 0 || sizeOfValueSet == 0){
+            throw new RuntimeException("attempting to add empty list of Rules");
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder innerStringBuilder = new StringBuilder();
+        for (int i = 0; i < amountOfValues; i++) {
+            stringBuilder.append(",(");
+
+            innerStringBuilder = new StringBuilder();
+            innerStringBuilder.append(",?".repeat(Math.max(0, sizeOfValueSet)));
+            innerStringBuilder.replace(0,1,"");
+
+            stringBuilder.append(innerStringBuilder);
+            stringBuilder.append(")");
+        }
+        stringBuilder.replace(0,1,"");
+        return stringBuilder.toString();
     }
 
 
