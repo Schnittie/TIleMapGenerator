@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DBinteractions {
 
@@ -230,7 +231,7 @@ public class DBinteractions {
         }
     }
 
-    public void putRulesIntoDB(RuleTO rule) {
+    public void putRuleIntoDB(RuleTO rule) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
@@ -245,6 +246,34 @@ public class DBinteractions {
             close(statement);
         }
     }
+
+    public void putListOfRulesIntoDB(List<RuleTO> rules) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement(
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?) ON CONFLICT DO NOTHING");
+
+            final int batchSize = 100; // Set an appropriate batch size
+
+            int count = 0;
+            for (RuleTO rule : rules) {
+                statement.setInt(1, rule.this_tile());
+                statement.setInt(2, rule.that_tile());
+                statement.setInt(3, rule.next_to());
+                statement.addBatch(); // Add the statement to the batch
+                if (++count % batchSize == 0) {
+                    statement.executeBatch(); // Execute the batch of statements
+                }
+            }
+
+            statement.executeBatch(); // Execute any remaining statements in the batch
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+        }
+    }
+
 
     public void putDirectionInDB(int id, String directionName, int x_change, int y_change, int reverse_id) {
         PreparedStatement statement = null;

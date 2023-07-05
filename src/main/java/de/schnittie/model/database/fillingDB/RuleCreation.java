@@ -16,7 +16,7 @@ public class RuleCreation {
     private static final ArrayList<Integer> colourSet = new ArrayList<>();
     private static final int TOLERANCE = 50;
 
-    public static void generateRulesBasedOnColour() {
+    public static void generateRules() {
         //Each side of a Tile has a Socket
         //the Sockets are based on Pixel colours
         //if the Socket of a Tile matches with the Socket of another Tile on the reverse Side it fits
@@ -55,14 +55,11 @@ public class RuleCreation {
             System.out.println("Validating rules...");
             RuleValidationService.areRulesValid(listOfRulesToCreate);
         } catch (InvalidAdjacencyException e) {
-            //TODO what if the rules are bad
             e.printFaultyTiles();
             throw new RuntimeException(e);
         }
         System.out.println("putting " + listOfRulesToCreate.size() + " Entries into the DB...");
-        for (RuleTO rule : listOfRulesToCreate) {
-            dBinteractions.putRulesIntoDB(rule);
-        }
+        dBinteractions.putListOfRulesIntoDB(listOfRulesToCreate);
         System.out.println("Done putting entries into DB");
 
 
