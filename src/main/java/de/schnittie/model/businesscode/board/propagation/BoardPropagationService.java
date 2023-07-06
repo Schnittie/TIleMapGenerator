@@ -4,6 +4,7 @@ import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
+import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import de.schnittie.model.businesscode.tile.Tile;
 import de.schnittie.model.businesscode.tile.TileCollapsed;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPropagationService {
-    private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getDirectionChanges();
 
     public static void propagate(int x, int y, Board board) {
         try {
@@ -20,6 +20,7 @@ public class BoardPropagationService {
             addNewEntriesToQueue(new PairOfCoordinates(x, y), boardPropagationQueue, board, board.getTile(x, y).getPossibleTileContentLeft());
             propagate(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
+            BoardImageFactory.generateBoardImage(board.getBoardTO());
             try {
                 System.out.println("I need to control damage");
                 e.printStackTrace();
@@ -58,6 +59,7 @@ public class BoardPropagationService {
     }
 
     private static void addNewEntriesToQueue(PairOfCoordinates coordinates, BoardPropagationQueue boardPropagationQueue, Board board, List<Integer> newContentOfPropagationSender) throws MapGenerationException {
+        HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
         for (int directionID : directionChangeMap.keySet()) {
             PairOfCoordinates directionChange = directionChangeMap.get(directionID);
             int wouldBeX = directionChange.x() + coordinates.x();

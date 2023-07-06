@@ -1,9 +1,8 @@
 package de.schnittie.model.mvcStuffs;
 
-import de.schnittie.model.businesscode.board.BoardManipulator;
-import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.fillingDB.TileCreation;
+import de.schnittie.model.businesscode.board.BoardImageFactory;
+import de.schnittie.model.businesscode.board.BoardManipulator;
 import de.schnittie.view.ModelListener;
 
 import java.awt.image.BufferedImage;
@@ -48,7 +47,8 @@ public class Model {
     }
 
     public void generateRules() {
-        TileCreation.addTiles(tilesToAdd);
+        //TODO where to generate these rules to?
+        //TileCreation.addTiles(tilesToAdd);
     }
 
     public BufferedImage getLastMap() {

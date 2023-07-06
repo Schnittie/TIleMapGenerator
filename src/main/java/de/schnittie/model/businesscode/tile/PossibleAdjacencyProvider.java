@@ -18,7 +18,7 @@ public class PossibleAdjacencyProvider {
         HashMap<Integer, HashSet<Integer>> possibleAdjacencyWIP = new HashMap<>();
         HashSet<Integer> adjacentIDListForOneDirection = new HashSet<>();
 
-        for (RuleTO ruleTO : Configuration.getRules()) {
+        for (RuleTO ruleTO : Configuration.getInstance().getRules()) {
             if (ruleTO.next_to() != next_to){
 
                 possibleAdjacencyWIP.put(next_to,adjacentIDListForOneDirection);

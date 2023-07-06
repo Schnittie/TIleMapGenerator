@@ -8,31 +8,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configuration {
-    private static final DBinteractions dBinteractions = DBinteractions.getInstance();
-    private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = dBinteractions.getDirectionChanges();
-    private static final HashMap<Integer, String> filePathMap = dBinteractions.getFilePathMap();
-    private static final ArrayList<RuleTO> rules = dBinteractions.getAllRules();
-    private static final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
-    private static final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
-    private static final String dbFolder = DBinteractions.getDbFolder();
+    private static Configuration configuration = new Configuration();
+    public static Configuration getInstance() {
+        return configuration;
+    }
+    public static void reloadConfiguration(){
+        configuration = new Configuration();
+    }
+
+    private  final DBinteractions dBinteractions = DBinteractions.getInstance();
+    private  final HashMap<Integer, PairOfCoordinates> directionChangeMap = dBinteractions.getDirectionChanges();
+    private  final HashMap<Integer, String> filePathMap = dBinteractions.getFilePathMap();
+    private  final ArrayList<RuleTO> rules = dBinteractions.getAllRules();
+    private  final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
+    private  final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
+    private  final String dbFolder = DBinteractions.getInstance().getDbFolder();
 
 
-    public static ArrayList<RuleTO> getRules(){
+    public  ArrayList<RuleTO> getRules(){
         return rules;
     }
-    public static HashMap<Integer, Integer> getProbabilityMap() {
+    public  HashMap<Integer, Integer> getProbabilityMap() {
         return probabilityMap;
     }
-    public static ArrayList<Integer> getPossibleTileIDs() {
+    public  ArrayList<Integer> getPossibleTileIDs() {
         return possibleTileIDs;
     }
-    public static HashMap<Integer, PairOfCoordinates> getDirectionChanges() {
+    public  HashMap<Integer, PairOfCoordinates> getDirectionChanges() {
         return directionChangeMap;
     }
-    public static HashMap<Integer, String> getFilePathMap() {
+    public  HashMap<Integer, String> getFilePathMap() {
         return filePathMap;
     }
-    public static String getDbFolder() {
+    public  String getDbFolder() {
         return dbFolder;
     }
 }

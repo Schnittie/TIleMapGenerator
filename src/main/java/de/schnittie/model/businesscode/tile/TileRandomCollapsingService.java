@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class TileRandomCollapsingService {
     private final Random random = new Random();
-    private final HashMap<Integer, Integer> probabilityMap = Configuration.getProbabilityMap();
 
     public TileRandomCollapsingService() {
     }
@@ -46,7 +45,7 @@ public class TileRandomCollapsingService {
     private HashMap<Integer, Integer> getProbabilityMap(List<Integer> possibleStates) {
         HashMap<Integer, Integer> returnMap = new HashMap<>(possibleStates.size());
         for (Integer tileId : possibleStates) {
-            returnMap.put(tileId, probabilityMap.get(tileId));
+            returnMap.put(tileId, Configuration.getInstance().getProbabilityMap().get(tileId));
         }
         return returnMap;
     }

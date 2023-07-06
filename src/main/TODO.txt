@@ -22,3 +22,5 @@
     //todo: look into using RetainAll in propagation (it returns true if things have changed)
     //TODO: fix bs controller
     //TODO: I can't call everything in BoardPropagation propagate()
+
+    OneJar maven Plugin

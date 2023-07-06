@@ -11,23 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DBinteractions {
 
 
-    private static final String DB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator;
+    private static final String DefaultDB_FOLDER = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator;
 
-    private static final String TILEFOLDER = DB_FOLDER + File.separator + "TileImages" + File.separator;
 
-    public static String getTILEFOLDER() {
-        return TILEFOLDER;
+    public String getTileFolder() {
+        return (dbFolder + File.separator + InstallationHandler.getTileFolderName());
     }
 
-    public static String getDbFolder() {
-        return DB_FOLDER;
+    public String getDbFolder() {
+        return dbFolder;
     }
 
-    private final Connection conn;
+    private Connection conn;
+    private String dbFolder = DBinteractions.DefaultDB_FOLDER;
 
     private static final DBinteractions dBInteractions;
 
@@ -49,10 +50,22 @@ public class DBinteractions {
         SQLiteConfig config = new SQLiteConfig();
         config.enforceForeignKeys(true);
         SQLiteDataSource dataSource = new SQLiteDataSource(config);
-        dataSource.setUrl("jdbc:sqlite:" + DB_FOLDER + "TileMapGeneratorDB.db");
+        dataSource.setUrl("jdbc:sqlite:" + dbFolder + "TileMapGeneratorDB.db");
 
         this.conn = dataSource.getConnection();
         conn.setAutoCommit(true);
+    }
+
+    public DBinteractions setDbFolder(String dbFolder) throws SQLException {
+        this.dbFolder = dbFolder;
+        SQLiteConfig config = new SQLiteConfig();
+        config.enforceForeignKeys(true);
+        SQLiteDataSource dataSource = new SQLiteDataSource(config);
+        dataSource.setUrl("jdbc:sqlite:" + dbFolder + File.separator + "TileMapGeneratorDB.db");
+
+        this.conn = dataSource.getConnection();
+        conn.setAutoCommit(true);
+        return this;
     }
 
     private static void close(AutoCloseable closable) {
@@ -174,6 +187,34 @@ public class DBinteractions {
         }
     }
 
+    public HashMap<Integer, String> getDirectionNameMap() {
+        //Mappes direction to their name
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            HashMap<Integer, String> resultMap = new HashMap<>();
+            statement = conn.prepareStatement(
+
+                    "SELECT id, name FROM direction");
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                resultMap.put(id, name);
+            }
+            return resultMap;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
     public void putTileIntoDB(String imageUrl, int probability) {
         PreparedStatement statement = null;
         try {
@@ -190,14 +231,14 @@ public class DBinteractions {
         }
     }
 
-    public void putRuleIntoDB(int this_tile, int that_tile, int direction) {
+    public void putRuleIntoDB(RuleTO rule) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
                     "INSERT INTO rule (this_tile, that_tile, next_to) VALUES (?,?,?) ON CONFLICT DO NOTHING");
-            statement.setInt(1, this_tile);
-            statement.setInt(2, that_tile);
-            statement.setInt(3, direction);
+            statement.setInt(1, rule.this_tile());
+            statement.setInt(2, rule.that_tile());
+            statement.setInt(3, rule.next_to());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -205,6 +246,49 @@ public class DBinteractions {
             close(statement);
         }
     }
+
+    public void putListOfRulesIntoDB(List<RuleTO> rules) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement(
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES " + getParameterPlaceholders(rules.size(), 3) +"ON CONFLICT DO NOTHING");
+
+
+            int count = 1;
+            for (RuleTO rule : rules) {
+                statement.setInt(count++, rule.this_tile());
+                statement.setInt(count++, rule.that_tile());
+                statement.setInt(count++, rule.next_to());
+            }
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+        }
+    }
+
+    private String getParameterPlaceholders(int amountOfValues , int sizeOfValueSet) {
+        if (amountOfValues == 0 || sizeOfValueSet == 0){
+            throw new RuntimeException("attempting to add empty list of Rules");
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder innerStringBuilder = new StringBuilder();
+        for (int i = 0; i < amountOfValues; i++) {
+            stringBuilder.append(",(");
+
+            innerStringBuilder = new StringBuilder();
+            innerStringBuilder.append(",?".repeat(Math.max(0, sizeOfValueSet)));
+            innerStringBuilder.replace(0,1,"");
+
+            stringBuilder.append(innerStringBuilder);
+            stringBuilder.append(")");
+        }
+        stringBuilder.replace(0,1,"");
+        return stringBuilder.toString();
+    }
+
 
     public void putDirectionInDB(int id, String directionName, int x_change, int y_change, int reverse_id) {
         PreparedStatement statement = null;
@@ -236,7 +320,7 @@ public class DBinteractions {
 
             while (resultSet.next()) {
                 returnMap.put(resultSet.getInt(1),
-                        (TILEFOLDER + File.separator + (resultSet.getString("filepath"))));
+                        (getTileFolder() + File.separator + (resultSet.getString("filepath"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -246,29 +330,86 @@ public class DBinteractions {
         }
         return returnMap;
     }
-    public ArrayList<RuleTO> getAllRules(){
-            //Returns an Array of all Rules
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-            try {
-                ArrayList<RuleTO> resultList = new ArrayList<>();
-                statement = conn.prepareStatement(
-                        "SELECT * FROM rule ORDER BY that_tile, next_to");
-                resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    resultList.add(new RuleTO(
-                            resultSet.getInt("id"),
-                            resultSet.getInt("this_tile"),
-                            resultSet.getInt("that_tile"),
-                            resultSet.getInt("next_to")));
-                }
-                return resultList;
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                close(statement);
-                close(resultSet);
+    public ArrayList<RuleTO> getAllRules() {
+        //Returns an Array of all Rules
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            ArrayList<RuleTO> resultList = new ArrayList<>();
+            statement = conn.prepareStatement(
+                    "SELECT * FROM rule ORDER BY that_tile, next_to");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultList.add(new RuleTO(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("this_tile"),
+                        resultSet.getInt("that_tile"),
+                        resultSet.getInt("next_to")));
             }
+            return resultList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    public RuleTO getRuleById(int ruleID) {
+        //Returns one Rule
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "SELECT * FROM rule WHERE id = ?");
+            statement.setInt(1, ruleID);
+            resultSet = statement.executeQuery();
+            return new RuleTO(
+                    resultSet.getInt("id"),
+                    resultSet.getInt("this_tile"),
+                    resultSet.getInt("that_tile"),
+                    resultSet.getInt("next_to"));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+
+    public void removeRule(int ruleToRemove) {
+        //Returns one Rule
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "DELETE * FROM rule WHERE id = ?");
+            statement.setInt(1, ruleToRemove);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    public void setProbabilityForTile(int tileID, int probability) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement(
+                    "UPDATE tile SET probability = ? WHERE id = ?");
+            statement.setInt(1, probability);
+            statement.setInt(2, tileID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+        }
     }
 }

@@ -13,22 +13,13 @@ import java.util.HashMap;
 public class BoardImageFactory {
 
     private static final int TILE_SIZE = 15;
-    private static BufferedImage DEFAULT = null; //The default image should only ever be shown if something goes wrong
-
-    static {
-        try {
-            DEFAULT = ImageIO.read(new File(Configuration.getDbFolder() + File.separator + "default.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static BufferedImage generateBoardImage(BoardTO board) {
         int width = board.getWIDTH();
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
-        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(Configuration.getFilePathMap());
+        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(Configuration.getInstance().getFilePathMap());
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();
@@ -43,7 +34,7 @@ public class BoardImageFactory {
 
         try {
             ImageIO.write(boardImage, "png", new File(
-                    DBinteractions.getDbFolder() + File.separator + "generatedMapRender.png"));
+                    DBinteractions.getInstance().getDbFolder() + File.separator + "generatedMapRender.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +46,12 @@ public class BoardImageFactory {
         try {
             for (Integer id : filePathMap.keySet()) {
                 imageById.put(id, ImageIO.read(new File(filePathMap.get(id))));
+            }
+            BufferedImage DEFAULT = null; //The default image should only ever be shown if something goes wrong
+            try {
+                DEFAULT = ImageIO.read(new File(Configuration.getInstance().getDbFolder() + File.separator + "default.png"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             imageById.put(-1, DEFAULT);
         } catch (IOException e) {
