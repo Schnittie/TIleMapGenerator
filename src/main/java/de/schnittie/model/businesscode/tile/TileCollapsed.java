@@ -37,7 +37,7 @@ public class TileCollapsed implements Tile {
     }
 
     @Override
-    public Tile collapse() throws MapGenerationException {
+    public Tile collapse() {
         //nothing to do here (shouldn't be called)
         throw new RuntimeException("This shouldn be called on a collapsed Tile");
     }

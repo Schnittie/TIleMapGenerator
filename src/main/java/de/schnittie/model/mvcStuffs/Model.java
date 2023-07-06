@@ -19,9 +19,9 @@ public class Model {
     private HashMap<File, Integer> tilesToAdd = new HashMap<>();
     private BufferedImage lastMap;
 
-    public BufferedImage generateMap(int width, int height) {
+    public BufferedImage generateMap() {
         try {
-            boardManipulator = new BoardManipulator(width, height);
+            boardManipulator = new BoardManipulator();
             boardManipulator.fill();
         } catch (MapGenerationException e) {
             notifyListeners(new GenerationErrorEvent("An Error occurred"));

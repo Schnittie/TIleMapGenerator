@@ -9,7 +9,7 @@ public interface Tile {
     public List<Integer> getPossibleTileContentLeft();
     public void removePossibility(int toRemove);
     public TileCollapsed collapse(int i);
-    public Tile collapse() throws MapGenerationException;
+    public Tile collapse() ;
     public boolean isCollapsed();
     public int getPossibleTileStatesLeft();
     public int getContent();

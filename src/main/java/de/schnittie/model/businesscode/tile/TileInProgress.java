@@ -49,10 +49,14 @@ public class TileInProgress implements Tile {
         return new TileCollapsed(content);
     }
 
-    public TileCollapsed collapse() throws MapGenerationException {
+    public TileCollapsed collapse() {
         //collapsing, but the caller doesn't care which possible state the TileInProgress ends up in
         if (!isCollapsed) {
-            return collapse(tileDataProvider.getTileRandomCollapsingService().getRandomState(getPossibleTileContentLeft()));
+            try {
+                return collapse(tileDataProvider.getTileRandomCollapsingService().getRandomState(getPossibleTileContentLeft()));
+            } catch (MapGenerationException e) {
+                throw new RuntimeException("Could not come up with Random state ");
+            }
         }
         return new TileCollapsed(content);
     }

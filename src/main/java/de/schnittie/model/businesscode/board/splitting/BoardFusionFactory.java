@@ -1,5 +1,6 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.businesscode.board.splitting;
 
+import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.tile.Tile;
 
 import java.util.ArrayList;
