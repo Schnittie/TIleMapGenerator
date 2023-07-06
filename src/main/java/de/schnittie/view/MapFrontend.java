@@ -6,6 +6,7 @@ import de.schnittie.model.mvcStuffs.NewMapEvent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
@@ -18,11 +19,32 @@ public class MapFrontend extends JFrame implements ModelListener{
         pane = getContentPane();
         pane.setLayout(new BorderLayout());
 
-        JButton button = new JButton("Generate Map");
-        button.addActionListener(listener);
+        JButton generateButton = new JButton("Generate Map");
+        generateButton.addActionListener(listener);
+
+        JButton browseButton = new JButton("Browse");
+        browseButton.addActionListener(e -> {
+            JFileChooser chooseNewDirectory = new JFileChooser();
+            chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int returnValue = chooseNewDirectory.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                String chosenDirectory = chooseNewDirectory.getSelectedFile().getAbsolutePath();
+            }
+        });
 
 
-        pane.add(button, BorderLayout.SOUTH);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(generateButton);
+        buttonPanel.add(browseButton);
+
+        getContentPane().setBackground(Color.WHITE);
+        setLayout(new BorderLayout());
+        ((JPanel) getContentPane()).setOpaque(false);
+        getRootPane().setOpaque(false);
+
+        add(buttonPanel, BorderLayout.SOUTH);
         setSize(300,300);
         setVisible(true);
     }
