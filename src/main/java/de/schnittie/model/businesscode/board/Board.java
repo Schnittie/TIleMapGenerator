@@ -1,7 +1,7 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.tile.Tile;
-import de.schnittie.model.businesscode.tile.TileInProgress;
+import de.schnittie.model.businesscode.tile.tileObjects.Tile;
+import de.schnittie.model.businesscode.tile.tileObjects.TileInProgress;
 
 import java.util.ArrayList;
 import java.util.List;

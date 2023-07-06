@@ -1,6 +1,6 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.tile.Tile;
+import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -14,7 +14,6 @@ public class TileDataProvider {
     }
 
     private final PossibleAdjacencyProvider possibleAdjacencyProvider = new PossibleAdjacencyProvider();
-    private final TilePropagationProvider tilePropagationProvider = new TilePropagationProvider();
     private final TileRandomCollapsingService tileRandomCollapsingService = new TileRandomCollapsingService();
 
     public TileDataProvider() {
@@ -30,9 +29,5 @@ public class TileDataProvider {
 
     public TileRandomCollapsingService getTileRandomCollapsingService() {
         return tileRandomCollapsingService;
-    }
-
-    public TilePropagationProvider getTilePropagationProvider() {
-        return tilePropagationProvider;
     }
 }

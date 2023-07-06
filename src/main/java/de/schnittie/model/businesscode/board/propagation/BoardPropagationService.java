@@ -6,8 +6,8 @@ import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
 import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
-import de.schnittie.model.businesscode.tile.Tile;
-import de.schnittie.model.businesscode.tile.TileCollapsed;
+import de.schnittie.model.businesscode.tile.tileObjects.Tile;
+import de.schnittie.model.businesscode.tile.tileObjects.TileCollapsed;
 
 import java.util.HashMap;
 import java.util.List;

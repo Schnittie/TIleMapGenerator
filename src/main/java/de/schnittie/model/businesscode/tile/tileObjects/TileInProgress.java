@@ -1,6 +1,8 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.businesscode.tile.tileObjects;
 
 import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.businesscode.tile.TileDataProvider;
+import de.schnittie.model.businesscode.tile.TilePropagationService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

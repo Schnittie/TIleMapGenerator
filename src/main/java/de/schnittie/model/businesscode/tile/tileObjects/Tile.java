@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.businesscode.tile.tileObjects;
 
 import de.schnittie.model.businesscode.MapGenerationException;
 
