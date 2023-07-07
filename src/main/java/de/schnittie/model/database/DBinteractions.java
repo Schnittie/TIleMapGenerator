@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DBinteractions {
 
@@ -230,7 +231,7 @@ public class DBinteractions {
         }
     }
 
-    public void putRulesIntoDB(RuleTO rule) {
+    public void putRuleIntoDB(RuleTO rule) {
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
@@ -245,6 +246,49 @@ public class DBinteractions {
             close(statement);
         }
     }
+
+    public void putListOfRulesIntoDB(List<RuleTO> rules) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement(
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES " + getParameterPlaceholders(rules.size(), 3) +"ON CONFLICT DO NOTHING");
+
+
+            int count = 1;
+            for (RuleTO rule : rules) {
+                statement.setInt(count++, rule.this_tile());
+                statement.setInt(count++, rule.that_tile());
+                statement.setInt(count++, rule.next_to());
+            }
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+        }
+    }
+
+    private String getParameterPlaceholders(int amountOfValues , int sizeOfValueSet) {
+        if (amountOfValues == 0 || sizeOfValueSet == 0){
+            throw new RuntimeException("attempting to add empty list of Rules");
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder innerStringBuilder = new StringBuilder();
+        for (int i = 0; i < amountOfValues; i++) {
+            stringBuilder.append(",(");
+
+            innerStringBuilder = new StringBuilder();
+            innerStringBuilder.append(",?".repeat(Math.max(0, sizeOfValueSet)));
+            innerStringBuilder.replace(0,1,"");
+
+            stringBuilder.append(innerStringBuilder);
+            stringBuilder.append(")");
+        }
+        stringBuilder.replace(0,1,"");
+        return stringBuilder.toString();
+    }
+
 
     public void putDirectionInDB(int id, String directionName, int x_change, int y_change, int reverse_id) {
         PreparedStatement statement = null;

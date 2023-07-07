@@ -15,12 +15,12 @@ public class ManuallyChangingRulesAndProbabilitiesService {
             RuleValidationService.areRulesValid(dBinteractions.getAllRules());
         } catch (InvalidAdjacencyException e) {
             System.out.println("Failed attempt to alter Rules : Rules aren't valid");
-        dBinteractions.putRulesIntoDB(ruleToRemove);
+        dBinteractions.putRuleIntoDB(ruleToRemove);
         }
     }
     public static void addRule(int this_tile_id,int that_tile_id, int direction){
-        dBinteractions.putRulesIntoDB(new RuleTO(-1, this_tile_id, that_tile_id, direction));
-        dBinteractions.putRulesIntoDB(new RuleTO(-1, that_tile_id, this_tile_id, dBinteractions.getReverseDirection().get(direction)));
+        dBinteractions.putRuleIntoDB(new RuleTO(-1, this_tile_id, that_tile_id, direction));
+        dBinteractions.putRuleIntoDB(new RuleTO(-1, that_tile_id, this_tile_id, dBinteractions.getReverseDirection().get(direction)));
     }
     public static void changeProbability(int ruleID, int probability){
         dBinteractions.setProbabilityForTile(ruleID,probability);

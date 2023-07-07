@@ -15,13 +15,13 @@ public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();
 
-    public static void addTiles(HashMap<File, Integer> tilemapMap, String tileFolder) {
+    public static void addTiles(HashMap<File, Integer> tilemapToRotationInstructionMap, String tileFolder) {
         //receives a Map that mapps a file to how often it should rotate
 
         System.out.println("Creating Tiles...");
-        for (File tilemap : tilemapMap.keySet()) {
+        for (File tilemap : tilemapToRotationInstructionMap.keySet()) {
             try {
-                TileCreation.splitImage(tilemap, tilemapMap.get(tilemap), tileFolder);
+                TileCreation.splitImage(tilemap, tilemapToRotationInstructionMap.get(tilemap), tileFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -34,7 +34,7 @@ public class TileCreation {
             throw new RuntimeException("files not found");
         }
         putTilesInDB(files);
-        RuleCreation.generateRulesBasedOnColour();
+        RuleCreation.generateRules();
     }
 
     private static void putTilesInDB(File[] files) {
