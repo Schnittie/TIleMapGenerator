@@ -3,6 +3,7 @@ package de.schnittie.model.database.fillingDB;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import de.schnittie.model.database.DBinteractions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,8 +14,9 @@ public class AdjacencyByFilePathHelperService {
 
     public static int extraRuleValidly(int thisTileId, int thatTileId, int direction, HashMap<Integer, String> tilePathMap) {
 
-        ArrayList<Integer> thatTileNumbers = ExtractingNumberService.extractNumbers(tilePathMap.get(thatTileId));
-        ArrayList<Integer> thisTileNumbers = ExtractingNumberService.extractNumbers(tilePathMap.get(thisTileId));
+
+        ArrayList<Integer> thatTileNumbers = ExtractingNumberService.extractNumbers(getFileName(thatTileId, tilePathMap));
+        ArrayList<Integer> thisTileNumbers = ExtractingNumberService.extractNumbers(getFileName(thisTileId, tilePathMap));
         thisTileNumbers.remove(0);
         thatTileNumbers.remove(0);
         PairOfCoordinates pairOfCoordinates = directionChanges.get(direction);
@@ -37,6 +39,12 @@ public class AdjacencyByFilePathHelperService {
             return -1;
         }
         return 0;
+    }
+
+    private static String getFileName(int thatTileId, HashMap<Integer, String> tilePathMap) {
+        File thatTile = new File(tilePathMap.get(thatTileId));
+        String thatTileFileName =  thatTile.getName();
+        return thatTileFileName;
     }
 }
 

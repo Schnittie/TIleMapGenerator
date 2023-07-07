@@ -40,16 +40,16 @@ public class TileCreation {
     private static void putTilesInDB(File[] files) {
         for (File file : files) {
             if (file.isFile() && file.getName().toLowerCase().endsWith(".png")) {
-                String imageUrl = file.getName();
-                dbinteractions.putTileIntoDB(imageUrl, getProbabilityForTile(imageUrl) * 10);
+                String fileName = file.getName();
+                dbinteractions.putTileIntoDB(fileName, getProbabilityForTile(fileName) * 10);
             }
         }
     }
 
-    private static int getProbabilityForTile(String imageUrl) {
+    private static int getProbabilityForTile(String filename) {
         try {
-            ArrayList<Integer> numbersInUrl = ExtractingNumberService.extractNumbers(imageUrl);
-            if (imageUrl.contains("Neighbour")){
+            ArrayList<Integer> numbersInUrl = ExtractingNumberService.extractNumbers(filename);
+            if (filename.contains("Neighbour")){
                 return numbersInUrl.get(0);
             }
             return 4 - numbersInUrl.get(0);
