@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class ExtractingNumberService {
     public static ArrayList<Integer> extractNumbers(String input) {
-        ArrayList<Integer> numbers = new ArrayList<>(4);
+        ArrayList<Integer> numbers = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(input);
@@ -16,6 +16,7 @@ public class ExtractingNumberService {
             int number = Integer.parseInt(numberString);
             numbers.add(number);
         }
+        
         return numbers;
     }
 }
