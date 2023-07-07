@@ -25,6 +25,7 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         JButton browseButton = new JButton("Browse");
         browseButton.addActionListener(e -> {
+            generateButton.setEnabled(false);
             JFileChooser chooseNewDirectory = new JFileChooser();
             chooseNewDirectory.setCurrentDirectory(new File(
                     System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
@@ -34,6 +35,7 @@ public class MapFrontend extends JFrame implements ModelListener{
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 String chosenDirectory = chooseNewDirectory.getSelectedFile().getAbsolutePath();
             }
+            generateButton.setEnabled(true);
         });
 
 
