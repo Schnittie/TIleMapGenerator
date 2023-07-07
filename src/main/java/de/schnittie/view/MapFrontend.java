@@ -3,11 +3,12 @@ package de.schnittie.view;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
+import de.schnittie.view.ProgressBar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 
 public class MapFrontend extends JFrame implements ModelListener{
@@ -25,6 +26,9 @@ public class MapFrontend extends JFrame implements ModelListener{
         JButton browseButton = new JButton("Browse");
         browseButton.addActionListener(e -> {
             JFileChooser chooseNewDirectory = new JFileChooser();
+            chooseNewDirectory.setCurrentDirectory(new File(
+                    System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
+                    System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"));
             chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnValue = chooseNewDirectory.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -45,6 +49,7 @@ public class MapFrontend extends JFrame implements ModelListener{
         getRootPane().setOpaque(false);
 
         add(buttonPanel, BorderLayout.SOUTH);
+        //add progressBar
         setSize(300,300);
         setVisible(true);
     }

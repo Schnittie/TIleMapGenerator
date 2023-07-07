@@ -5,7 +5,7 @@
     //TODO: Thread stuff for progressbar in Frontend und das die Buttons nicht blockieren
     //TODO: Ultra super fancy progress
     //TODO: User changing Probability
-    //TODO: User changing Rules
+    //TODO: User changing Rules, gray out when board is being generated
 
     //TODO: Hexagons!!
 
