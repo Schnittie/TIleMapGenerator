@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
+
 
 public class MapFrontend extends JFrame implements ModelListener{
     private JScrollPane panel;
@@ -23,8 +25,8 @@ public class MapFrontend extends JFrame implements ModelListener{
         JButton generateButton = new JButton("Generate Map");
         generateButton.addActionListener(listener);
 
-        JButton browseButton = new JButton("Browse");
-        browseButton.addActionListener(e -> {
+        JButton configButton = new JButton("Load new Config");
+        configButton.addActionListener(e -> {
             generateButton.setEnabled(false);
             JFileChooser chooseNewDirectory = new JFileChooser();
             chooseNewDirectory.setCurrentDirectory(new File(
@@ -34,6 +36,8 @@ public class MapFrontend extends JFrame implements ModelListener{
             int returnValue = chooseNewDirectory.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 String chosenDirectory = chooseNewDirectory.getSelectedFile().getAbsolutePath();
+                System.out.println(chosenDirectory);
+                loadConfiguration(chosenDirectory);
             }
             generateButton.setEnabled(true);
         });
@@ -43,7 +47,7 @@ public class MapFrontend extends JFrame implements ModelListener{
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         buttonPanel.add(Box.createHorizontalGlue());
         buttonPanel.add(generateButton);
-        buttonPanel.add(browseButton);
+        buttonPanel.add(configButton);
 
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
