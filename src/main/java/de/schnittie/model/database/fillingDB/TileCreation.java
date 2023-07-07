@@ -96,7 +96,7 @@ public class TileCreation {
                     ImageIO.write(outputImage, "png", new File(baseOutputFilePath));
                     continue;
                 }
-                String rotateFileName = "rotated_" + shouldRotate + "_times";
+                String rotateFileName = "rotated_" + shouldRotate + "_times_from_" +inputFile.getName();
                 String baseOutputFilePath = tileFolder + rotateFileName + "_" + col + "_" + row + "_";
 
 

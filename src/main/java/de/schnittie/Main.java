@@ -1,6 +1,7 @@
 package de.schnittie;
 
 import de.schnittie.controller.Controller;
+import de.schnittie.model.ConfigurationLoaderService;
 import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.splitting.BoardFusionException;
@@ -11,6 +12,9 @@ public class Main {
     public static void main(String[] args) throws MapGenerationException, InvalidDimensionException, BoardFusionException {
         InstallationHandler.generateTilesForDefaultMapIfNotPresent();
         Configuration.reloadConfiguration();
+
+        ConfigurationLoaderService.loadConfiguration("C:\\Users\\laure\\AppData\\Local\\CatboyMaps\\TileMapGenerator\\FantasyConfig");
+
         Controller controller = new Controller();
     }
 }

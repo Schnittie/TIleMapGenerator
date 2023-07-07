@@ -2,7 +2,7 @@ package de.schnittie.model.businesscode.board;
 
 public class BoardFillingServiceThread implements Runnable{
     private final Board board;
-    BoardFillingServiceThread(Board board){
+    public BoardFillingServiceThread(Board board){
         this.board = board;
     }
     public void fill(Board board) {

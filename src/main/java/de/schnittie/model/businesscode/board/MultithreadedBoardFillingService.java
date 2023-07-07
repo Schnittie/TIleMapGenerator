@@ -31,6 +31,17 @@ public class MultithreadedBoardFillingService {
                 throw new RuntimeException(e);
             }
         }
+//        ExecutorService executorService = ExecutorServiceProvider.getLinkedBlockingQueueExecutor();
+//        for(Thread t: listOfThreads) {
+//            executorService.submit(t);
+//        }
+//        boolean threadFinished = false;
+//        try {
+//           threadFinished = executorService.awaitTermination(10, TimeUnit.SECONDS);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.println(threadFinished);
         //wenn alle Threads fertig sind
         return BoardFusionFactory.fuseMapOfBoardsIntoOneBoard(coordinatesSubBoardMap);
     }
