@@ -1,16 +1,16 @@
 package de.schnittie.model.businesscode.board;
 
 import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.board.propagation.BoardPropagationService;
 
-public class BoardManipulator {
+public class BoardFillingService {
     private final Board board;
 
-    public BoardManipulator(int width, int height) throws MapGenerationException {
-        board = new Board(width, height);
+    public BoardFillingService() throws MapGenerationException {
+        board = new Board(160,160);
+        System.out.println("board created");
     }
 
-    public void fill() throws MapGenerationException {
+    public static void fill(Board board) throws MapGenerationException {
         long timeAtStartOfTest = System.currentTimeMillis();
         while (true) {
             PairOfCoordinates nextTile = BoardNextTileToCollapseService.getNextTile(board);
@@ -19,13 +19,8 @@ public class BoardManipulator {
                 System.out.println("Map creation completed in: " + (System.currentTimeMillis() - timeAtStartOfTest) + " Millisecond");
                 return;
             }
-            collapseATile(nextTile.x(), nextTile.y());
+            BoardCollapsingTileService.collapseATile(nextTile, board);
         }
-    }
-
-    private void collapseATile(int x, int y) throws MapGenerationException {
-        board.getTile(x, y).collapse();
-        BoardPropagationService.propagate(x, y, board);
     }
 
     public BoardTO getBoardTO() {

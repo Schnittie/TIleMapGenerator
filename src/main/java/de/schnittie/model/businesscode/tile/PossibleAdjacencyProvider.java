@@ -41,7 +41,7 @@ public class PossibleAdjacencyProvider {
     public List<Integer> canThisBeHere(
             List<Integer> tileInQuestion, int whereIamRelativeToCaller, List<Integer> listOfPossibilities)
             throws MapGenerationException {
-        //listOfPossibilities is the List of the possibilities the Tile from where the propagation is coming from can be
+        //listOfPossibilities is the List of the possibilities the TileInProgress from where the propagation is coming from can be
         //tileInQuestion is the tile this tile could be
 
         if (listOfPossibilities.isEmpty()) {

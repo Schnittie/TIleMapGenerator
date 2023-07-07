@@ -15,7 +15,7 @@
     //TODO: Can I do propagation as Multithreading
 	//TODO: Multithreading idea: every board first generates its borders <- implications for the Damage Control unit
     //TODO: Installation DBinteractions as Bulk operations
-    //TODO: Split tile into TIle and TileManipulator
+    //TODO: Split tileInProgress into TIle and TileManipulator
     //TODO: which version of NextTile is the one I want
 
     //TODO: CanIBe in Tile as Hashset where existence = true

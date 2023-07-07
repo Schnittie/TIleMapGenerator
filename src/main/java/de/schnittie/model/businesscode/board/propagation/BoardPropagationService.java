@@ -6,6 +6,8 @@ import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
 import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.businesscode.tile.tileObjects.Tile;
+import de.schnittie.model.businesscode.tile.tileObjects.TileCollapsed;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,13 +41,19 @@ public class BoardPropagationService {
 
     private static void propagate(BoardPropagationToDo boardPropagationToDo, BoardPropagationQueue boardPropagationQueue, Board board) throws MapGenerationException {
         boolean propagationRecieverHasChangedPossibilites = false;
+        Tile tile = board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y());
+        if (tile.isCollapsed()){
+            return;
+        }
         for (int direction : boardPropagationToDo.instruction().getAffectedDirections()) {
-            if (board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).
-                    propagate(direction, boardPropagationToDo.instruction().getNewTileContentForDirection(direction))){
+            if (tile.propagate(direction, boardPropagationToDo.instruction().getNewTileContentForDirection(direction))){
                 propagationRecieverHasChangedPossibilites = true;
             }
         }
         if (propagationRecieverHasChangedPossibilites) {
+            if (tile.isCollapsed()){
+                board.setTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y(), new TileCollapsed(tile.getContent()));
+            }
             addNewEntriesToQueue(boardPropagationToDo.coordinates(), boardPropagationQueue, board, board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).getPossibleTileContentLeft());
         }
     }
@@ -56,7 +64,7 @@ public class BoardPropagationService {
             PairOfCoordinates directionChange = directionChangeMap.get(directionID);
             int wouldBeX = directionChange.x() + coordinates.x();
             int wouldBeY = directionChange.y() + coordinates.y();
-            if (wouldBeX >= 0 && wouldBeX <= board.getWIDTH() - 1 && wouldBeY >= 0 && wouldBeY <= board.getHEIGHT() - 1) {
+            if (wouldBeX >= 0 && wouldBeX <= board.getWidth() - 1 && wouldBeY >= 0 && wouldBeY <= board.getHeight() - 1) {
                 boardPropagationQueue.enqueue(new PairOfCoordinates(wouldBeX, wouldBeY), directionID, newContentOfPropagationSender);
 
             }

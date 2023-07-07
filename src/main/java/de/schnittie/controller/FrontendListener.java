@@ -15,6 +15,6 @@ public class FrontendListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("action Performend");
-        model.generateMap(50,50);
+        model.generateMap();
     }
 }

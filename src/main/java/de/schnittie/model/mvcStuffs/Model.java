@@ -1,8 +1,9 @@
 package de.schnittie.model.mvcStuffs;
 
 import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardImageFactory;
-import de.schnittie.model.businesscode.board.BoardManipulator;
+import de.schnittie.model.businesscode.board.BoardFillingService;
 import de.schnittie.view.ModelListener;
 
 import java.awt.image.BufferedImage;
@@ -14,18 +15,18 @@ import java.util.List;
 public class Model {
 
     private List<ModelListener> listeners = new ArrayList<>();
-    private BoardManipulator boardManipulator;
+    private BoardFillingService boardFillingService;
     private HashMap<File, Integer> tilesToAdd = new HashMap<>();
     private BufferedImage lastMap;
 
-    public BufferedImage generateMap(int width, int height) {
+    public BufferedImage generateMap() {
         try {
-            boardManipulator = new BoardManipulator(width, height);
-            boardManipulator.fill();
+            boardFillingService = new BoardFillingService();
+            BoardFillingService.fill(new Board(160,160));
         } catch (MapGenerationException e) {
             notifyListeners(new GenerationErrorEvent("An Error occurred"));
         }
-        lastMap = BoardImageFactory.generateBoardImage(boardManipulator.getBoardTO());
+        lastMap = BoardImageFactory.generateBoardImage(boardFillingService.getBoardTO());
         notifyListeners(new NewMapEvent(lastMap));
         return lastMap;
     }
