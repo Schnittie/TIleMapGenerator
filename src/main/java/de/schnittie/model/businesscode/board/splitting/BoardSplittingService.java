@@ -38,11 +38,11 @@ public class BoardSplittingService {
     }
 
 
-    private static HashMap<PairOfCoordinates, BoardCornerCoordinates> vorbereitingForSplitting(Board board) {
+    public static HashMap<PairOfCoordinates, BoardCornerCoordinates> vorbereitingForSplitting(Board board) {
         //returns a map of the Corners of each SubBoard
-        int numberOfBoardsAlongHeight = board.getHeight() / MINIMAL_BOARD_HEIGHT +
+        int numberOfBoardsAlongHeight = (board.getHeight() / MINIMAL_BOARD_HEIGHT) +
                 (board.getHeight() % MINIMAL_BOARD_HEIGHT == 0 ? 0 : 1);
-        int numberOfBoardsAlongWidth = board.getWidth() / MINIMAL_BOARD_WIDTH +
+        int numberOfBoardsAlongWidth = (board.getWidth() / MINIMAL_BOARD_WIDTH) +
                 (board.getWidth() % MINIMAL_BOARD_WIDTH == 0 ? 0 : 1);
 
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = new HashMap<>();

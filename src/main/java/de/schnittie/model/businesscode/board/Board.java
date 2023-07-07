@@ -16,10 +16,10 @@ public class Board {
         this.width = width;
         this.height = height;
         board = new ArrayList<>(this.width);
-        for (int x = 0; x < this.width; x++) {
+        for (int y = 0; y < this.height; y++) {
             board.add(new ArrayList<Tile>(this.height));
-            for (int y = 0; y < this.height; y++) {
-                board.get(x).add(new TileInProgress());
+            for (int x = 0; x < this.width; x++) {
+                board.get(y).add(new TileInProgress());
             }
         }
     }
@@ -28,11 +28,11 @@ public class Board {
         return BoardTOFactory.getBoardTO(this);
     }
 
-    public List<Tile> getRow(int y) {
+    public ArrayList<Tile> getRow(int y) {
         return board.get(y);
     }
 
-    public List<ArrayList<Tile>> getBoardAsListofArrayList() {
+    public ArrayList<ArrayList<Tile>> getBoardAsListofArrayList() {
         return board;
     }
 
@@ -51,7 +51,7 @@ public class Board {
     }
 
     public Tile getTile(int x, int y) {
-        return board.get(x).get(y);
+        return board.get(y).get(x);
     }
 
     public Tile setTile(PairOfCoordinates coordinates, Tile tile) {
@@ -59,7 +59,7 @@ public class Board {
     }
 
     public Tile setTile(int x, int y, Tile tile) {
-        return board.get(x).set(y, tile);
+        return board.get(y).set(x, tile);
     }
 
     public int getWidth() {
