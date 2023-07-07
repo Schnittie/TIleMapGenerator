@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Board {
     private final ArrayList<ArrayList<Tile>> board;
-    private int width = 150; //x
-    private int height = 150;//y
+    private int width = 160; //x
+    private int height = 160;//y
     //x=0 y=0 is the upper left corner
 
     public Board() {

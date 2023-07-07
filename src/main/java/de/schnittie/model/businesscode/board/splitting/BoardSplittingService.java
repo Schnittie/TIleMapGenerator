@@ -41,10 +41,10 @@ public class BoardSplittingService {
         //Calculate the corners for each SubBoard
         for (int y = 0; y < numberOfBoardsAlongHeight; y++) {
             int minY = y * MINIMAL_BOARD_HEIGHT;
-            int maxY = Math.min(((y + 1) * MINIMAL_BOARD_HEIGHT), board.getHeight()) - 1;
+            int maxY = Math.min(((y + 1) * MINIMAL_BOARD_HEIGHT), board.getHeight()-1);
             for (int x = 0; x < numberOfBoardsAlongWidth; x++) {
                 int minX = x * MINIMAL_BOARD_HEIGHT;
-                int maxX = Math.min(((y + 1) * MINIMAL_BOARD_WIDTH), board.getWidth()) - 1;
+                int maxX = Math.min(((x + 1) * MINIMAL_BOARD_WIDTH), board.getWidth()-1);
                 boardToCornerMap.put(new PairOfCoordinates(x, y), new BoardCornerCoordinates(
                         new PairOfCoordinates(minX, minY), new PairOfCoordinates(maxX, minY),
                         new PairOfCoordinates(minX, maxY), new PairOfCoordinates(maxX, maxY)));

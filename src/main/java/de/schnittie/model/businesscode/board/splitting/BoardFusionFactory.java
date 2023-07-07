@@ -6,10 +6,10 @@ import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 import java.util.ArrayList;
 
 public class BoardFusionFactory {
-    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException {
+    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getWidth() != outerBoard.getWidth()) {
-            throw new BoardFusionException("These boards don't have the right Dimensions to fit");
+            throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
         }
         for (int x = 0; x < getLowerXEdge(innerBoard).size(); x++) {
             if (getLowerXEdge(innerBoard).get(x) != getUpperXEdge(outerBoard).get(x)){
@@ -22,10 +22,10 @@ public class BoardFusionFactory {
         return innerBoard;
     }
 
-    private static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException {
+    private static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getHeight() != outerBoard.getHeight()) {
-            throw new BoardFusionException("These boards don't have the right Dimensions to fit");
+            throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
         }
         for (int y = 0; y < getRightYEdge(innerBoard).size(); y++) {
             if (getRightYEdge(innerBoard).get(y) != getLeftYEdge(outerBoard).get(y)){
