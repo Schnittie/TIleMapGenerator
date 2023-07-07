@@ -5,19 +5,18 @@ import de.schnittie.model.businesscode.Configuration;
 import java.util.ArrayList;
 
 public class TileDataProvider {
-    private static TileDataProvider tileDataProvider = new TileDataProvider();
+    private static ThreadLocal<TileDataProvider> _threadLocal = ThreadLocal.withInitial(TileDataProvider::new);
+
     public static TileDataProvider getInstance() {
-        return tileDataProvider;
+        return _threadLocal.get();
     }
-    public static void reloadTileDataProvider(){
-        tileDataProvider = new TileDataProvider();
+
+    public static void reloadTileDataProvider() {
+        _threadLocal = ThreadLocal.withInitial(TileDataProvider::new);
     }
 
     private final PossibleAdjacencyProvider possibleAdjacencyProvider = new PossibleAdjacencyProvider();
     private final TileRandomCollapsingService tileRandomCollapsingService = new TileRandomCollapsingService();
-
-    public TileDataProvider() {
-    }
 
     public ArrayList<Integer> getPossibleTileIDs() {
         return Configuration.getInstance().getPossibleTileIDs();

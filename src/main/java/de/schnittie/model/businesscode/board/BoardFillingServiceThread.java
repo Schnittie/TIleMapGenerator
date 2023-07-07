@@ -1,16 +1,11 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.MapGenerationException;
-
-public class BoardFillingService {
+public class BoardFillingServiceThread implements Runnable{
     private final Board board;
-
-    public BoardFillingService() throws MapGenerationException {
-        board = new Board(160,160);
-        System.out.println("board created");
+    BoardFillingServiceThread(Board board){
+        this.board = board;
     }
-
-    public static void fill(Board board) throws MapGenerationException {
+    public void fill(Board board) {
         long timeAtStartOfTest = System.currentTimeMillis();
         while (true) {
             PairOfCoordinates nextTile = BoardNextTileToCollapseService.getNextTile(board);
@@ -23,8 +18,9 @@ public class BoardFillingService {
         }
     }
 
-    public BoardTO getBoardTO() {
-        return board.getBoardTO();
+    @Override
+    public void run() {
+        fill(this.board);
     }
 }
 

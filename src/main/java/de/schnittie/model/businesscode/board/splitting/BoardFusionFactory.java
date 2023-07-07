@@ -48,7 +48,7 @@ public class BoardFusionFactory {
         return listOfVerticalSlices;
     }
 
-    public static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
+    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getWidth() != outerBoard.getWidth()) {
             throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
@@ -64,7 +64,7 @@ public class BoardFusionFactory {
         return innerBoard;
     }
 
-    public static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
+    private static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getHeight() != outerBoard.getHeight()) {
             throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
