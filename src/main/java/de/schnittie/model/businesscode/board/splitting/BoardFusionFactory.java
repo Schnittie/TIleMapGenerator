@@ -6,7 +6,16 @@ import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 import java.util.ArrayList;
 
 public class BoardFusionFactory {
-    private static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
+
+//    public static Board fuseMapOfBoardsIntoOneBoard(HashMap<PairOfCoordinates, Board> coordinatesBoardMap){
+//        Board HorizontalSlice = createHorizontalSlice(coordinatesBoardMap);
+//    }
+//
+//    private static Board createHorizontalSlice(HashMap<PairOfCoordinates, Board> coordinatesBoardMap) {
+//
+//    }
+
+    public static Board fuseBoardsAlongXAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getWidth() != outerBoard.getWidth()) {
             throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
@@ -22,7 +31,7 @@ public class BoardFusionFactory {
         return innerBoard;
     }
 
-    private static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
+    public static Board fuseBoardsAlongYAxis(Board innerBoard, Board outerBoard) throws BoardFusionException, InvalidDimensionException {
         //taking two already formed Boards and fusing them
         if (innerBoard.getHeight() != outerBoard.getHeight()) {
             throw new InvalidDimensionException("These boards don't have the right Dimensions to fit");
@@ -38,7 +47,7 @@ public class BoardFusionFactory {
         return innerBoard;
     }
 
-    public static ArrayList<Tile> getLeftYEdge(Board board) {
+    private static ArrayList<Tile> getLeftYEdge(Board board) {
         ArrayList<Tile> leftYEdge = new ArrayList<>(board.getHeight());
         for (int i = 0; i < board.getHeight(); i++) {
             leftYEdge.add(board.getTile(0, i));
@@ -46,7 +55,7 @@ public class BoardFusionFactory {
         return leftYEdge;
     }
 
-    public static ArrayList<Tile> getRightYEdge(Board board) {
+    private static ArrayList<Tile> getRightYEdge(Board board) {
         ArrayList<Tile> rightYEdge = new ArrayList<>(board.getHeight());
         for (int i = 0; i < board.getHeight(); i++) {
             rightYEdge.add(board.getTile(board.getWidth() - 1, i));
@@ -54,11 +63,15 @@ public class BoardFusionFactory {
         return rightYEdge;
     }
 
-    public static ArrayList<Tile> getLowerXEdge(Board board) {
-        return (ArrayList<Tile>) board.getRow(board.getHeight()-1);
+    private static ArrayList<Tile> getLowerXEdge(Board board) {
+        ArrayList<Tile> LowerXEdge = new ArrayList<>(board.getHeight());
+        for (int i = 0; i < board.getHeight(); i++) {
+            rightYEdge.add(board.getTile(board.getWidth() - 1, i));
+        }
+        return rightYEdge;
     }
 
-    public static ArrayList<Tile> getUpperXEdge(Board board) {
+    private static ArrayList<Tile> getUpperXEdge(Board board) {
         return (ArrayList<Tile>) board.getRow(0);
     }
 }

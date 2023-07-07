@@ -8,11 +8,13 @@ import java.util.List;
 
 public class Board {
     private final ArrayList<ArrayList<Tile>> board;
-    private int width = 160; //x
-    private int height = 160;//y
+    private int width; //x
+    private int height;//y
     //x=0 y=0 is the upper left corner
 
-    public Board() {
+    public Board(int width, int height) {
+        this.width = width;
+        this.height = height;
         board = new ArrayList<>(this.width);
         for (int x = 0; x < this.width; x++) {
             board.add(new ArrayList<Tile>(this.height));
@@ -25,13 +27,16 @@ public class Board {
     public BoardTO getBoardTO() {
         return BoardTOFactory.getBoardTO(this);
     }
-    public List<Tile> getRow(int y){
+
+    public List<Tile> getRow(int y) {
         return board.get(y);
     }
-    public List<ArrayList<Tile>> getBoardAsListofArrayList(){
+
+    public List<ArrayList<Tile>> getBoardAsListofArrayList() {
         return board;
     }
-    public void addRows(List<ArrayList<Tile>> rows){
+
+    public void addRows(List<ArrayList<Tile>> rows) {
         board.addAll(rows);
         height = board.size();
     }
@@ -41,12 +46,20 @@ public class Board {
         width = board.get(y).size();
     }
 
+    public Tile getTile(PairOfCoordinates coordinates) {
+        return getTile(coordinates.x(), coordinates.y());
+    }
+
     public Tile getTile(int x, int y) {
         return board.get(x).get(y);
     }
 
+    public Tile setTile(PairOfCoordinates coordinates, Tile tile) {
+        return setTile(coordinates.x(), coordinates.y(), tile);
+    }
+
     public Tile setTile(int x, int y, Tile tile) {
-        return board.get(x).set(y,tile);
+        return board.get(x).set(y, tile);
     }
 
     public int getWidth() {

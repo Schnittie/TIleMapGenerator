@@ -10,22 +10,35 @@ public class BoardSplittingService {
     private static final int MINIMAL_BOARD_HEIGHT = 50;
     private static final int MINIMAL_BOARD_WIDTH = 50;
 
-    public static ArrayList<ArrayList<Board>> splitBoardIntoSmallerShelledBoards(Board board) {
+    public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
-        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT || board.getWidth() <= MINIMAL_BOARD_WIDTH) {
+        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
             System.out.println("board is too small to split");
-            ArrayList<ArrayList<Board>> outerReturnList = new ArrayList<>(1);
-            ArrayList<Board> innerReturnList = new ArrayList<>(1);
-            innerReturnList.add(board);
-            outerReturnList.add(innerReturnList);
-            return outerReturnList;
+            HashMap<PairOfCoordinates, Board> coordinatesBoardMap = new HashMap<>(1);
+            coordinatesBoardMap.put(new PairOfCoordinates(0, 0), board);
+            return coordinatesBoardMap;
         }
 
-        vorbereitingForSplitting(board);
-        return null;
+        HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
+        HashMap<PairOfCoordinates, Board> coordinatesBoardMap = new HashMap<>();
+        for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {
+            BoardCornerCoordinates corner = boardToCornerMap.get(coordinates);
+            int minX = corner.MinXMinY().x();
+            int minY = corner.MinXMinY().y();
+            int maxX = corner.MaxXMaxY().x();
+            int maxY = corner.MaxXMaxY().y();
+            coordinatesBoardMap.put(coordinates, new Board(maxX - minX + 1, maxY - minY + 1));
+            for (int x = minX; x <= maxX; x++) {
+                for (int y = minY; y <= maxY; y++) {
+                    coordinatesBoardMap.get(coordinates).setTile(x - minX, y - minY, board.getTile(x, y));
+                }
+            }
+        }
+        return coordinatesBoardMap;
     }
 
-    public static HashMap<PairOfCoordinates, BoardCornerCoordinates> vorbereitingForSplitting(Board board) {
+
+    private static HashMap<PairOfCoordinates, BoardCornerCoordinates> vorbereitingForSplitting(Board board) {
         //returns a map of the Corners of each SubBoard
         int numberOfBoardsAlongHeight = board.getHeight() / MINIMAL_BOARD_HEIGHT +
                 (board.getHeight() % MINIMAL_BOARD_HEIGHT == 0 ? 0 : 1);
@@ -41,10 +54,10 @@ public class BoardSplittingService {
         //Calculate the corners for each SubBoard
         for (int y = 0; y < numberOfBoardsAlongHeight; y++) {
             int minY = y * MINIMAL_BOARD_HEIGHT;
-            int maxY = Math.min(((y + 1) * MINIMAL_BOARD_HEIGHT), board.getHeight()-1);
+            int maxY = Math.min(((y + 1) * MINIMAL_BOARD_HEIGHT), board.getHeight() - 1);
             for (int x = 0; x < numberOfBoardsAlongWidth; x++) {
                 int minX = x * MINIMAL_BOARD_HEIGHT;
-                int maxX = Math.min(((x + 1) * MINIMAL_BOARD_WIDTH), board.getWidth()-1);
+                int maxX = Math.min(((x + 1) * MINIMAL_BOARD_WIDTH), board.getWidth() - 1);
                 boardToCornerMap.put(new PairOfCoordinates(x, y), new BoardCornerCoordinates(
                         new PairOfCoordinates(minX, minY), new PairOfCoordinates(maxX, minY),
                         new PairOfCoordinates(minX, maxY), new PairOfCoordinates(maxX, maxY)));
@@ -57,10 +70,10 @@ public class BoardSplittingService {
 
     private static ArrayList<PairOfCoordinates> getListOfCoordinatesForSplitLines(HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap) {
         ArrayList<PairOfCoordinates> listOfCoordinatesForSplitLines = new ArrayList<>();
-        for (BoardCornerCoordinates corners: boardToCornerMap.values()) {
+        for (BoardCornerCoordinates corners : boardToCornerMap.values()) {
             listOfCoordinatesForSplitLines.addAll(getListOfCoordinatesForSplitLine(corners));
         }
-        return  listOfCoordinatesForSplitLines;
+        return listOfCoordinatesForSplitLines;
     }
 
     private static ArrayList<PairOfCoordinates> getListOfCoordinatesForSplitLine(BoardCornerCoordinates corners) {
