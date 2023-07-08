@@ -1,6 +1,7 @@
 package de.schnittie.model.businesscode.board;
 
 import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.businesscode.TileImageLoaderService;
 import de.schnittie.model.database.DBinteractions;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,7 @@ public class BoardImageFactory {
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
-        HashMap<Integer, BufferedImage> imageById = getImageMapFromFilepathMap(Configuration.getInstance().getFilePathMap());
+        HashMap<Integer, BufferedImage> imageById = TileImageLoaderService.getImageMapFromFilepathMap();
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();
@@ -42,23 +43,6 @@ public class BoardImageFactory {
         return boardImage;
     }
 
-    private static HashMap<Integer, BufferedImage> getImageMapFromFilepathMap(HashMap<Integer, String> filePathMap) {
-        HashMap<Integer, BufferedImage> imageById = new HashMap<>(filePathMap.size() + 1);
-        try {
-            for (Integer id : filePathMap.keySet()) {
-                imageById.put(id, ImageIO.read(new File(filePathMap.get(id))));
-            }
-            BufferedImage DEFAULT = null; //The default image should only ever be shown if something goes wrong
-            try {
-                DEFAULT = ImageIO.read(new File(Configuration.getInstance().getDbFolder() + File.separator + "default.png"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            imageById.put(-1, DEFAULT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return imageById;
-    }
+
 }
 
