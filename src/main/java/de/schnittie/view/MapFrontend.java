@@ -3,7 +3,6 @@ package de.schnittie.view;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
-import de.schnittie.view.ProgressBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,26 +27,26 @@ public class MapFrontend extends JFrame implements ModelListener{
         JButton configButton = new JButton("Load new Config");
         configButton.addActionListener(e -> {
             generateButton.setEnabled(false);
-            JFileChooser chooseNewDirectory = new JFileChooser();
-            chooseNewDirectory.setCurrentDirectory(new File(
-                    System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
-                    System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"));
-            chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int returnValue = chooseNewDirectory.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                String chosenDirectory = chooseNewDirectory.getSelectedFile().getAbsolutePath();
-                System.out.println(chosenDirectory);
-                loadConfiguration(chosenDirectory);
-            }
+            openConfiguration();
             generateButton.setEnabled(true);
+        });
+
+        JButton probabilityButton = new JButton("Change Probability");
+        probabilityButton.addActionListener(e -> {
+            generateButton.setEnabled(false);
+            configButton.setEnabled(false);
+            ProbabilityChangeFrame probabilityChangeFrame = new ProbabilityChangeFrame();
+            probabilityChangeFrame.setVisible(true);
+            generateButton.setEnabled(true);
+            configButton.setEnabled(true);
         });
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
-        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(generateButton);
         buttonPanel.add(configButton);
+        buttonPanel.add(probabilityButton);
 
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
@@ -56,8 +55,9 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         add(buttonPanel, BorderLayout.SOUTH);
         //add progressBar
-        setSize(300,300);
+        setSize(600,300);
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     @Override
@@ -68,11 +68,31 @@ public class MapFrontend extends JFrame implements ModelListener{
 
            pane.add(panel, BorderLayout.CENTER);
            pack();
+           setLocationRelativeTo(null);
        }
        if (event.getClass().equals(GenerationErrorEvent.class)){
            JLabel label = new JLabel(((GenerationErrorEvent) event).getErrorMessage());
            pane.add(label);
            pack();
        }
+    }
+
+    private void openConfiguration() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        JFileChooser chooseNewDirectory = new JFileChooser();
+        chooseNewDirectory.setCurrentDirectory(new File(
+                System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
+                        System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"));
+        chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = chooseNewDirectory.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String chosenDirectory = chooseNewDirectory.getSelectedFile().getAbsolutePath();
+            System.out.println(chosenDirectory);
+            loadConfiguration(chosenDirectory);
+        }
     }
 }
