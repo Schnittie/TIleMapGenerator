@@ -12,7 +12,7 @@ public class BoardSplittingService {
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
-
+        //TODO: Mulitithreaded Recursive Splitting
         System.out.println("Splitting board...");
         if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
             System.out.println("board is too small to split");
