@@ -21,7 +21,7 @@ public class Model {
 
     public BufferedImage generateMap() {
         long timeBefore = System.currentTimeMillis();
-        Board board = new Board(500, 500);
+        Board board = new Board(100, 100);
         MultithreadedBoardFillingService.generateBoard(board);
         System.out.println("Finished generating Map in " + (System.currentTimeMillis() - timeBefore) + " Milliseconds");
         lastMap = BoardImageFactory.renderBoardImage(board.getBoardTO());
