@@ -13,17 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPropagationService {
-
+    public static void propagate(PairOfCoordinates coordinates, Board board){
+        propagate(coordinates.x(),coordinates.y(),board);
+    }
     public static void propagate(int x, int y, Board board) {
         try {
             BoardPropagationQueue boardPropagationQueue = new BoardPropagationQueue();
             addNewEntriesToQueue(new PairOfCoordinates(x, y), boardPropagationQueue, board, board.getTile(x, y).getPossibleTileContentLeft());
             propagate(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
-            BoardImageFactory.generateBoardImage(board.getBoardTO());
+            BoardImageFactory.renderBoardImage(board.getBoardTO());
             try {
                 System.out.println("I need to control damage");
-                e.printStackTrace();
                 BoardDamageControlService.controlDamage(x, y, board);
             } catch (MapGenerationException ex) {
                 throw new RuntimeException(ex);

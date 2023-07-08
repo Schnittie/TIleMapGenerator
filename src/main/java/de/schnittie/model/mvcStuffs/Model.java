@@ -21,18 +21,20 @@ public class Model {
 
     public BufferedImage generateMap() {
         long timeBefore = System.currentTimeMillis();
-        Board board = new Board(100,100);
+        Board board = new Board(500, 500);
         MultithreadedBoardFillingService.generateBoard(board);
-        System.out.println(System.currentTimeMillis()-timeBefore);
-        lastMap = BoardImageFactory.generateBoardImage(board.getBoardTO());
+        System.out.println("Finished generating Map in " + (System.currentTimeMillis() - timeBefore) + " Milliseconds");
+        lastMap = BoardImageFactory.renderBoardImage(board.getBoardTO());
         notifyListeners(new NewMapEvent(lastMap));
         return lastMap;
     }
+
     private void notifyListeners(MapGeneratorEvent event) {
         for (ModelListener listener : listeners) {
             listener.update(event);
         }
     }
+
     public void addListener(ModelListener listener) {
         listeners.add(listener);
     }

@@ -35,13 +35,12 @@ public class AdjacencyByFilePathHelperService {
         }
         if ((thisTileFileName.contains("NeighbourRules") && thatTileFileName.contains("NeighbourRules"))) {
             if (twoFileNamesAreFromTheSameTile(thisTileFileName, thatTileFileName)) {
-                if (thisTileNumbers.get(0) + pairOfCoordinates.x() == thatTileNumbers.get(0) && thisTileNumbers.get(1) + pairOfCoordinates.y() == thatTileNumbers.get(1)) {
+                if (thisTileNumbers.get(0) + pairOfCoordinates.x() == thatTileNumbers.get(0) && thisTileNumbers.get(1) +
+                        pairOfCoordinates.y() == thatTileNumbers.get(1)) {
                     return 1;
                 }
-                return -1;
-//            } else if ((thisTileFileName.contains(directionNames.get(directionOpposites.get(direction))) && thatTileFileName.contains(directionNames.get(direction)))) {
-//                return 0;
-            } else return -1;
+            }
+            return -1;
         }
         return 0;
     }

@@ -26,7 +26,6 @@ public class BoardNextTileToCollapseService {
         if (lowestEntropyTiles.isEmpty()) {
             return new PairOfCoordinates(-10, -10);
         }
-        System.out.println(lowestEntropyTiles.size() + " tiles left");
         return lowestEntropyTiles.get(random.nextInt(lowestEntropyTiles.size()));
     }
 

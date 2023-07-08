@@ -18,11 +18,12 @@ public class MultithreadedBoardFillingService {
             listOfFillingThreads.add(new BoardFillingServiceThread(subBoard));
         }
         ArrayList<Thread> listOfThreads = new ArrayList<>(listOfFillingThreads.size());
-        for (BoardFillingServiceThread thread: listOfFillingThreads){
-            Thread currentThread =new Thread(thread);
+        for (BoardFillingServiceThread thread : listOfFillingThreads) {
+            Thread currentThread = new Thread(thread);
             listOfThreads.add(currentThread);
             currentThread.start();
         }
+        System.out.println("Collapsing SubBoards...");
 
         for(Thread t: listOfThreads) {
             try {
@@ -31,18 +32,21 @@ public class MultithreadedBoardFillingService {
                 throw new RuntimeException(e);
             }
         }
+        //TODO: ask artur about this (Generating the board images gets called multiple times)
 //        ExecutorService executorService = ExecutorServiceProvider.getLinkedBlockingQueueExecutor();
-//        for(Thread t: listOfThreads) {
+//        for (Thread t : listOfThreads) {
 //            executorService.submit(t);
 //        }
-//        boolean threadFinished = false;
+//        executorService.shutdown();
+//        boolean finishedThread = false;
 //        try {
-//           threadFinished = executorService.awaitTermination(10, TimeUnit.SECONDS);
+//            finishedThread = !executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 //        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
+//            throw new RuntimeException("Unexpected Interruption");
 //        }
-//        System.out.println(threadFinished);
-        //wenn alle Threads fertig sind
+//        if (finishedThread) System.out.println("Threads didn't finish");
+
+        System.out.println("Fusing SubBoards together...");
         return BoardFusionFactory.fuseMapOfBoardsIntoOneBoard(coordinatesSubBoardMap);
     }
 }

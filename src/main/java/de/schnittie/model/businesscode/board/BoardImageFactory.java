@@ -14,7 +14,8 @@ public class BoardImageFactory {
 
     private static final int TILE_SIZE = 15;
 
-    public static BufferedImage generateBoardImage(BoardTO board) {
+    public static BufferedImage renderBoardImage(BoardTO board) {
+        System.out.println("Rendering Image...");
         int width = board.getWIDTH();
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;

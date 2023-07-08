@@ -49,11 +49,11 @@ public class TileCreation {
     private static int getProbabilityForTile(String filename) {
         try {
             ArrayList<Integer> numbersInUrl = ExtractingNumberService.extractNumbers(filename);
-            if (filename.contains("Neighbour")){
+            if (filename.contains("Neighbour")) {
                 return numbersInUrl.get(0);
             }
             return 4 - numbersInUrl.get(0);
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Couldn't parse probability from TileName");
             return 1;
         }

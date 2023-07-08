@@ -12,13 +12,14 @@ public class BoardSplittingService {
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
+
+        System.out.println("Splitting board...");
         if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
             System.out.println("board is too small to split");
             HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
             coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
             return coordinatesSubBoardMap;
         }
-
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>();
         for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {
@@ -45,13 +46,21 @@ public class BoardSplittingService {
         int numberOfBoardsAlongWidth = (board.getWidth() / MINIMAL_BOARD_WIDTH) +
                 (board.getWidth() % MINIMAL_BOARD_WIDTH == 0 ? 0 : 1);
 
-        HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = new HashMap<>();
 
         //the Pair of Coordinates here refers to the "Coordinates" of the Subboard within the bigger Board
         //not to be confused with the Coordinates of the Tiles within a Board
         // 0 0 is still the upper left corner
+        HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = getBoardCoordinatesToBoardCornersMap(
+                board, numberOfBoardsAlongHeight, numberOfBoardsAlongWidth);
+        //Collapse all Tiles at the Edges between SubBoards => Shelling them
+        System.out.println("Collapsing Tiles along Splitlines ...");
+        BoardCollapsingTileService.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+        return boardToCornerMap;
+    }
 
-        //Calculate the corners for each SubBoard
+    private static HashMap<PairOfCoordinates, BoardCornerCoordinates> getBoardCoordinatesToBoardCornersMap(
+            Board board, int numberOfBoardsAlongHeight, int numberOfBoardsAlongWidth) {
+        HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = new HashMap<>();
         for (int y = 0; y < numberOfBoardsAlongHeight; y++) {
             int minY = y * MINIMAL_BOARD_HEIGHT;
             int maxY = Math.min(((y + 1) * MINIMAL_BOARD_HEIGHT), board.getHeight() - 1);
@@ -63,8 +72,6 @@ public class BoardSplittingService {
                         new PairOfCoordinates(minX, maxY), new PairOfCoordinates(maxX, maxY)));
             }
         }
-        //Collapse all Tiles at the Edges between SubBoards => Shelling them
-        BoardCollapsingTileService.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
         return boardToCornerMap;
     }
 

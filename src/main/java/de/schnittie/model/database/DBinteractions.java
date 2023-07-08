@@ -274,7 +274,7 @@ public class DBinteractions {
             throw new RuntimeException("attempting to add empty list of Rules");
         }
         StringBuilder stringBuilder = new StringBuilder();
-        StringBuilder innerStringBuilder = new StringBuilder();
+        StringBuilder innerStringBuilder;
         for (int i = 0; i < amountOfValues; i++) {
             stringBuilder.append(",(");
 
@@ -384,7 +384,6 @@ public class DBinteractions {
     public void removeRule(int ruleToRemove) {
         //Returns one Rule
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = conn.prepareStatement(
                     "DELETE * FROM rule WHERE id = ?");
@@ -394,7 +393,6 @@ public class DBinteractions {
             throw new RuntimeException(e);
         } finally {
             close(statement);
-            close(resultSet);
         }
     }
 
