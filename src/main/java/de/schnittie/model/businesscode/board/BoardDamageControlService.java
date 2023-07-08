@@ -19,12 +19,12 @@ public class BoardDamageControlService {
             }
         }
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
-           BoardPropagationService.propagate(x, damageAreaBorderMinY, board);
-            BoardPropagationService.propagate(x, damageAreaBorderMaxY - 1, board);
+           BoardPropagationService.startPropagation(x, damageAreaBorderMinY, board);
+            BoardPropagationService.startPropagation(x, damageAreaBorderMaxY - 1, board);
         }
         for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
-            BoardPropagationService.propagate(damageAreaBorderMinX, y, board);
-            BoardPropagationService.propagate(damageAreaBorderMaxX - 1, y, board);
+            BoardPropagationService.startPropagation(damageAreaBorderMinX, y, board);
+            BoardPropagationService.startPropagation(damageAreaBorderMaxX - 1, y, board);
         }
     }
 }

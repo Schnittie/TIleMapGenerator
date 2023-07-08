@@ -9,7 +9,7 @@ public class BoardCollapsingTileService {
         if (!board.getTile(pairOfCoordinates).isCollapsed()){
             board.setTile(pairOfCoordinates,
                     board.getTile(pairOfCoordinates).collapse());
-            BoardPropagationService.propagate(pairOfCoordinates, board);
+            BoardPropagationService.startPropagation(pairOfCoordinates, board);
         }
     }
     public static void collapseAll(Collection<PairOfCoordinates> coordinatesCollection, Board board){
