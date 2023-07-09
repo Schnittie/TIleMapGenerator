@@ -3,6 +3,7 @@ package de.schnittie.view;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
+import de.schnittie.view.ProbabilityChangeFrame;
 
 import javax.swing.*;
 import java.awt.*;

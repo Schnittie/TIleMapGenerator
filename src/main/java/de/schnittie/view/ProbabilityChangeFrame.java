@@ -4,29 +4,37 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-import de.schnittie.model.businesscode.tile.TileDataProvider;
+import de.schnittie.model.GettingInformationService;
+import de.schnittie.view.ImageRenderer;
 
 public class ProbabilityChangeFrame extends JDialog {
 
     public ProbabilityChangeFrame() {
-
-        TileDataProvider tileDataProvider = new TileDataProvider();
-        ArrayList<Integer> TileIDs = tileDataProvider.getPossibleTileIDs();
-        // make buffered image out of ID
-
-
-
-        JDialog probabilityChangeFrame = new JDialog();
+        super();
+        setSize(600, 600);
+        setLocationRelativeTo(null);
+        GettingInformationService iDtoProbability = new GettingInformationService();
+        HashMap<Integer,Integer> iDToProbabilityMap = iDtoProbability.getTileIdToProbabilityMap();
+        HashMap<Integer, BufferedImage> iDtoImage = iDtoProbability.getTileIdToBufferedImageMap();
 
         String[] columnNames = {"Tile", "Probability"};
-        Object[][] data = {{TileIDs, "probability"}};
-        DefaultTableModel probabilityTableModel = new DefaultTableModel(data, columnNames);
-        JTable probabilityTable = new JTable(probabilityTableModel);
+        DefaultTableModel probabilityTableModel = new DefaultTableModel(columnNames, 0);
 
-        setSize(400, 400);
-        setLocationRelativeTo(null);
+        for (Map.Entry<Integer, Integer> entry : iDToProbabilityMap.entrySet()){
+            Integer key = entry.getKey();
+            Integer value = entry.getValue();
+            BufferedImage image = iDtoImage.get(key);
+            probabilityTableModel.addRow(new Object[]{image, value});
+        }
+
+        JTable probabilityTable = new JTable(probabilityTableModel);
+        int rowHeight = 40;
+        probabilityTable.setRowHeight(rowHeight);
+        probabilityTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
+        getContentPane().add(new JScrollPane(probabilityTable));
+
     }
 }
