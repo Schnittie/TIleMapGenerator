@@ -44,11 +44,7 @@ public class TileInProgress implements Tile {
     }
 
     public TileCollapsed collapse(int i) {
-        if (!isCollapsed) {
-            isCollapsed = true;
-            content = i;
-        }
-        return new TileCollapsed(content);
+        return new TileCollapsed(i);
     }
 
     public TileCollapsed collapse() {
