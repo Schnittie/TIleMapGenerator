@@ -4,6 +4,7 @@ import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
+import de.schnittie.model.businesscode.damageControll.BoardDamageControlService;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 import de.schnittie.model.businesscode.tile.tileObjects.TileCollapsed;

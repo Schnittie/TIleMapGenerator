@@ -58,5 +58,13 @@ public class PossibleAdjacencyProvider {
         }
         return new ArrayList<>(possibilities);
     }
+    public boolean doTheseTilesMatchInEveryDirection(int tileId, int otherTileId){
+        for (Integer direction : adjacencyByID.get(tileId).tileIDbyDirection().keySet()) {
+            if (!adjacencyByID.get(tileId).tileIDbyDirection().get(direction).contains(otherTileId)){
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

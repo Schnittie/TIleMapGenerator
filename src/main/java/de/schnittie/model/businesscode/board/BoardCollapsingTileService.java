@@ -17,4 +17,17 @@ public class BoardCollapsingTileService {
             collapseATile(coordinates, board);
         }
     }
+    public static void forceCollapse(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){
+        for (PairOfCoordinates coordinates : coordinatesCollection) {
+            board.setTile(coordinates,
+                    board.getTile(coordinates).collapse(tileID));
+            BoardPropagationService.startPropagation(coordinates, board);
+        }
+    }
+    public static void forceCollapseWithoutPropagation(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){
+        for (PairOfCoordinates coordinates : coordinatesCollection) {
+            board.setTile(coordinates,
+                    board.getTile(coordinates).collapse(tileID));
+        }
+    }
 }

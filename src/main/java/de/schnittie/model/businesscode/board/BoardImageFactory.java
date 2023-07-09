@@ -49,7 +49,7 @@ public class BoardImageFactory {
 
     public static void renderDamageImage(BoardTO board, PairOfCoordinates coordinatesOfDamage){
             board.setIDat(coordinatesOfDamage.x(), coordinatesOfDamage.y(), -2);
-            renderBoardImage(board,"generatedDamageRender.png");
+            renderBoardImage(board, coordinatesOfDamage.x() + "_" + coordinatesOfDamage.y() + "_generatedDamageRender.png");
     }
 }
 
