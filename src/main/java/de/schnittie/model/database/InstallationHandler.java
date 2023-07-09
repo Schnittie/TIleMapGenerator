@@ -9,7 +9,6 @@ import net.harawata.appdirs.AppDirsFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -106,8 +105,8 @@ public class InstallationHandler {
 
     private static void copyFileFromResourcesToDirectorie(String filename, String pathStringToDirectory) throws URISyntaxException, IOException {
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
-        URI absoluteSourcePath = Objects.requireNonNull(classLoader.getResource(filename)).toURI();
-        Files.copy(Path.of(absoluteSourcePath), Path.of(
+        File absoluteSourcePath = new File(Objects.requireNonNull(classLoader.getResource(filename)).getFile());
+        Files.copy(absoluteSourcePath.toPath(), Path.of(
                 pathStringToDirectory + File.separator + filename), StandardCopyOption.REPLACE_EXISTING);
     }
 
