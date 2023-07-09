@@ -5,6 +5,9 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -64,13 +67,22 @@ public class ProbabilityChangeFrame extends JDialog {
                 int row = e.getFirstRow();
                 int column = e.getColumn();
                 if (column == 1) {
-                    Integer id = (Integer) probabilityTable.getValueAt(row, 0);
+                    BufferedImage image = (BufferedImage) probabilityTable.getValueAt(row,0);
+                    Integer id = getKeyByValue(image, iDtoImage);
                     Integer newProbability = (Integer) probabilityTable.getValueAt(row, column);
                     iDToProbabilityMap.put(id, newProbability);
                 }
             }
         });
+    }
 
+    private static Integer getKeyByValue(BufferedImage image, HashMap<Integer, BufferedImage> iDToImage){
+        for (Map.Entry<Integer, BufferedImage> entry : iDToImage.entrySet()){
+            if (entry.getValue().equals(image)){
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     private static class EditableCellRenderer extends JTextField implements TableCellRenderer{
@@ -105,7 +117,28 @@ public class ProbabilityChangeFrame extends JDialog {
 
         @Override
         public Object getCellEditorValue() {
-            return editorComponent.getText();
+            String text = editorComponent.getText();
+            if (text.isEmpty()) {
+                return null;
+            } else {
+                return Integer.parseInt(text);
+            }
+        }
+
+        private static class IntegerDocument extends PlainDocument {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+
+                try {
+                    Integer.parseInt(str);
+                    super.insertString(offs, str, a);
+                } catch (NumberFormatException e) {
+                    // Not a valid integer, ignore the input
+                }
+            }
         }
 
         @Override
