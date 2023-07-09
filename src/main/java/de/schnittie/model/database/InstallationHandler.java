@@ -68,6 +68,7 @@ public class InstallationHandler {
 
         //copying over Resources
         copyFileFromResourcesToDirectorie("default.png", pathStringToDirectory);
+        copyFileFromResourcesToDirectorie("damage.png", pathStringToDirectory);
         copyFileFromResourcesToDirectorie("TileMapGeneratorDB.db", pathStringToDirectory);
     }
 

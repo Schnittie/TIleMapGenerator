@@ -19,4 +19,7 @@ public class BoardTO {
     public int getHEIGHT() {
         return HEIGHT;
     }
+    public void setIDat(int x, int y, int id){
+        boardOfIDs[x][y]=id;
+    }
 }

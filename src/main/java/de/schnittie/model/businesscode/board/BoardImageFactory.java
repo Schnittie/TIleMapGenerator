@@ -1,6 +1,5 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.TileImageLoaderService;
 import de.schnittie.model.database.DBinteractions;
 
@@ -15,7 +14,10 @@ public class BoardImageFactory {
 
     private static final int TILE_SIZE = 15;
 
-    public static BufferedImage renderBoardImage(BoardTO board) {
+    public static BufferedImage renderBoardImage(BoardTO board){
+       return renderBoardImage(board, "generatedMapRender.png");
+    }
+    private static BufferedImage renderBoardImage(BoardTO board,String filename) {
         System.out.println("Rendering Image...");
         int width = board.getWIDTH();
         int height = board.getHEIGHT();
@@ -36,11 +38,16 @@ public class BoardImageFactory {
 
         try {
             ImageIO.write(boardImage, "png", new File(
-                    DBinteractions.getInstance().getDbFolder() + File.separator + "generatedMapRender.png"));
+                    DBinteractions.getInstance().getDbFolder() + File.separator + filename));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return boardImage;
+    }
+
+    public static void renderDamageImage(BoardTO board, PairOfCoordinates coordinatesOfDamage){
+            board.setIDat(coordinatesOfDamage.x(), coordinatesOfDamage.y(), -2);
+            renderBoardImage(board,"generatedDamageRender.png");
     }
 
 

@@ -15,12 +15,15 @@ public class TileImageLoaderService {
                 imageById.put(id, ImageIO.read(new File(filePathMap.get(id))));
             }
             BufferedImage DEFAULT = null; //The default image should only ever be shown if something goes wrong
+            BufferedImage DAMAGE = null; //The default image should only ever be shown if something goes wrong
             try {
                 DEFAULT = ImageIO.read(new File(Configuration.getInstance().getDbFolder() + File.separator + "default.png"));
+                DAMAGE = ImageIO.read(new File(Configuration.getInstance().getDbFolder() + File.separator + "damage.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             imageById.put(-1, DEFAULT);
+            imageById.put(-2, DAMAGE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
