@@ -14,7 +14,7 @@ public class RuleCreation {
     private static final DBinteractions dBinteractions = DBinteractions.getInstance();
     private static final ArrayList<Socket> socketSet = new ArrayList<>();
     private static final ArrayList<Integer> colourSet = new ArrayList<>();
-    private static final int TOLERANCE = 15;
+    private static final int TOLERANCE = 5;
 
     public static void generateRules() {
         //Each side of a TileInProgress has a Socket

@@ -5,10 +5,8 @@ import de.schnittie.model.businesscode.board.BoardCollapsingTileService;
 
 public class PatchApplierService {
     public static void applyPatch(PatchInstruction patchInstruction, Board board) {
-        System.out.println("Applying Patch Border...");
-        BoardCollapsingTileService.forceCollapse(patchInstruction.damageBorder(), board, patchInstruction.easyTileId());
         System.out.println("Applying innerPatch...");
-        BoardCollapsingTileService.forceCollapseWithoutPropagation(patchInstruction.damageArea(),board, patchInstruction.easyTileId());
+        BoardCollapsingTileService.forceCollapse(patchInstruction.damageArea(),board, patchInstruction.easyTileId());
         System.out.println("Patch applied");
     }
 }

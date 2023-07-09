@@ -39,6 +39,7 @@ public class TileRandomCollapsingService {
                 return possibleState;
             }
         }
+        System.out.println("Error1");
         throw new MapGenerationException();
     }
 

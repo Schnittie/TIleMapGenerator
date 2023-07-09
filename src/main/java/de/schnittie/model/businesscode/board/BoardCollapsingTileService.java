@@ -19,15 +19,10 @@ public class BoardCollapsingTileService {
     }
     public static void forceCollapse(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){
         for (PairOfCoordinates coordinates : coordinatesCollection) {
-            board.setTile(coordinates,
-                    board.getTile(coordinates).collapse(tileID));
-            //BoardPropagationService.startPropagation(coordinates, board);
+            board.setTile(coordinates, board.getTile(coordinates).collapse(tileID));
         }
-    }
-    public static void forceCollapseWithoutPropagation(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){
         for (PairOfCoordinates coordinates : coordinatesCollection) {
-            board.setTile(coordinates,
-                    board.getTile(coordinates).collapse(tileID));
+            BoardPropagationService.startPropagation(coordinates, board);
         }
     }
 }

@@ -33,7 +33,7 @@ public class TileCollapsed implements Tile {
     @Override
     public TileCollapsed collapse(int i) {
         //nothing to do here (shouldn't be called)
-         return this;
+         return  new TileCollapsed(i);
     }
 
     @Override
