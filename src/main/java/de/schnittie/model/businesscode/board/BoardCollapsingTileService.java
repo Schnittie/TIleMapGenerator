@@ -21,7 +21,7 @@ public class BoardCollapsingTileService {
         for (PairOfCoordinates coordinates : coordinatesCollection) {
             board.setTile(coordinates,
                     board.getTile(coordinates).collapse(tileID));
-            BoardPropagationService.startPropagation(coordinates, board);
+            //BoardPropagationService.startPropagation(coordinates, board);
         }
     }
     public static void forceCollapseWithoutPropagation(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){

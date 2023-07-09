@@ -16,10 +16,12 @@ public class EasyTilePatchAreaFinderService {
         for (ArrayList<Integer> easyTileList : easyTileLists) {
             easyTileSetExamples.add(easyTileList.get(0));
         }
+        System.out.println("Trying to make out a damage Area...");
         for (Integer easyTileExampleId : easyTileSetExamples) {
             patchInstruction = tryToFindPatchArea(damageOrigin, easyTileExampleId, board);
             if (patchInstruction != null) return patchInstruction;
         }
+        System.out.println(damageOrigin.x() + damageOrigin.y());
         throw new RuntimeException("No easy Patch for Damage found");
 
     }
@@ -30,28 +32,34 @@ public class EasyTilePatchAreaFinderService {
         Queue<PairOfCoordinates> possibleBorderQueue = new LinkedList<>();
         possibleBorderQueue.add(damageOrigin);
         while (!possibleBorderQueue.isEmpty()) {
+            if (possibleBorderQueue.size()>50){
+                System.out.println("Abandon hope for tile " + easyTileExampleId);
+                return null;
+            }
             PairOfCoordinates possibleBorderMember = possibleBorderQueue.poll();
             patchArea.add(possibleBorderMember);
             if (isOnBorder(possibleBorderMember, board)) {
+                System.out.println("No valid Area found for tile " + easyTileExampleId);
                 return null;
             }
             if (board.getTile(possibleBorderMember).getPossibleTileContentLeft().contains(easyTileExampleId)) {
                 patchBorder.add(possibleBorderMember);
                 continue;
             }
-            putAllNeighboursInQueueIfNotPresent(damageOrigin, possibleBorderQueue);
+            putAllNeighboursInQueueIfNotPresent(damageOrigin, possibleBorderQueue, patchArea);
         }
+        System.out.println("Damage area found");
         return new PatchInstruction(patchArea, patchBorder, easyTileExampleId);
     }
 
-    private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates damageOrigin, Queue<PairOfCoordinates> patchBorder) {
+    private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates damageOrigin, Queue<PairOfCoordinates>
+            patchBorder, ArrayList<PairOfCoordinates> patchArea) {
         HashMap<Integer, PairOfCoordinates> directionChanges = DBinteractions.getInstance().getDirectionChanges();
-        for (Integer direction :
-                directionChanges.keySet()) {
+        for (Integer direction : directionChanges.keySet()) {
             PairOfCoordinates neighbour = new PairOfCoordinates(
                     damageOrigin.x() + directionChanges.get(direction).x(),
                     damageOrigin.y() + directionChanges.get(direction).y());
-            if (!patchBorder.contains(neighbour)) {
+            if (!(patchBorder.contains(neighbour)|| patchArea.contains(neighbour))) {
                 patchBorder.add(neighbour);
             }
         }

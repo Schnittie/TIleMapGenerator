@@ -62,7 +62,7 @@ public class RuleCreation {
         dBinteractions.putListOfRulesIntoDB(listOfRulesToCreate);
         System.out.println("Done putting entries into DB");
 
-
+        EasyTileCreationService.createEasyTiles(tileSocketList, socketSet, tilePathMap);
     }
 
     private static void putTileIntoLists(BufferedImage tileImage, Integer tileId,

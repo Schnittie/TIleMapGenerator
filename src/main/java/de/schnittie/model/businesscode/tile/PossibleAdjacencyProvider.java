@@ -12,7 +12,7 @@ import java.util.List;
 public class PossibleAdjacencyProvider {
     private final HashMap<Integer, PossibleAdjacencyHolderForOneTile> adjacencyByID = new HashMap<>();
 
-    PossibleAdjacencyProvider() {
+    public PossibleAdjacencyProvider() {
         int that_tile = -1;
         int next_to = -1;
         HashMap<Integer, HashSet<Integer>> possibleAdjacencyWIP = new HashMap<>();

@@ -249,9 +249,9 @@ public class DBinteractions {
     }
 
     public void putListOfRulesIntoDB(List<RuleTO> rules) {
-        if (rules.size() > MAX_STATEMENT_SIZE+1) {
-            List<RuleTO> firstRulesSlice =  rules.subList(0, MAX_STATEMENT_SIZE);
-            List<RuleTO> secondRulesSlice =  rules.subList(MAX_STATEMENT_SIZE, rules.size());
+        if (rules.size() > MAX_STATEMENT_SIZE + 1) {
+            List<RuleTO> firstRulesSlice = rules.subList(0, MAX_STATEMENT_SIZE);
+            List<RuleTO> secondRulesSlice = rules.subList(MAX_STATEMENT_SIZE, rules.size());
             putListOfRulesIntoDB(firstRulesSlice);
             putListOfRulesIntoDB(secondRulesSlice);
             return;
@@ -316,6 +316,25 @@ public class DBinteractions {
         }
     }
 
+    public void putEasyTilesIntoDB(ArrayList<ArrayList<Integer>> easyTileSets) {
+        for (int i = 0; i < easyTileSets.size(); i++) {
+            for (int j = 0; j < easyTileSets.get(i).size(); j++) {
+                PreparedStatement statement = null;
+                try {
+                    statement = conn.prepareStatement(
+                            "INSERT INTO easy_tiles (tile_id, set_id) VALUES (?,?)");
+                    statement.setInt(1, easyTileSets.get(i).get(j));
+                    statement.setInt(2, i);
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    close(statement);
+                }
+            }
+        }
+    }
+
     public HashMap<Integer, String> getFilePathMap() {
         //Mapps TileIDs to their file paths
 
@@ -356,6 +375,31 @@ public class DBinteractions {
                         resultSet.getInt("next_to")));
             }
             return resultList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> getEasyTiles() {
+        ArrayList<ArrayList<Integer>> easyTiles = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(
+                    "SELECT * FROM easy_tiles ORDER BY set_id");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int setId = resultSet.getInt("set_id");
+                if (easyTiles.size() <= setId){
+                    easyTiles.add(new ArrayList<Integer>());
+                }
+                easyTiles.get(setId).add(resultSet.getInt("tile_id"));
+            }
+            return easyTiles;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

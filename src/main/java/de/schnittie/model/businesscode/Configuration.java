@@ -22,6 +22,7 @@ public class Configuration {
     private  final ArrayList<RuleTO> rules = dBinteractions.getAllRules();
     private  final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private  final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
+    private final ArrayList<ArrayList<Integer>> easyTiles = dBinteractions.getEasyTiles();
     private  final String dbFolder = DBinteractions.getInstance().getDbFolder();
 
 
@@ -42,5 +43,8 @@ public class Configuration {
     }
     public  String getDbFolder() {
         return dbFolder;
+    }
+    public  ArrayList<ArrayList<Integer>> getEasyTiles(){
+        return easyTiles;
     }
 }
