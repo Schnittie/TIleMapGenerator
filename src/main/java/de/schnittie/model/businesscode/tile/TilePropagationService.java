@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TilePropagationService {
     private static final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
+
     public static boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, TileInProgress tileInProgress)
             throws MapGenerationException {
 
@@ -30,7 +31,7 @@ public class TilePropagationService {
         for (Integer discardedPossibility : listOfPossibilitiesOfSelf) {
             tileInProgress.removePossibility(discardedPossibility);
         }
-        if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1) {
+        if (listOfPossibilitiesOfSelfAfterPropagation.size() == 1 || tileInProgress.getPossibleTileStatesLeft() == 1) {
             //A tileInProgress with only one Possibility left has to collapse
             tileInProgress.collapse(listOfPossibilitiesOfSelfAfterPropagation.get(0));
             responseList.add(tileInProgress.getContent());

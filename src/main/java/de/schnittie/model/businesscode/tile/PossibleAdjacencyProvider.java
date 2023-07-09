@@ -19,13 +19,13 @@ public class PossibleAdjacencyProvider {
         HashSet<Integer> adjacentIDListForOneDirection = new HashSet<>();
 
         for (RuleTO ruleTO : Configuration.getInstance().getRules()) {
-            if (ruleTO.next_to() != next_to){
+            if (ruleTO.next_to() != next_to) {
 
-                possibleAdjacencyWIP.put(next_to,adjacentIDListForOneDirection);
+                possibleAdjacencyWIP.put(next_to, adjacentIDListForOneDirection);
                 adjacentIDListForOneDirection = new HashSet<>();
                 next_to = ruleTO.next_to();
 
-                if (ruleTO.that_tile() != that_tile){
+                if (ruleTO.that_tile() != that_tile) {
                     adjacencyByID.put(that_tile, new PossibleAdjacencyHolderForOneTile(possibleAdjacencyWIP));
                     possibleAdjacencyWIP = new HashMap<>();
                     that_tile = ruleTO.that_tile();
@@ -33,7 +33,7 @@ public class PossibleAdjacencyProvider {
             }
             adjacentIDListForOneDirection.add(ruleTO.this_tile());
         }
-        possibleAdjacencyWIP.put(next_to,adjacentIDListForOneDirection);
+        possibleAdjacencyWIP.put(next_to, adjacentIDListForOneDirection);
         adjacencyByID.put(that_tile, new PossibleAdjacencyHolderForOneTile(possibleAdjacencyWIP));
         adjacencyByID.remove(-1);
     }
@@ -50,7 +50,7 @@ public class PossibleAdjacencyProvider {
         }
 
         HashSet<Integer> possibilities = new HashSet<>();
-        for (int possibleIDofCaller: listOfPossibilities) {
+        for (int possibleIDofCaller : listOfPossibilities) {
             possibilities.addAll(adjacencyByID.get(possibleIDofCaller).getPossibleTilesByDirection(whereIamRelativeToCaller));
         }
         possibilities.retainAll(tileInQuestion);
@@ -60,9 +60,10 @@ public class PossibleAdjacencyProvider {
         }
         return new ArrayList<>(possibilities);
     }
-    public boolean doTheseTilesMatchInEveryDirection(int tileId, int otherTileId){
+
+    public boolean doTheseTilesMatchInEveryDirection(int tileId, int otherTileId) {
         for (Integer direction : adjacencyByID.get(tileId).tileIDbyDirection().keySet()) {
-            if (!adjacencyByID.get(tileId).tileIDbyDirection().get(direction).contains(otherTileId)){
+            if (!adjacencyByID.get(tileId).tileIDbyDirection().get(direction).contains(otherTileId)) {
                 return false;
             }
         }
