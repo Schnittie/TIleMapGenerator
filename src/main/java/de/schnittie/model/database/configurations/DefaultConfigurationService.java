@@ -11,12 +11,12 @@ public class DefaultConfigurationService {
         HashSet<ConfigurationHolder> defaultConfigurations = new HashSet<>(3);
 
         HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").toURI()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastle.png").toURI()) , -1);
+//        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").toURI()) , -1);
+//        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastle.png").toURI()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeVertical.png").toURI()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeHorizontal.png").toURI()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBrickPath.png").toURI()) , 0);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasySpring.png").toURI()) , -1);
+//        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasySpring.png").toURI()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRotatablePaths.png").toURI()) , 3);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").toURI()) , 0);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").toURI()) , 3);

@@ -7,20 +7,8 @@
     //TODO: User changing Probability
     //TODO: User changing Rules
 
-    //TODO: Hexagons!!
-
-    //TODO: To propagate as board wide stack? (this isn't as big a deal as it might seem) (think about this after threads)
-    //TODO: actually think about thread stuff (0,5x amount tiles separation should cover everything) <- doesn't make sense, more thought needed
-
-    //TODO: Can I do propagation as Multithreading
-	//TODO: Multithreading idea: every board first generates its borders <- implications for the Damage Control unit
-    //TODO: Installation DBinteractions as Bulk operations
-    //TODO: Split tileInProgress into TIle and TileManipulator
-    //TODO: which version of NextTile is the one I want
 
     //TODO: CanIBe in Tile as Hashset where existence = true
     //todo: look into using RetainAll in propagation (it returns true if things have changed)
-    //TODO: fix bs controller
-    //TODO: I can't call everything in BoardPropagation propagate()
 
     OneJar maven Plugin

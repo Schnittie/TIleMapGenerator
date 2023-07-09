@@ -248,10 +248,17 @@ public class DBinteractions {
     }
 
     public void putListOfRulesIntoDB(List<RuleTO> rules) {
+        if (rules.size() > 50000) {
+            List<RuleTO> firstRulesSlice =  rules.subList(0, 40000);
+            List<RuleTO> secondRulesSlice =  rules.subList(40000, rules.size());
+            putListOfRulesIntoDB(firstRulesSlice);
+            putListOfRulesIntoDB(secondRulesSlice);
+            return;
+        }
         PreparedStatement statement = null;
         try {
             statement = conn.prepareStatement(
-                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES " + getParameterPlaceholders(rules.size(), 3) +"ON CONFLICT DO NOTHING");
+                    "INSERT INTO rule (this_tile, that_tile, next_to) VALUES " + getParameterPlaceholders(rules.size(), 3) + "ON CONFLICT DO NOTHING");
 
 
             int count = 1;
@@ -269,8 +276,8 @@ public class DBinteractions {
         }
     }
 
-    private String getParameterPlaceholders(int amountOfValues , int sizeOfValueSet) {
-        if (amountOfValues == 0 || sizeOfValueSet == 0){
+    private String getParameterPlaceholders(int amountOfValues, int sizeOfValueSet) {
+        if (amountOfValues == 0 || sizeOfValueSet == 0) {
             throw new RuntimeException("attempting to add empty list of Rules");
         }
         StringBuilder stringBuilder = new StringBuilder();
@@ -280,12 +287,12 @@ public class DBinteractions {
 
             innerStringBuilder = new StringBuilder();
             innerStringBuilder.append(",?".repeat(Math.max(0, sizeOfValueSet)));
-            innerStringBuilder.replace(0,1,"");
+            innerStringBuilder.replace(0, 1, "");
 
             stringBuilder.append(innerStringBuilder);
             stringBuilder.append(")");
         }
-        stringBuilder.replace(0,1,"");
+        stringBuilder.replace(0, 1, "");
         return stringBuilder.toString();
     }
 

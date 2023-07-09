@@ -13,14 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPropagationService {
-    public static void propagate(PairOfCoordinates coordinates, Board board){
-        propagate(coordinates.x(),coordinates.y(),board);
+    public static void startPropagation(PairOfCoordinates coordinates, Board board){
+        startPropagation(coordinates.x(),coordinates.y(),board);
     }
-    public static void propagate(int x, int y, Board board) {
+    public static void startPropagation(int x, int y, Board board) {
         try {
             BoardPropagationQueue boardPropagationQueue = new BoardPropagationQueue();
             addNewEntriesToQueue(new PairOfCoordinates(x, y), boardPropagationQueue, board, board.getTile(x, y).getPossibleTileContentLeft());
-            propagate(boardPropagationQueue, board);
+            workThroughPropagationQueue(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
             BoardImageFactory.renderBoardImage(board.getBoardTO());
             try {
@@ -32,7 +32,7 @@ public class BoardPropagationService {
         }
     }
 
-    private static void propagate(BoardPropagationQueue boardPropagationQueue, Board board) throws MapGenerationException {
+    private static void workThroughPropagationQueue(BoardPropagationQueue boardPropagationQueue, Board board) throws MapGenerationException {
         BoardPropagationToDo boardPropagationToDo = boardPropagationQueue.dequeue();
         while (boardPropagationToDo != null) {
             propagate(boardPropagationToDo, boardPropagationQueue, board);
@@ -40,7 +40,8 @@ public class BoardPropagationService {
         }
     }
 
-    private static void propagate(BoardPropagationToDo boardPropagationToDo, BoardPropagationQueue boardPropagationQueue, Board board) throws MapGenerationException {
+    private static void propagate(BoardPropagationToDo boardPropagationToDo, BoardPropagationQueue boardPropagationQueue,
+                                  Board board) throws MapGenerationException {
         boolean propagationRecieverHasChangedPossibilites = false;
         Tile tile = board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y());
         if (tile.isCollapsed()){
@@ -53,13 +54,16 @@ public class BoardPropagationService {
         }
         if (propagationRecieverHasChangedPossibilites) {
             if (tile.isCollapsed()){
-                board.setTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y(), new TileCollapsed(tile.getContent()));
+                board.setTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y(),
+                        new TileCollapsed(tile.getContent()));
             }
-            addNewEntriesToQueue(boardPropagationToDo.coordinates(), boardPropagationQueue, board, board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).getPossibleTileContentLeft());
+            addNewEntriesToQueue(boardPropagationToDo.coordinates(), boardPropagationQueue, board, board.getTile(
+                    boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).getPossibleTileContentLeft());
         }
     }
 
-    private static void addNewEntriesToQueue(PairOfCoordinates coordinates, BoardPropagationQueue boardPropagationQueue, Board board, List<Integer> newContentOfPropagationSender) throws MapGenerationException {
+    private static void addNewEntriesToQueue(PairOfCoordinates coordinates, BoardPropagationQueue boardPropagationQueue,
+                                             Board board, List<Integer> newContentOfPropagationSender) throws MapGenerationException {
         HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
         for (int directionID : directionChangeMap.keySet()) {
             PairOfCoordinates directionChange = directionChangeMap.get(directionID);

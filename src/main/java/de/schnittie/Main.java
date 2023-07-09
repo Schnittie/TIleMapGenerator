@@ -1,8 +1,10 @@
 package de.schnittie;
 
-import de.schnittie.controller.Controller;
 import de.schnittie.model.ConfigurationLoaderService;
 import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.businesscode.board.Board;
+import de.schnittie.model.businesscode.board.BoardFillingServiceThread;
+import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.database.InstallationHandler;
 
 public class Main {
@@ -23,8 +25,10 @@ public class Main {
 
         //with 200 sized Subboards
         // 500x500 FantasyMap in 302465 Milliseconds
-
-
-        Controller controller = new Controller();
+        Board board =new Board(20,20);
+        BoardFillingServiceThread boardFillingServiceThread = new BoardFillingServiceThread(board);
+        boardFillingServiceThread.fill(board);
+        BoardImageFactory.renderBoardImage(board.getBoardTO());
+        //Controller controller = new Controller();
     }
 }
