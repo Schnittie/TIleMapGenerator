@@ -7,6 +7,8 @@ public class BoardDamageControlService {
     public static void controlDamage(int problemTileX, int problemTileY, Board board) throws MapGenerationException {
         //TODO: Dmg Controll system ramps up the damage size if it's called again within it's own propagation
         //Maybe completely split put the damaged area, make it it's own board and give it to the Filling service
+
+        BoardImageFactory.renderDamageImage(board.getBoardTO(),new PairOfCoordinates(problemTileX,problemTileY));
         int damageSize = 5;
         int damageAreaBorderMinX = Math.max(problemTileX - damageSize, 0);
         int damageAreaBorderMinY = Math.max(problemTileY - damageSize, 0);

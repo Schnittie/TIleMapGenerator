@@ -29,6 +29,7 @@ public class DBinteractions {
 
     private Connection conn;
     private String dbFolder = DBinteractions.DefaultDB_FOLDER;
+    private static final int MAX_STATEMENT_SIZE = 40000;
 
     private static final DBinteractions dBInteractions;
 
@@ -248,9 +249,9 @@ public class DBinteractions {
     }
 
     public void putListOfRulesIntoDB(List<RuleTO> rules) {
-        if (rules.size() > 50000) {
-            List<RuleTO> firstRulesSlice =  rules.subList(0, 40000);
-            List<RuleTO> secondRulesSlice =  rules.subList(40000, rules.size());
+        if (rules.size() > MAX_STATEMENT_SIZE+1) {
+            List<RuleTO> firstRulesSlice =  rules.subList(0, MAX_STATEMENT_SIZE);
+            List<RuleTO> secondRulesSlice =  rules.subList(MAX_STATEMENT_SIZE, rules.size());
             putListOfRulesIntoDB(firstRulesSlice);
             putListOfRulesIntoDB(secondRulesSlice);
             return;
