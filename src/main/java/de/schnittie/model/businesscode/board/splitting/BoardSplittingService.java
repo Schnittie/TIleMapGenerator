@@ -7,15 +7,14 @@ import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import java.util.*;
 
 public class BoardSplittingService {
-    private static final int MINIMAL_BOARD_HEIGHT = 50;
-    private static final int MINIMAL_BOARD_WIDTH = 50;
+    private static final int MINIMAL_BOARD_HEIGHT = 100;
+    private static final int MINIMAL_BOARD_WIDTH = 100;
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
         //TODO: Mulitithreaded Recursive Splitting
         System.out.println("Splitting board...");
-        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
-            System.out.println("board is too small to split");
+        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT || board.getWidth() <= MINIMAL_BOARD_WIDTH) {
             HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
             coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
             return coordinatesSubBoardMap;
