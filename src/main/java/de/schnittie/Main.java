@@ -25,7 +25,7 @@ public class Main {
 
         //with 200 sized Subboards
         // 500x500 FantasyMap in 302465 Milliseconds
-        Board board =new Board(20,20);
+        Board board =new Board(50,50);
         BoardFillingServiceThread boardFillingServiceThread = new BoardFillingServiceThread(board);
         boardFillingServiceThread.fill(board);
         BoardImageFactory.renderBoardImage(board.getBoardTO());

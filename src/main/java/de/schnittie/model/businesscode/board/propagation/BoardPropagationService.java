@@ -4,7 +4,6 @@ import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardDamageControlService;
-import de.schnittie.model.businesscode.board.BoardImageFactory;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 import de.schnittie.model.businesscode.tile.tileObjects.TileCollapsed;
@@ -22,7 +21,6 @@ public class BoardPropagationService {
             addNewEntriesToQueue(new PairOfCoordinates(x, y), boardPropagationQueue, board, board.getTile(x, y).getPossibleTileContentLeft());
             workThroughPropagationQueue(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
-            BoardImageFactory.renderBoardImage(board.getBoardTO());
             try {
                 System.out.println("I need to control damage");
                 BoardDamageControlService.controlDamage(x, y, board);
