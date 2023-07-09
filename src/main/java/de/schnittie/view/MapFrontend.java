@@ -56,6 +56,7 @@ public class MapFrontend extends JFrame implements ModelListener{
         add(buttonPanel, BorderLayout.SOUTH);
         //add progressBar
         setSize(600,300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
     }
