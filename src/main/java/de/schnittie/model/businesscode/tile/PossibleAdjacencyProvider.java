@@ -45,7 +45,6 @@ public class PossibleAdjacencyProvider {
         //tileInQuestion is the tile this tile could be
 
         if (listOfPossibilities.isEmpty()) {
-            System.out.println("Error1");
             throw new MapGenerationException();
         }
 
@@ -55,7 +54,6 @@ public class PossibleAdjacencyProvider {
         }
         possibilities.retainAll(tileInQuestion);
         if (possibilities.isEmpty()) {
-            System.out.println("Error2");
             throw new MapGenerationException();
         }
         return new ArrayList<>(possibilities);

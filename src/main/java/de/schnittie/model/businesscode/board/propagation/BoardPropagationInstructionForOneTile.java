@@ -20,7 +20,6 @@ public class BoardPropagationInstructionForOneTile {
 
            existingNewTileContent.retainAll(newTileContent);
            if (existingNewTileContent.isEmpty()){
-               System.out.println("Error1");
                throw new MapGenerationException();
            }
            directionNewTileContentMap.replace(direction, existingNewTileContent);

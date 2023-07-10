@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class BoardNextTileToCollapseService {
     private static final Random random = new Random();
-    public static final int MAX_ENTROPY = 100;
+    public static final int MAX_ENTROPY = 10000;
 
-    public static PairOfCoordinates getNextTile(Board board){
+    public static PairOfCoordinates getNextTile(Board board) {
         //return getNextTileWithLowestEntropy(board);
         return getRandomNonCollapsedTile(board);
     }
@@ -18,8 +18,13 @@ public class BoardNextTileToCollapseService {
         ArrayList<PairOfCoordinates> lowestEntropyTiles = new ArrayList<>();
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
-                if (!board.getTile(x, y).isCollapsed()) {
-                    lowestEntropyTiles.add(new PairOfCoordinates(x, y));
+                Tile currentTile = board.getTile(x, y);
+                if (!currentTile.isCollapsed()) {
+                    if (currentTile.getPossibleTileStatesLeft() == 1) {
+                        board.setTile(x, y, currentTile.collapse());
+                    } else {
+                        lowestEntropyTiles.add(new PairOfCoordinates(x, y));
+                    }
                 }
             }
         }
