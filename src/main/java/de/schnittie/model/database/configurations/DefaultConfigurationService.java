@@ -23,6 +23,7 @@ public class DefaultConfigurationService {
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinTwo.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasySpring.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRotatablePaths.png").getFile()) , 3);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOcean.png").getFile()) , 3);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()) , 0);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
         HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
