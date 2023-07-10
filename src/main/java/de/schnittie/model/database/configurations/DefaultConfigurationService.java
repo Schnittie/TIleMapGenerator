@@ -2,13 +2,14 @@ package de.schnittie.model.database.configurations;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class DefaultConfigurationService {
-    public static HashSet<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
+    public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
-        HashSet<ConfigurationHolder> defaultConfigurations = new HashSet<>(3);
+        ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>(3);
 
         HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
