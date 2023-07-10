@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class InstallationHandler {
     private final static AppDirs appDirs = AppDirsFactory.getInstance();
     private final static String pathString = appDirs.getUserDataDir("TileMapGenerator", null, "CatboyMaps");
     private static final String TILE_FOLDER_NAME = "TileImages";
-    private static final HashSet<ConfigurationHolder> defaultConfigs;
+    private static final ArrayList<ConfigurationHolder> defaultConfigs;
 
     static {
         try {
