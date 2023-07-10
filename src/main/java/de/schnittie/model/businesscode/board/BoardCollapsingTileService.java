@@ -11,6 +11,8 @@ public class BoardCollapsingTileService {
     // This class sounds more like an Uitl-Class, not a service
     // while Reading "service", I'd expect this class to be instantiated instead of calling#
     // some static utility-(*cough*)Methods.
+
+    private static ArrayList<ArrayList<Integer>> listOfEasyTileSets =Configuration.getInstance().getEasyTiles();
     public static void collapseATile(PairOfCoordinates pairOfCoordinates, Board board)  {
         if (!board.getTile(pairOfCoordinates).isCollapsed()){
             board.setTile(pairOfCoordinates, board.getTile(pairOfCoordinates).collapse());
@@ -25,18 +27,41 @@ public class BoardCollapsingTileService {
     }
     public static void collapseAllEasy(Collection<PairOfCoordinates> coordinatesCollection, Board board){
         Random random = new Random();
-        ArrayList<ArrayList<Integer>> easyTiles= Configuration.getInstance().getEasyTiles();
-        ArrayList<Integer> easyTileSet = easyTiles.get(random.nextInt(easyTiles.size()));
+        ArrayList<ArrayList<Integer>> easyTiles = Configuration.getInstance().getEasyTiles();
+        ArrayList<Integer> easyTileSet = findBiggestInnerList(easyTiles);
         for (PairOfCoordinates coordinates: coordinatesCollection) {
             collapseATile(coordinates, board,easyTileSet.get(random.nextInt(easyTileSet.size())));
         }
     }
+
+    private static ArrayList<Integer> findBiggestInnerList(ArrayList<ArrayList<Integer>> outerList) {
+        int maxSize = 0;
+        ArrayList<Integer> biggestInnerList = null;
+        for (ArrayList<Integer> innerList : outerList) {
+            if (innerList.size() > maxSize) {
+                maxSize = innerList.size();
+                biggestInnerList = innerList;
+            }
+        }
+        return biggestInnerList;
+    }
+
     public static void forceCollapse(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID){
+        Random random = new Random();
+        ArrayList<Integer> easyTileSet = findEasyTileSetForExample(listOfEasyTileSets , tileID);
         for (PairOfCoordinates coordinates : coordinatesCollection) {
-            board.setTile(coordinates, board.getTile(coordinates).collapse(tileID));
+            board.setTile(coordinates, board.getTile(coordinates).collapse(easyTileSet.get(random.nextInt(easyTileSet.size()))));
         }
         for (PairOfCoordinates coordinates : coordinatesCollection) {
             BoardPropagationService.startPropagation(coordinates, board);
         }
+    }
+
+    private static ArrayList<Integer> findEasyTileSetForExample(ArrayList<ArrayList<Integer>> listOfEasyTileSets, int tileID) {
+        for (ArrayList<Integer> tileSet :
+                listOfEasyTileSets) {
+            if (tileSet.contains(tileID)) return tileSet;
+        }
+        throw new RuntimeException("Given Tile ID does not occur in given Sets");
     }
 }
