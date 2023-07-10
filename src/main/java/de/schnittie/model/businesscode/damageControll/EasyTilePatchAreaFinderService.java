@@ -1,9 +1,12 @@
 package de.schnittie.model.businesscode.damageControll;
 
 import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.businesscode.MapGenerationException;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.businesscode.tile.TilePropagationService;
 import de.schnittie.model.businesscode.tile.tileObjects.TileInProgress;
+import de.schnittie.model.database.DBinteractions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,57 +16,112 @@ import java.util.Queue;
 public class EasyTilePatchAreaFinderService {
     private static final int DAMAGE_MIN_SIZE = 1;
     private static final HashMap<Integer, PairOfCoordinates> directionChanges = Configuration.getInstance().getDirectionChanges();
+    private static final HashMap<Integer, Integer> reverseDirection = DBinteractions.getInstance().getReverseDirection();
 
     public static PatchInstruction getPatchInstruction(PairOfCoordinates damageOrigin, ArrayList<ArrayList<Integer>> easyTileLists, Board board) {
-        PatchInstruction patchInstruction;
         ArrayList<Integer> easyTileSetExamples = new ArrayList<>(easyTileLists.size());
         for (ArrayList<Integer> easyTileList : easyTileLists) {
             easyTileSetExamples.add(easyTileList.get(0));
         }
         System.out.println("Trying to make out a damage Area...");
-        for (Integer easyTileExampleId : easyTileSetExamples) {
-            patchInstruction = tryToFindPatchArea(damageOrigin, easyTileExampleId, board);
-            if (patchInstruction != null) return patchInstruction;
-        }
-        System.out.println(damageOrigin.x() + damageOrigin.y());
-        throw new RuntimeException("No easy Patch for Damage found");
+        return tryToFindPatchArea(damageOrigin, easyTileSetExamples, board);
     }
 
-    private static PatchInstruction tryToFindPatchArea(PairOfCoordinates damageOrigin, int easyTileExampleId, Board board) {
-        ArrayList<PairOfCoordinates> patchArea = new ArrayList<>();
-        Queue<PairOfCoordinates> possibleBorderQueue = new LinkedList<>();
+    private static PatchInstruction tryToFindPatchArea(PairOfCoordinates damageOrigin, ArrayList<Integer> easyTileExampleIds, Board board) {
         board.setTile(damageOrigin, new TileInProgress());
-
-        prefillQueue(damageOrigin, board, patchArea, possibleBorderQueue);
-
-        possibleBorderQueue.add(damageOrigin);
-        while (!possibleBorderQueue.isEmpty()) {
-            if (possibleBorderQueue.size() > 50) {
-                System.out.println("Abandon hope for tile " + easyTileExampleId);
-                return null;
-            }
-            PairOfCoordinates possibleBorderMember = possibleBorderQueue.poll();
-            if (isOnBorder(possibleBorderMember, board)) {
-                System.out.println("No valid Area found for tile " + easyTileExampleId);
-                return null;
-            }
-            if (!patchArea.contains(possibleBorderMember)){
-                patchArea.add(possibleBorderMember);
-            }
-            if (board.getTile(possibleBorderMember).getPossibleTileContentLeft().contains(easyTileExampleId)) {
-                continue;
-            }
-            putAllNeighboursInQueueIfNotPresent(possibleBorderMember, possibleBorderQueue, patchArea);
+        HashMap<Integer, PatchInstruction> easyTileToPatchMap = new HashMap<>();
+        for (Integer easyTileExampleId : easyTileExampleIds) {
+            easyTileToPatchMap.put(easyTileExampleId, (new PatchInstruction(new ArrayList<>(), new LinkedList<>(),new ArrayList<>(), easyTileExampleId)));
+            prefillQueue(damageOrigin, board, easyTileToPatchMap.get(easyTileExampleId).damageArea(),
+                    easyTileToPatchMap.get(easyTileExampleId).possibleBorderQueue());
+            easyTileToPatchMap.get(easyTileExampleId).possibleBorderQueue().add(damageOrigin);
+            easyTileToPatchMap.get(easyTileExampleId).resettingList().addAll(easyTileToPatchMap.get(easyTileExampleId).damageArea());
         }
-        System.out.println("Damage area found for " + easyTileExampleId);
-        return new PatchInstruction(patchArea, easyTileExampleId);
+
+        PatchInstruction foundInstruction;
+        while (true) {
+            for (Integer easyTileExampleId : easyTileToPatchMap.keySet()) {
+                foundInstruction = workThroughOneQueueElement(easyTileToPatchMap.get(easyTileExampleId), board);
+                if (foundInstruction != null) return foundInstruction;
+            }
+        }
+    }
+
+    private static PatchInstruction workThroughOneQueueElement(PatchInstruction patchInstruction, Board board) {
+        if (patchInstruction.possibleBorderQueue().isEmpty()) return patchInstruction;
+        PairOfCoordinates possibleBorderMember = patchInstruction.possibleBorderQueue().poll();
+//            if (isOnBorder(possibleBorderMember, board)) {
+//                System.out.println("No valid Area found for tile ");
+//                return null;
+//            }
+        if (!patchInstruction.damageArea().contains(possibleBorderMember)) {
+            patchInstruction.damageArea().add(possibleBorderMember);
+            patchInstruction.resettingList().add(possibleBorderMember);
+        }
+        HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea = getAllNeighboursNotInArea(possibleBorderMember, patchInstruction.damageArea(), board);
+        if (board.getTile(possibleBorderMember).getPossibleTileContentLeft().contains(patchInstruction.easyTileId())) {
+            return null;
+        } else if (couldBeGreenIfItWereNew(possibleBorderMember, board, allNeighboursNotInArea, patchInstruction.easyTileId())) {
+            return null;
+        } else if (couldBeGreenIfNeighboursWereDifferent(board, allNeighboursNotInArea, patchInstruction.easyTileId(), patchInstruction.damageArea())) {
+            patchInstruction.resettingList().addAll(allNeighboursNotInArea.values());
+        }
+        putAllNeighboursInQueueIfNotPresent(possibleBorderMember, patchInstruction.possibleBorderQueue(), patchInstruction.damageArea(), board);
+        return null;
+    }
+
+    private static boolean couldBeGreenIfNeighboursWereDifferent(Board board, HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea, int easyTile, ArrayList<PairOfCoordinates> patchArea) {
+        for (Integer direction : allNeighboursNotInArea.keySet()) {
+            if (!couldBeAdjacentToGreenIfItWereNew(board, easyTile, direction, getAllNeighboursNotInArea(allNeighboursNotInArea.get(direction), patchArea, board))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean couldBeAdjacentToGreenIfItWereNew( Board board, int easyTile, Integer direction,
+                                                              HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea) {
+        TileInProgress potentialTile = new TileInProgress();
+        ArrayList<Integer> easyTilePossibilityAsList = new ArrayList<>(1);
+        easyTilePossibilityAsList.add(easyTile);
+        allNeighboursNotInArea.remove(reverseDirection.get(direction));
+        try {
+            TilePropagationService.propagate(reverseDirection.get(direction), easyTilePossibilityAsList, potentialTile);
+        } catch (MapGenerationException e) {
+            return false;
+        }
+        for (Integer neighbourDirection : allNeighboursNotInArea.keySet()) {
+            try {
+                TilePropagationService.propagate(reverseDirection.get(neighbourDirection),
+                        board.getTile(allNeighboursNotInArea.get(neighbourDirection)).getPossibleTileContentLeft(),potentialTile);
+            } catch (MapGenerationException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private static boolean couldBeGreenIfItWereNew(PairOfCoordinates possibleBorderMember, Board board, HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea, int easyTile) {
+        //TODO rename
+        TileInProgress potentialTile = new TileInProgress();
+        for (Integer direction : allNeighboursNotInArea.keySet()) {
+            try {
+                TilePropagationService.propagate(reverseDirection.get(direction),
+                        board.getTile(allNeighboursNotInArea.get(direction)).getPossibleTileContentLeft(), potentialTile);
+            } catch (MapGenerationException e) {
+                return false;
+            }
+        }
+        return potentialTile.getPossibleTileContentLeft().contains(easyTile);
+
     }
 
     private static void prefillQueue(PairOfCoordinates damageOrigin, Board board, ArrayList<PairOfCoordinates> patchArea, Queue<PairOfCoordinates> possibleBorderQueue) {
         int damageAreaBorderMinX = Math.max(damageOrigin.x() - DAMAGE_MIN_SIZE, 1);
         int damageAreaBorderMinY = Math.max(damageOrigin.y() - DAMAGE_MIN_SIZE, 1);
-        int damageAreaBorderMaxX = Math.min(damageOrigin.x() + DAMAGE_MIN_SIZE+1, board.getWidth());
-        int damageAreaBorderMaxY = Math.min(damageOrigin.y() + DAMAGE_MIN_SIZE+1, board.getHeight());
+        int damageAreaBorderMaxX = Math.min(damageOrigin.x() + DAMAGE_MIN_SIZE + 1, board.getWidth());
+        int damageAreaBorderMaxY = Math.min(damageOrigin.y() + DAMAGE_MIN_SIZE + 1, board.getHeight());
 
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
             for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
@@ -78,23 +136,35 @@ public class EasyTilePatchAreaFinderService {
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
             PairOfCoordinates xLow = new PairOfCoordinates(x, damageAreaBorderMinY);
             PairOfCoordinates xHigh = new PairOfCoordinates(x, damageAreaBorderMaxY - 1);
-            if (!possibleBorderQueue.contains(xLow)){
+            if (!possibleBorderQueue.contains(xLow)) {
                 possibleBorderQueue.add(xLow);
             }
-            if (!possibleBorderQueue.contains(xHigh)){
+            if (!possibleBorderQueue.contains(xHigh)) {
                 possibleBorderQueue.add(xHigh);
             }
-
         }
     }
 
-    private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates damageOrigin, Queue<PairOfCoordinates>
-            patchBorder, ArrayList<PairOfCoordinates> patchArea) {
+    private static HashMap<Integer, PairOfCoordinates> getAllNeighboursNotInArea(PairOfCoordinates centralTile, ArrayList<PairOfCoordinates> patchArea, Board board) {
+        HashMap<Integer, PairOfCoordinates> directionToNeighbourMap = new HashMap<>(directionChanges.size());
         for (Integer direction : directionChanges.keySet()) {
             PairOfCoordinates neighbour = new PairOfCoordinates(
-                    damageOrigin.x() + directionChanges.get(direction).x(),
-                    damageOrigin.y() + directionChanges.get(direction).y());
-            if (!(patchBorder.contains(neighbour) || patchArea.contains(neighbour))) {
+                    centralTile.x() + directionChanges.get(direction).x(),
+                    centralTile.y() + directionChanges.get(direction).y());
+            if (!(patchArea.contains(neighbour) || isOnBorder(neighbour, board))) {
+                directionToNeighbourMap.put(direction,neighbour);
+            }
+        }
+        return directionToNeighbourMap;
+    }
+
+    private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates possibleQueueMember, Queue<PairOfCoordinates>
+            patchBorder, ArrayList<PairOfCoordinates> patchArea, Board board) {
+        for (Integer direction : directionChanges.keySet()) {
+            PairOfCoordinates neighbour = new PairOfCoordinates(
+                    possibleQueueMember.x() + directionChanges.get(direction).x(),
+                    possibleQueueMember.y() + directionChanges.get(direction).y());
+            if (!(patchBorder.contains(neighbour) || patchArea.contains(neighbour) || isOnBorder(neighbour, board))) {
                 patchBorder.add(neighbour);
             }
         }

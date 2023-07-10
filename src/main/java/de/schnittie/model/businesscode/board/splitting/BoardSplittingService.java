@@ -7,8 +7,8 @@ import de.schnittie.model.businesscode.board.PairOfCoordinates;
 import java.util.*;
 
 public class BoardSplittingService {
-    private static final int MINIMAL_BOARD_HEIGHT = 50;
-    private static final int MINIMAL_BOARD_WIDTH = 50;
+    private static final int MINIMAL_BOARD_HEIGHT = 75;
+    private static final int MINIMAL_BOARD_WIDTH = 75;
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
@@ -54,7 +54,7 @@ public class BoardSplittingService {
                 board, numberOfBoardsAlongHeight, numberOfBoardsAlongWidth);
         //Collapse all Tiles at the Edges between SubBoards => Shelling them
         System.out.println("Collapsing Tiles along Splitlines ...");
-        BoardCollapsingTileService.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+        BoardCollapsingTileService.collapseAllEasy(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
         return boardToCornerMap;
     }
 
