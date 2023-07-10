@@ -71,6 +71,7 @@ public class MapFrontend extends JFrame implements ModelListener{
            pack();
            setLocationRelativeTo(null);
        }
+       // compare classes with == (except if you want to check for superclasses as well obviously)
        if (event.getClass().equals(GenerationErrorEvent.class)){
            JLabel label = new JLabel(((GenerationErrorEvent) event).getErrorMessage());
            pane.add(label);

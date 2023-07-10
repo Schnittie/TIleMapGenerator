@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -105,8 +106,8 @@ public class RuleCreation {
     private static int colourIsInSet(int colour) {
         //because colours are weird we grant a Tolerance of how much a Colour can be different before it's a new colour
         for (int colourFromSet : colourSet) {
-            int redDiff = Math.abs((colour >> 16) & 0xFF - (colourFromSet >> 16) & 0xFF);
-            int greenDiff = Math.abs((colour >> 8) & 0xFF - (colourFromSet >> 8) & 0xFF);
+            int redDiff = Math.abs((colour >> 16) & 0xFF - (colourFromSet >> 16) & 0xFF); // holy shit :D
+            int greenDiff = Math.abs((colour >> 8) & 0xFF - (colourFromSet >> 8) & 0xFF); // maybe worth some comments? no?
             int blueDiff = Math.abs((colour & 0xFF) - (colourFromSet & 0xFF));
             if (redDiff + greenDiff + blueDiff <= TOLERANCE) {
                 return colourSet.indexOf(colourFromSet);

@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+// ..util.
 public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();
@@ -81,7 +81,7 @@ public class TileCreation {
                     StringBuilder edgeMarker = new StringBuilder();
                     if (row == numRows - 1) {
                         edgeMarker.append("Below");
-                    }
+                    } // else? dont these cases exclude the others? if not - forget this.
                     if (row == 0) {
                         edgeMarker.append("Above");
                     }
@@ -132,7 +132,7 @@ public class TileCreation {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int pixel = image.getRGB(x, y);
-                if ((pixel >> 24) != 0x00) {
+                if ((pixel >> 24) != 0x00) { // 0x00? because a simple 0 is for loosers?
                     return false;
                 }
             }

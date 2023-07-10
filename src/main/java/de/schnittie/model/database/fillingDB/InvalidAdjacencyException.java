@@ -5,6 +5,7 @@ import de.schnittie.model.database.DBinteractions;
 import java.util.HashSet;
 import java.util.Map;
 
+// see BoardFusionException
 public class InvalidAdjacencyException extends Throwable {
     private final Map<Integer, HashSet<Integer>> mapOfIDsToSetsOfDirections;
     private final Map<Integer, String> iDToFilePathMap = DBinteractions.getInstance().getFilePathMap();

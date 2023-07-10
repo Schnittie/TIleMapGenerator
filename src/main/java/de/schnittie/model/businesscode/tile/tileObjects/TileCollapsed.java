@@ -28,6 +28,10 @@ public class TileCollapsed implements Tile {
     public void removePossibility(int toRemove) {
         //nothing to do here (shouldn't be called)
         throw new RuntimeException("This shouldn be called on a collapsed Tile");
+        // maybe this shouldn't be part of the "Tile" interface then?
+        // this exception implies, that a caller knows, that this shouldn't be called.
+        // this again implies, that a TileInProgress is known to be one by a caller.
+        // Just cast it to "TileInProgress" then and call this method, which is only implemented in "TileInProgress"
     }
 
     @Override

@@ -5,6 +5,7 @@ import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 import java.util.ArrayList;
 import java.util.Random;
 
+// UUUUUTIL! :D
 public class BoardNextTileToCollapseService {
     private static final Random random = new Random();
     public static final int MAX_ENTROPY = 100;

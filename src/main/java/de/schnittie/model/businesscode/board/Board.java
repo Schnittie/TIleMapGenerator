@@ -70,6 +70,7 @@ public class Board {
         return height;
     }
 
+    // unused?
     public void newTileAt(int x, int y) {
         board.get(x).set(y, new TileInProgress());
     }

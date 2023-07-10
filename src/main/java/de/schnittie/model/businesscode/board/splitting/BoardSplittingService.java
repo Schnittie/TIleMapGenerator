@@ -6,6 +6,8 @@ import de.schnittie.model.businesscode.board.PairOfCoordinates;
 
 import java.util.*;
 
+// Stop calling utils a "Service" :D
+// conventions DO matter :P
 public class BoardSplittingService {
     private static final int MINIMAL_BOARD_HEIGHT = 50;
     private static final int MINIMAL_BOARD_WIDTH = 50;
