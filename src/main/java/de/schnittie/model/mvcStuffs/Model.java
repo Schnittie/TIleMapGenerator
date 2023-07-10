@@ -19,9 +19,9 @@ public class Model {
     private HashMap<File, Integer> tilesToAdd = new HashMap<>();
     private BufferedImage lastMap;
 
-    public BufferedImage generateMap() {
+    public BufferedImage generateMap(int width, int height) {
         long timeBefore = System.currentTimeMillis();
-        Board board = new Board(100, 100);
+        Board board = new Board(width, height);
         board = MultithreadedBoardFillingService.generateBoard(board);
         System.out.println("Finished generating Map in " + (System.currentTimeMillis() - timeBefore) + " Milliseconds");
         lastMap = BoardImageFactory.renderBoardImage(board.getBoardTO());
@@ -54,5 +54,8 @@ public class Model {
 
     public BufferedImage getLastMap() {
         return lastMap;
+    }
+
+    public void generateMap() {
     }
 }
