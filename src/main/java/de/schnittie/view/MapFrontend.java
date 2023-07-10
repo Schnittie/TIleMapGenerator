@@ -1,12 +1,15 @@
 package de.schnittie.view;
 
+import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.database.InstallationHandler;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
+import de.schnittie.model.mvcStuffs.Model;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.io.File;
 
 import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
@@ -15,14 +18,27 @@ import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
 public class MapFrontend extends JFrame implements ModelListener{
     private JScrollPane panel;
     private Container pane;
-    public MapFrontend(ActionListener listener){
+    private Model model;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("action Performend");
+        model.generateMap();
+    }
+    public MapFrontend(){
         super("MapGenerator");
+
+        model = new Model();
+        model.addListener(this);
 
         pane = getContentPane();
         pane.setLayout(new BorderLayout());
 
         JButton generateButton = new JButton("Generate Map");
-        generateButton.addActionListener(listener);
+        generateButton.addActionListener(e -> {
+            System.out.println("Action performed");
+            model.generateMap();
+        });
 
         JButton configButton = new JButton("Load new Config");
         configButton.addActionListener(e -> {
@@ -63,7 +79,7 @@ public class MapFrontend extends JFrame implements ModelListener{
 
     @Override
     public void update(MapGeneratorEvent event) {
-       if (event.getClass().equals(NewMapEvent.class)){
+       if (event.getClass() == NewMapEvent.class){
            panel = new JScrollPane(new ImagePanel(((NewMapEvent) event).getImage())) ;
            panel.paint(((NewMapEvent) event).getImage().createGraphics());
 
@@ -71,9 +87,7 @@ public class MapFrontend extends JFrame implements ModelListener{
            pack();
            setLocationRelativeTo(null);
        }
-        //TODO
-       // compare classes with == (except if you want to check for superclasses as well obviously)
-       if (event.getClass().equals(GenerationErrorEvent.class)){
+       if (event.getClass() == GenerationErrorEvent.class){
            JLabel label = new JLabel(((GenerationErrorEvent) event).getErrorMessage());
            pane.add(label);
            pack();
@@ -98,4 +112,21 @@ public class MapFrontend extends JFrame implements ModelListener{
             loadConfiguration(chosenDirectory);
         }
     }
+
+    public static void main(String[] args)  {
+        InstallationHandler.generateTilesForDefaultMapIfNotPresent();
+        Configuration.reloadConfiguration();
+
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+               IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        MapFrontend mapFrontend = new MapFrontend();
+    }
+
 }
