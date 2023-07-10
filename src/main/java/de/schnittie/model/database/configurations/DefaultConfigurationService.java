@@ -10,7 +10,10 @@ public class DefaultConfigurationService {
     public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
         ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>(3);
+        //TODO make into Enum
 
+        //integer >=0 means that colour Rules apply and the  int indicates the amount of rotations that should be applied
+        //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability
         HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("FantasyCastle.png").getFile()) , -1);
