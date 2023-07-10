@@ -80,8 +80,16 @@ public class MapFrontend extends JFrame implements ModelListener{
     @Override
     public void update(MapGeneratorEvent event) {
        if (event.getClass() == NewMapEvent.class){
+
+           if (panel != null) {
+               pane.remove(panel);
+           }
+
            panel = new JScrollPane(new ImagePanel(((NewMapEvent) event).getImage())) ;
            panel.paint(((NewMapEvent) event).getImage().createGraphics());
+           panel.setPreferredSize(new Dimension(700,700));
+           panel.getHorizontalScrollBar().setUnitIncrement(10);
+           panel.getVerticalScrollBar().setUnitIncrement(10);
 
            pane.add(panel, BorderLayout.CENTER);
            pack();
