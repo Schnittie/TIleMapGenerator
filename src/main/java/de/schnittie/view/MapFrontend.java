@@ -8,6 +8,7 @@ import de.schnittie.model.mvcStuffs.Model;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -19,6 +20,9 @@ public class MapFrontend extends JFrame implements ModelListener{
     private JScrollPane panel;
     private Container pane;
     private Model model;
+    private JTextField widthTextField;
+    private JTextField heightTextField;
+    private JLabel warningLabel;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -34,10 +38,25 @@ public class MapFrontend extends JFrame implements ModelListener{
         pane = getContentPane();
         pane.setLayout(new BorderLayout());
 
+        JLabel widthLabel = new JLabel("Width:");
+        widthTextField = new JTextField(10);
+
+        JLabel heightLabel = new JLabel("Height:");
+        heightTextField = new JTextField(10);
+
+        ((AbstractDocument) widthTextField.getDocument()).setDocumentFilter(new IntegerDocumentFilter());
+        ((AbstractDocument) heightTextField.getDocument()).setDocumentFilter(new IntegerDocumentFilter());
+
+        warningLabel = new JLabel();
+
         JButton generateButton = new JButton("Generate Map");
         generateButton.addActionListener(e -> {
             System.out.println("Action performed");
-            model.generateMap();
+
+            int width = Integer.parseInt(widthTextField.getText());
+            int height = Integer.parseInt(heightTextField.getText());
+
+            model.generateMap(width, height);
         });
 
         JButton configButton = new JButton("Load new Config");
@@ -60,9 +79,15 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(widthLabel);
+        buttonPanel.add(widthTextField);
+        buttonPanel.add(heightLabel);
+        buttonPanel.add(heightTextField);
         buttonPanel.add(generateButton);
+        buttonPanel.add(warningLabel);
         buttonPanel.add(configButton);
         buttonPanel.add(probabilityButton);
+        warningLabel.setText("Warning: Generating a map with high numbers may take a long time.");
 
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
@@ -71,7 +96,7 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         add(buttonPanel, BorderLayout.SOUTH);
         //add progressBar
-        setSize(600,300);
+        setSize(1000,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
