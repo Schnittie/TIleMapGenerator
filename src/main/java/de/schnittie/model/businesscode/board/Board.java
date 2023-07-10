@@ -69,7 +69,8 @@ public class Board {
     public int getHeight() {
         return height;
     }
-
+//TODO
+    // unused?
     public void newTileAt(int x, int y) {
         board.get(x).set(y, new TileInProgress());
     }

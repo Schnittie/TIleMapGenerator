@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BoardPropagationService {
+    //TODO
+    // everything is static - maybe this is a Util, not a service?
     public static void startPropagation(PairOfCoordinates coordinates, Board board){
         startPropagation(coordinates.x(),coordinates.y(),board);
     }

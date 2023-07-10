@@ -32,6 +32,7 @@ public class MultithreadedBoardFillingService {
                 throw new RuntimeException(e);
             }
         }
+        // this is something w should talk about in discord, cant really tell whats the problem here...
         //TODO: ask artur about this (Generating the board images gets called multiple times)
 //        ExecutorService executorService = ExecutorServiceProvider.getLinkedBlockingQueueExecutor();
 //        for (Thread t : listOfThreads) {

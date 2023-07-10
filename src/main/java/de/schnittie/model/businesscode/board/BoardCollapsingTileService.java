@@ -6,8 +6,11 @@ import de.schnittie.model.businesscode.board.propagation.BoardPropagationService
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
-
+//TODO
 public class BoardCollapsingTileService {
+    // This class sounds more like an Uitl-Class, not a service
+    // while Reading "service", I'd expect this class to be instantiated instead of calling#
+    // some static utility-(*cough*)Methods.
     public static void collapseATile(PairOfCoordinates pairOfCoordinates, Board board)  {
         if (!board.getTile(pairOfCoordinates).isCollapsed()){
             board.setTile(pairOfCoordinates, board.getTile(pairOfCoordinates).collapse());

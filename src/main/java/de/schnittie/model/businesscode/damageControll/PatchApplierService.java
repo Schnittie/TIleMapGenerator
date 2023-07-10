@@ -13,8 +13,10 @@ import de.schnittie.model.database.DBinteractions;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//TODO
+// util :3
 public class PatchApplierService {
-    private static final HashMap<Integer,PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
+    private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
     private static final HashMap<Integer,Integer> reverseDirection = DBinteractions.getInstance().getReverseDirection();
     public static void applyPatch(PatchInstruction patchInstruction, Board board) {
         System.out.println("Applying innerPatch...");

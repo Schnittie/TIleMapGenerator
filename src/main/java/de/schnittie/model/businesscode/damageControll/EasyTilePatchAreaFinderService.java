@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
-
+//TODO
+// util?
 public class EasyTilePatchAreaFinderService {
     private static final int DAMAGE_MIN_SIZE = 1;
     private static final HashMap<Integer, PairOfCoordinates> directionChanges = Configuration.getInstance().getDirectionChanges();
@@ -23,6 +24,10 @@ public class EasyTilePatchAreaFinderService {
         for (ArrayList<Integer> easyTileList : easyTileLists) {
             easyTileSetExamples.add(easyTileList.get(0));
         }
+        // all these printlns should probably be replaced by a logger... its fine for development, but you'll like
+        // not to bother the users with pointless logging stuff they'll never see anyways while
+        // eating CPU-Cycles like they were crisps. A logger can be configured to shut up for prod builds.
+        // this applies to every single println in your code.
         System.out.println("Trying to make out a damage Area...");
         return tryToFindPatchArea(damageOrigin, easyTileSetExamples, board);
     }

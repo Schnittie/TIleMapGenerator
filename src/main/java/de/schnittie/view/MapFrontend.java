@@ -3,7 +3,6 @@ package de.schnittie.view;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
-import de.schnittie.view.ProbabilityChangeFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,6 +70,8 @@ public class MapFrontend extends JFrame implements ModelListener{
            pack();
            setLocationRelativeTo(null);
        }
+        //TODO
+       // compare classes with == (except if you want to check for superclasses as well obviously)
        if (event.getClass().equals(GenerationErrorEvent.class)){
            JLabel label = new JLabel(((GenerationErrorEvent) event).getErrorMessage());
            pane.add(label);

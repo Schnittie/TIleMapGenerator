@@ -6,7 +6,12 @@ import de.schnittie.model.businesscode.tile.tileObjects.Tile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+//TODO
+// can't see anything that is constructed in this "factory", seems more like a Util
+// and sont argument with the fused board - just see the factorypattern as
+// described in the DesignPattern book of the GangOfFour.
+// really nice lecture for all this stuff: https://www.amazon.de/Entwurfsmuster-von-Kopf-bis-Fu%C3%9F/dp/3897214210
+// tell me if you need a PDF ;)
 public class BoardFusionFactory {
 
     public static Board fuseMapOfBoardsIntoOneBoard(HashMap<PairOfCoordinates, Board> coordinatesBoardMap) {

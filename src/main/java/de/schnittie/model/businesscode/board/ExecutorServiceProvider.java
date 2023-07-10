@@ -4,7 +4,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
+//TODO
+// looks familiar :D
+// but maybe thats not a "model" class
 public class ExecutorServiceProvider {
 
     private static final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();

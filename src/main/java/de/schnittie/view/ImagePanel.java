@@ -13,7 +13,8 @@ class ImagePanel extends JPanel {
     }
 
     public ImagePanel() {
-
+        //TODO
+        // unused?
     }
 
     public void setImage(BufferedImage image) {
