@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 class ImagePanel extends JPanel {
     private BufferedImage image;
-    private double scaleFactor = 1.0;
+    private double scaleFactor = 0.4;
 
     public ImagePanel(BufferedImage image) {
         this.image = image;
@@ -39,21 +39,30 @@ class ImagePanel extends JPanel {
         this.image = image;
         setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         setMinimumSize(new Dimension(image.getWidth(), image.getHeight()));
-        scaleFactor = 1.0;
+        scaleFactor = calculateInitialScale();
         revalidate();
         repaint();
     }
+
+    private double calculateInitialScale(){
+        double scaleWidth = (double) getWidth() / image.getWidth();
+        double scaleHeight = (double) getHeight() / image.getHeight();
+        return Math.min(scaleWidth, scaleHeight);
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int scaledWidth = (int) (image.getWidth() * scaleFactor);
-        int scaledHeight = (int) (image.getHeight() * scaleFactor);
+        if (image != null) {
+            int scaledWidth = (int) (image.getWidth() * scaleFactor);
+            int scaledHeight = (int) (image.getHeight() * scaleFactor);
 
-        int x = (getWidth() - scaledWidth) / 2;
-        int y = (getHeight() - scaledHeight) / 2;
+            int x = (getWidth() - scaledWidth) / 14;
+            int y = (getHeight() - scaledHeight) / 14;
 
-        g.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+            g.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+        }
     }
 }
