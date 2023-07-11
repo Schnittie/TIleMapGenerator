@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class DefaultConfigurationService {
     public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
@@ -33,6 +32,12 @@ public class DefaultConfigurationService {
         HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
                 fantasyFileToInstructions, "FantasyConfig",fantasyProbabilityChange));
+
+        HashMap<File , Integer> desertFileToInstructions = new HashMap<>(2);
+        desertFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()), 0);
+        HashMap<Integer, Integer> desertProbabilityChange = new HashMap<>();
+        defaultConfigurations.add(new ConfigurationHolder(
+                desertFileToInstructions, "DesertConfig", desertProbabilityChange));
 
         HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
         basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateNone.png").getFile()), 0);
