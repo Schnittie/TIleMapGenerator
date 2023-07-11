@@ -32,6 +32,16 @@ public class DefaultConfigurationService {
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiver.png").getFile()) , 0);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInflux.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInfluxMirrored.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInflux.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInfluxMirrored.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInflux.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInfluxMirrored.png").getFile()) , -1);
+
+
+
+
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneHorizontal.png").getFile()) ,-1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneVertical.png").getFile()) , -1);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
@@ -39,13 +49,13 @@ public class DefaultConfigurationService {
         defaultConfigurations.add(new ConfigurationHolder(
                 fantasyFileToInstructions, "FantasyConfig",fantasyProbabilityChange));
 
-        HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
+        /*HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
         basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateNone.png").getFile()), 0);
         basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateOnce.png").getFile()), 1);
-        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateThrice.png").getFile()), 3);
+        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateThrice.png").getFile()), 3)
         HashMap<Integer, Integer> basicProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
-                basicFileToInstructions, "BasicConfig", basicProbabilityChange));
+                basicFileToInstructions, "BasicConfig", basicProbabilityChange));;*/
 
         return defaultConfigurations;
     }
