@@ -140,7 +140,8 @@ public class MapFrontend extends JFrame implements ModelListener{
         JFileChooser chooseNewDirectory = new JFileChooser();
         chooseNewDirectory.setCurrentDirectory(new File(
                 System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
-                        System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"));
+                        System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"
+                        + System.getProperty("file.separator") + "TileMapGenerator"));
         chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = chooseNewDirectory.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
