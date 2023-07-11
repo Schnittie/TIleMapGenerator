@@ -113,8 +113,12 @@ public class MapFrontend extends JFrame implements ModelListener{
            panel = new JScrollPane(new ImagePanel(((NewMapEvent) event).getImage())) ;
            panel.paint(((NewMapEvent) event).getImage().createGraphics());
            panel.setPreferredSize(new Dimension(700,700));
-           panel.getHorizontalScrollBar().setUnitIncrement(10);
            panel.getVerticalScrollBar().setUnitIncrement(10);
+           panel.getHorizontalScrollBar().setUnitIncrement(10);
+           int horizontalScrollValue = (panel.getHorizontalScrollBar().getMaximum() - panel.getHorizontalScrollBar().getVisibleAmount()) * 2;
+           panel.getHorizontalScrollBar().setValue(horizontalScrollValue);
+           int verticalScrollValue = (panel.getVerticalScrollBar().getMaximum() - panel.getVerticalScrollBar().getMinimum()) / 4;
+           panel.getVerticalScrollBar().setValue(verticalScrollValue);
 
            pane.add(panel, BorderLayout.CENTER);
            pack();
