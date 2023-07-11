@@ -1,5 +1,6 @@
 package de.schnittie.model.businesscode.board.splitting;
 
+import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.board.Board;
 import de.schnittie.model.businesscode.board.BoardCollapsingTileService;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
@@ -56,7 +57,11 @@ public class BoardSplittingService {
                 board, numberOfBoardsAlongHeight, numberOfBoardsAlongWidth);
         //Collapse all Tiles at the Edges between SubBoards => Shelling them
         System.out.println("Collapsing Tiles along Splitlines ...");
-        BoardCollapsingTileService.collapseAllEasy(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+        if (Configuration.getInstance().isSimpleMap()){
+            BoardCollapsingTileService.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+        } else {
+            BoardCollapsingTileService.collapseAllEasy(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+        }
         return boardToCornerMap;
     }
 
