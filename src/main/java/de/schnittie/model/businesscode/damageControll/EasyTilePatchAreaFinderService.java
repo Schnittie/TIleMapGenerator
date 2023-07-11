@@ -157,7 +157,7 @@ public class EasyTilePatchAreaFinderService {
             PairOfCoordinates neighbour = new PairOfCoordinates(
                     centralTile.x() + directionChanges.get(direction).x(),
                     centralTile.y() + directionChanges.get(direction).y());
-            if (!(patchArea.contains(neighbour) || isOnBorder(neighbour, board) && isInBoard(neighbour, board))) {
+            if (!(patchArea.contains(neighbour) || isOnBorder(neighbour, board)) && isInBoard(neighbour, board)) {
                 directionToNeighbourMap.put(direction, neighbour);
             }
         }
