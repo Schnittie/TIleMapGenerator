@@ -27,6 +27,8 @@ public class DefaultConfigurationService {
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOcean.png").getFile()) , 0);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()) , 0);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiver.png").getFile()) , 0);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
         HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
