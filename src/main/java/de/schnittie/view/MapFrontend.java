@@ -1,12 +1,16 @@
 package de.schnittie.view;
 
+import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.database.InstallationHandler;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
+import de.schnittie.model.mvcStuffs.Model;
 import de.schnittie.model.mvcStuffs.NewMapEvent;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.io.File;
 
 import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
@@ -15,14 +19,45 @@ import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
 public class MapFrontend extends JFrame implements ModelListener{
     private JScrollPane panel;
     private Container pane;
-    public MapFrontend(ActionListener listener){
+    private Model model;
+    private JTextField widthTextField;
+    private JTextField heightTextField;
+    private JLabel warningLabel;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("action Performend");
+        model.generateMap();
+    }
+    public MapFrontend(){
         super("MapGenerator");
+
+        model = new Model();
+        model.addListener(this);
 
         pane = getContentPane();
         pane.setLayout(new BorderLayout());
 
+        JLabel widthLabel = new JLabel("Width:");
+        widthTextField = new JTextField(10);
+
+        JLabel heightLabel = new JLabel("Height:");
+        heightTextField = new JTextField(10);
+
+        ((AbstractDocument) widthTextField.getDocument()).setDocumentFilter(new IntegerDocumentFilter());
+        ((AbstractDocument) heightTextField.getDocument()).setDocumentFilter(new IntegerDocumentFilter());
+
+        warningLabel = new JLabel();
+
         JButton generateButton = new JButton("Generate Map");
-        generateButton.addActionListener(listener);
+        generateButton.addActionListener(e -> {
+            System.out.println("Action performed");
+
+            int width = Integer.parseInt(widthTextField.getText());
+            int height = Integer.parseInt(heightTextField.getText());
+
+            model.generateMap(width, height);
+        });
 
         JButton configButton = new JButton("Load new Config");
         configButton.addActionListener(e -> {
@@ -44,9 +79,15 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(widthLabel);
+        buttonPanel.add(widthTextField);
+        buttonPanel.add(heightLabel);
+        buttonPanel.add(heightTextField);
         buttonPanel.add(generateButton);
+        buttonPanel.add(warningLabel);
         buttonPanel.add(configButton);
         buttonPanel.add(probabilityButton);
+        warningLabel.setText("Warning: Generating a map with high numbers may take a long time.");
 
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
@@ -55,24 +96,31 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         add(buttonPanel, BorderLayout.SOUTH);
         //add progressBar
-        setSize(600,300);
+        setSize(1000,300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
     }
 
     @Override
     public void update(MapGeneratorEvent event) {
-       if (event.getClass().equals(NewMapEvent.class)){
+       if (event.getClass() == NewMapEvent.class){
+
+           if (panel != null) {
+               pane.remove(panel);
+           }
+
            panel = new JScrollPane(new ImagePanel(((NewMapEvent) event).getImage())) ;
            panel.paint(((NewMapEvent) event).getImage().createGraphics());
+           panel.setPreferredSize(new Dimension(700,700));
+           panel.getHorizontalScrollBar().setUnitIncrement(10);
+           panel.getVerticalScrollBar().setUnitIncrement(10);
 
            pane.add(panel, BorderLayout.CENTER);
            pack();
            setLocationRelativeTo(null);
        }
-        //TODO
-       // compare classes with == (except if you want to check for superclasses as well obviously)
-       if (event.getClass().equals(GenerationErrorEvent.class)){
+       if (event.getClass() == GenerationErrorEvent.class){
            JLabel label = new JLabel(((GenerationErrorEvent) event).getErrorMessage());
            pane.add(label);
            pack();
@@ -97,4 +145,21 @@ public class MapFrontend extends JFrame implements ModelListener{
             loadConfiguration(chosenDirectory);
         }
     }
+
+    public static void main(String[] args)  {
+        InstallationHandler.generateTilesForDefaultMapIfNotPresent();
+        Configuration.reloadConfiguration();
+
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+               IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        MapFrontend mapFrontend = new MapFrontend();
+    }
+
 }
