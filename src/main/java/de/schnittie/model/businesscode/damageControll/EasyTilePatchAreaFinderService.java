@@ -8,10 +8,7 @@ import de.schnittie.model.businesscode.tile.TilePropagationService;
 import de.schnittie.model.businesscode.tile.tileObjects.TileInProgress;
 import de.schnittie.model.database.DBinteractions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 //TODO
 // util?
@@ -139,20 +136,18 @@ public class EasyTilePatchAreaFinderService {
             }
         }
         for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
-            possibleBorderQueue.add(new PairOfCoordinates(damageAreaBorderMinX, y));
-            possibleBorderQueue.add(new PairOfCoordinates(damageAreaBorderMaxX - 1, y));
+            addIfValid(possibleBorderQueue, new PairOfCoordinates(damageAreaBorderMinX, y), board);
+            addIfValid(possibleBorderQueue,new PairOfCoordinates(damageAreaBorderMaxX - 1, y), board);
         }
 
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
-            PairOfCoordinates xLow = new PairOfCoordinates(x, damageAreaBorderMinY);
-            PairOfCoordinates xHigh = new PairOfCoordinates(x, damageAreaBorderMaxY - 1);
-            if (!possibleBorderQueue.contains(xLow)) {
-                possibleBorderQueue.add(xLow);
-            }
-            if (!possibleBorderQueue.contains(xHigh)) {
-                possibleBorderQueue.add(xHigh);
-            }
+            addIfValid(possibleBorderQueue, new PairOfCoordinates(x, damageAreaBorderMinY),board);
+            addIfValid(possibleBorderQueue, new  PairOfCoordinates(x, damageAreaBorderMaxY - 1),board);
         }
+    }
+
+    private static void addIfValid(Collection<PairOfCoordinates> possibleBorderQueue, PairOfCoordinates pairOfCoordinates, Board board) {
+        if (isInBoard(pairOfCoordinates,board) && !isOnBorder(pairOfCoordinates, board)) possibleBorderQueue.add(pairOfCoordinates);
     }
 
     private static HashMap<Integer, PairOfCoordinates> getAllNeighboursNotInArea(PairOfCoordinates centralTile, ArrayList<PairOfCoordinates> patchArea, Board board) {
@@ -179,7 +174,7 @@ public class EasyTilePatchAreaFinderService {
             PairOfCoordinates neighbour = new PairOfCoordinates(
                     possibleQueueMember.x() + directionChanges.get(direction).x(),
                     possibleQueueMember.y() + directionChanges.get(direction).y());
-            if (!(patchBorder.contains(neighbour) || patchArea.contains(neighbour) || isOnBorder(neighbour, board))) {
+            if (!(patchBorder.contains(neighbour) || patchArea.contains(neighbour) || isOnBorder(neighbour, board)) && isInBoard(neighbour, board)) {
                 patchBorder.add(neighbour);
             }
         }
