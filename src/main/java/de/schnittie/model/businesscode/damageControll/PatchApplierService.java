@@ -20,11 +20,15 @@ public class PatchApplierService {
     private static final HashMap<Integer,Integer> reverseDirection = DBinteractions.getInstance().getReverseDirection();
     public static void applyPatch(PatchInstruction patchInstruction, Board board) {
         System.out.println("Applying innerPatch...");
+        if (isAnythingOnBorder(patchInstruction, board)){
+            throw new RuntimeException("If this is thrown then theirs something wrong in code. sowwy ");
+            //TODO delete anything that has to do with this, this should not be in prod code
+        }
         for (PairOfCoordinates coordinatesToReset : patchInstruction.resettingList()) {
             board.setTile(coordinatesToReset, new TileInProgress());
         }
         ArrayList<PairOfCoordinates> listOfTilesResetButNotInArea = new ArrayList<>(patchInstruction.resettingList());
-        listOfTilesResetButNotInArea.retainAll(patchInstruction.damageArea());
+        listOfTilesResetButNotInArea.removeAll(patchInstruction.damageArea());
         for (PairOfCoordinates coordinatesOfResetTile : listOfTilesResetButNotInArea) {
             propagateIntoMe(coordinatesOfResetTile, board);
         }
@@ -45,5 +49,25 @@ public class PatchApplierService {
                 return;
             }
         }
+    }
+    private static boolean isAnythingOnBorder(PatchInstruction patchInstruction, Board board){
+        for (PairOfCoordinates coords : patchInstruction.damageArea()) {
+            if (!isInBoard(coords,board)||isOnBorder(coords,board))
+                return true;
+        }
+        for (PairOfCoordinates coords : patchInstruction.resettingList()) {
+            if (!isInBoard(coords,board)||isOnBorder(coords,board))
+                return true;
+        }
+        return false;
+    }
+    private static boolean isOnBorder(PairOfCoordinates possibleBorderMember, Board board) {
+        return possibleBorderMember.x() == 0 || possibleBorderMember.y() == 0 ||
+                possibleBorderMember.x() == board.getWidth() - 1 || possibleBorderMember.y() == board.getHeight() - 1;
+    }
+
+    private static boolean isInBoard(PairOfCoordinates neighbour, Board board) {
+        if (neighbour.y() < 0 || neighbour.x() < 0) return false;
+        return neighbour.y() < board.getHeight() && neighbour.x() < board.getWidth();
     }
 }

@@ -10,19 +10,19 @@ import java.util.*;
 // Stop calling utils a "Service" :D
 // conventions DO matter :P
 public class BoardSplittingService {
-    private static final int MINIMAL_BOARD_HEIGHT = 75;
-    private static final int MINIMAL_BOARD_WIDTH = 75;
+    private static final int MINIMAL_BOARD_HEIGHT = 25;
+    private static final int MINIMAL_BOARD_WIDTH = 25;
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
         //TODO: Mulitithreaded Recursive Splitting
         System.out.println("Splitting board...");
-        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
-            System.out.println("board is too small to split");
-            HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
-            coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
-            return coordinatesSubBoardMap;
-        }
+//        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
+//            System.out.println("board is too small to split");
+//            HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
+//            coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
+//            return coordinatesSubBoardMap;
+//        }
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>();
         for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {

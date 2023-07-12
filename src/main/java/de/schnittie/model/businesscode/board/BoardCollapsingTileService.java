@@ -68,8 +68,7 @@ public class BoardCollapsingTileService {
     }
 
     private static ArrayList<Integer> findEasyTileSetForExample(ArrayList<ArrayList<Integer>> listOfEasyTileSets, int tileID) {
-        for (ArrayList<Integer> tileSet :
-                listOfEasyTileSets) {
+        for (ArrayList<Integer> tileSet : listOfEasyTileSets) {
             if (tileSet.contains(tileID)) return tileSet;
         }
         throw new RuntimeException("Given Tile ID does not occur in given Sets");
