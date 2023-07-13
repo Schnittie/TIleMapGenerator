@@ -76,6 +76,11 @@ public class MapFrontend extends JFrame implements ModelListener{
             configButton.setEnabled(true);
         });
 
+        JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener(e -> {
+            System.exit(0);
+        });
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -87,6 +92,7 @@ public class MapFrontend extends JFrame implements ModelListener{
         buttonPanel.add(warningLabel);
         buttonPanel.add(configButton);
         buttonPanel.add(probabilityButton);
+        buttonPanel.add(quitButton);
         warningLabel.setText("Warning: Generating a map with high numbers may take a long time.");
 
         getContentPane().setBackground(Color.WHITE);
@@ -96,8 +102,9 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         add(buttonPanel, BorderLayout.SOUTH);
         //add progressBar
-        setSize(1000,300);
+        setSize(1100,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null);
     }
