@@ -1,5 +1,6 @@
 package de.schnittie.model.database;
 
+import de.schnittie.model.ConfigurationLoaderService;
 import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService;
 import de.schnittie.model.database.configurations.ConfigurationHolder;
 import de.schnittie.model.database.configurations.DefaultConfigurationService;
@@ -92,6 +93,7 @@ public class InstallationHandler {
         TileCreation.addTiles(config.inputStreamToRotateInstructionMap(), pathStringToDirectory +
                 File.separator + TILE_FOLDER_NAME + File.separator, config.inputStreamToFilenameMap());
         System.out.println("Applying custom Rule changes...");
+        ConfigurationLoaderService.reloadConfiguration();
         ManuallyChangingRulesAndProbabilitiesService.changeProbabilityOfFileName(config.probabilityChange());
 
         System.out.println("Rules for " + config.nameOfConfiguration() + " successfully Generated");
