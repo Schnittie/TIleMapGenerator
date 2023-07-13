@@ -4,11 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 
 class ImagePanel extends JPanel {
     private BufferedImage image;
-    private double scaleFactor = 0.4;
+    private double scaleFactor = 1.0;
+    private int translationX = 0;
+    private int translationY = 0;
+    private Point dragStart;
 
     public ImagePanel(BufferedImage image) {
         this.image = image;
@@ -16,6 +20,16 @@ class ImagePanel extends JPanel {
         setMinimumSize(new Dimension(image.getWidth(), image.getHeight()));
 
         addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e){
+                dragStart = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e){
+                dragStart = null;
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -26,9 +40,24 @@ class ImagePanel extends JPanel {
                 revalidate();
                 repaint();
             }
+
         });
 
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e){
+                if (dragStart != null) {
+                    int dx = e.getX() - dragStart.x;
+                    int dy = e.getY() - dragStart.y;
+                    translationX += dx;
+                    translationY += dy;
+                    dragStart = e.getPoint();
+                    repaint();
+                }
+            }
+        });
     }
+
 
     public ImagePanel() {
         //TODO
@@ -40,6 +69,8 @@ class ImagePanel extends JPanel {
         setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         setMinimumSize(new Dimension(image.getWidth(), image.getHeight()));
         scaleFactor = calculateInitialScale();
+        translationX = 0;
+        translationY = 0;
         revalidate();
         repaint();
     }
@@ -56,13 +87,21 @@ class ImagePanel extends JPanel {
         super.paintComponent(g);
 
         if (image != null) {
+            Graphics2D g2d = (Graphics2D) g.create();
+
+            g2d.translate(translationX, translationY);
+
+            g2d.scale(scaleFactor, scaleFactor);
+
             int scaledWidth = (int) (image.getWidth() * scaleFactor);
             int scaledHeight = (int) (image.getHeight() * scaleFactor);
 
-            int x = (getWidth() - scaledWidth) / 14;
-            int y = (getHeight() - scaledHeight) / 14;
+            int x = (getWidth() - scaledWidth) / 2;
+            int y = (getHeight() - scaledHeight) / 2;
 
-            g.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+            g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+
+            g2d.dispose();
         }
     }
 }

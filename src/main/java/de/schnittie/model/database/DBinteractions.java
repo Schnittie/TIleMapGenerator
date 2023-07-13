@@ -358,6 +358,28 @@ public class DBinteractions {
         return returnMap;
     }
 
+    public HashMap<String, Integer> getFilenameToIDMap() {
+        //Mapps TileIDs to their file paths
+
+        HashMap<String, Integer> returnMap = new HashMap<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement("SELECT id,filepath FROM tile");
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                returnMap.put((resultSet.getString("filepath")), resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(statement);
+            close(resultSet);
+        }
+        return returnMap;
+    }
+
     public ArrayList<RuleTO> getAllRules() {
         //Returns an Array of all Rules
         PreparedStatement statement = null;
@@ -394,7 +416,7 @@ public class DBinteractions {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int setId = resultSet.getInt("set_id");
-                if (easyTiles.size() <= setId){
+                if (easyTiles.size() <= setId) {
                     easyTiles.add(new ArrayList<Integer>());
                 }
                 easyTiles.get(setId).add(resultSet.getInt("tile_id"));

@@ -1,65 +1,71 @@
 package de.schnittie.model.database.configurations;
 
-import java.io.File;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class DefaultConfigurationService {
+    private static void addTilemapToConfig(ConfigurationHolder config, String filename, RuleCreationInstruction ruleCreationInstruction) {
+        ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(filename);
+        config.inputStreamToFilenameMap().put(inputStream, filename);
+        config.inputStreamToRotateInstructionMap().put(inputStream, ruleCreationInstruction);
+    }
+
     public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
-        ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>(3);
+        ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>();
         //TODO make into Enum
 
-        //integer >=0 means that colour Rules apply and the  int indicates the amount of rotations that should be applied
+        //integer >=RuleCreationInstruction.ROTATE_NONE means that colour Rules apply and the  int indicates the amount of rotations that should be applied
         //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability
-        HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleBlue.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleRed.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertBlue.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertRed.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeVertical.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeHorizontal.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBrickPath.png").getFile()) , 0);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRapunzelTower.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinFour.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinOne.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinThree.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinTwo.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasySpring.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRotatablePaths.png").getFile()) , 3);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOcean.png").getFile()) , 0);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()) , 0);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiver.png").getFile()) , 0);
+        HashMap<InputStream, RuleCreationInstruction> fantasyFileToInstructions = new HashMap<>();
+        
+        ConfigurationHolder fantasyConfig = new ConfigurationHolder(new HashMap<>(), "FantasyConfig", new HashMap<>(),new HashMap<>());
+        addTilemapToConfig(fantasyConfig, "fantasyLake.png" , RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLake.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyCastleBlue.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyCastleRed.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyCastleDesertBlue.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyCastleDesertRed.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyBridgeVertical.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyBridgeHorizontal.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyBrickPath.png", RuleCreationInstruction.ROTATE_NONE);
+        addTilemapToConfig(fantasyConfig,"fantasyRapunzelTower.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRuinFour.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRuinOne.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRuinThree.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRuinTwo.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasySpring.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRotatablePaths.png", RuleCreationInstruction.ROTATE_THRICE);
+        addTilemapToConfig(fantasyConfig,"fantasyOcean.png", RuleCreationInstruction.ROTATE_NONE);
+        addTilemapToConfig(fantasyConfig,"fantasyDesertPath.png", RuleCreationInstruction.ROTATE_NONE);
+        addTilemapToConfig(fantasyConfig,"fantasyOceanShip.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRiver.png", RuleCreationInstruction.ROTATE_NONE);
 
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInflux.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInfluxMirrored.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInflux.png").getFile()) ,-1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInfluxMirrored.png").getFile()) ,-1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInflux.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInfluxMirrored.png").getFile()) , -1);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeNoInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeNoInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeSideInflux.png",RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeSideInfluxMirrored.png",RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeTopInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyLakeTopInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
+
+        addTilemapToConfig(fantasyConfig,"fantasyRiverBridgeStoneHorizontal.png",RuleCreationInstruction.ADJACENCY_RULES);
+        addTilemapToConfig(fantasyConfig,"fantasyRiverBridgeStoneVertical.png", RuleCreationInstruction.ADJACENCY_RULES);
+        defaultConfigurations.add(fantasyConfig);
 
 
+        ConfigurationHolder desertConfig = new ConfigurationHolder(new HashMap<>(), "DesertConfig", new HashMap<>(),new HashMap<>());
+        addTilemapToConfig(desertConfig,"fantasyDesertPath.png", RuleCreationInstruction.ROTATE_NONE);
+        addTilemapToConfig(desertConfig,"fantasyDesertRiver.png", RuleCreationInstruction.ROTATE_NONE);
+        defaultConfigurations.add(desertConfig);
 
-
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneHorizontal.png").getFile()) ,-1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneVertical.png").getFile()) , -1);
-        //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
-        HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
-        defaultConfigurations.add(new ConfigurationHolder(
-                fantasyFileToInstructions, "FantasyConfig",fantasyProbabilityChange));
-
-        /*HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
-        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateNone.png").getFile()), 0);
-        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateOnce.png").getFile()), 1);
-        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateThrice.png").getFile()), 3)
-        HashMap<Integer, Integer> basicProbabilityChange = new HashMap<>();
-        defaultConfigurations.add(new ConfigurationHolder(
-                basicFileToInstructions, "BasicConfig", basicProbabilityChange));;*/
-
+        ConfigurationHolder basicConfig = new ConfigurationHolder(new HashMap<>(), "BasicConfig", new HashMap<>(),new HashMap<>());
+        addTilemapToConfig(basicConfig,"BasicTilemapRotateNone.png", RuleCreationInstruction.ROTATE_NONE);
+        addTilemapToConfig(basicConfig,"BasicTilemapRotateOnce.png", RuleCreationInstruction.ROTATE_ONCE);
+        addTilemapToConfig(basicConfig,"BasicTilemapRotateThrice.png", RuleCreationInstruction.ROTATE_THRICE);
+        defaultConfigurations.add(basicConfig);
         return defaultConfigurations;
     }
 }

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TilePropagationService {
-    private static final TileDataProvider tileDataProvider = TileDataProvider.getInstance();
 
     public static boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, TileInProgress tileInProgress)
             throws MapGenerationException {
@@ -18,7 +17,7 @@ public class TilePropagationService {
         }
 
         List<Integer> listOfPossibilitiesOfSelf = tileInProgress.getPossibleTileContentLeft();
-        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = tileDataProvider.getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
+        List<Integer> listOfPossibilitiesOfSelfAfterPropagation = TileDataProvider.getInstance().getPossibleAdjacencyProvider().canThisBeHere(listOfPossibilitiesOfSelf,
                 whereIamRelativeToCaller, listOfPossibilitiesOfCaller);
         listOfPossibilitiesOfSelf.removeAll(listOfPossibilitiesOfSelfAfterPropagation);
         //all the possibilities that I can now be are removed, leaving listOfPossibilitiesOfSelf a

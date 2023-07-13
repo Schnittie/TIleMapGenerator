@@ -161,6 +161,7 @@ public class EasyTilePatchAreaFinderService {
         return directionToNeighbourMap;
     }
 
+
     private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates possibleQueueMember, Queue<PairOfCoordinates>
             patchBorder, ArrayList<PairOfCoordinates> patchArea, Board board) {
         for (Integer direction : directionChanges.keySet()) {
