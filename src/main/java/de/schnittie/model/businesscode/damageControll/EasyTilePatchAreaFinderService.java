@@ -58,8 +58,8 @@ public class EasyTilePatchAreaFinderService {
                 return null;
             }
         if (!patchInstruction.damageArea().contains(possibleBorderMember)) {
-            patchInstruction.damageArea().add(possibleBorderMember);
-            patchInstruction.resettingList().add(possibleBorderMember);
+            addIfValid(patchInstruction.damageArea(),possibleBorderMember,board);
+            addIfValid(patchInstruction.resettingList(),possibleBorderMember,board);
         }
         HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea = getAllNeighboursNotInArea(possibleBorderMember, patchInstruction.damageArea(), board);
         if (board.getTile(possibleBorderMember).getPossibleTileContentLeft().contains(patchInstruction.easyTileId())) {
@@ -67,9 +67,7 @@ public class EasyTilePatchAreaFinderService {
         } else if (couldBeEasyIfItWereNew(board, allNeighboursNotInArea, patchInstruction.easyTileId())) {
             return null;
         } else if (couldBeEasyIfNeighboursWereDifferent(board, allNeighboursNotInArea, patchInstruction.easyTileId(), patchInstruction.damageArea())) {
-            for (PairOfCoordinates neighbour :
-                    allNeighboursNotInArea.values()) {
-
+            for (PairOfCoordinates neighbour : allNeighboursNotInArea.values()) {
                 patchInstruction.resettingList().addAll(getAllNeighboursNotInArea(neighbour,patchInstruction.damageArea(),board).values());
             }
         }
@@ -132,7 +130,7 @@ public class EasyTilePatchAreaFinderService {
 
         for (int x = damageAreaBorderMinX; x < damageAreaBorderMaxX; x++) {
             for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
-                patchArea.add(new PairOfCoordinates(x, y));
+                addIfValid(patchArea,new PairOfCoordinates(x, y),board);
             }
         }
         for (int y = damageAreaBorderMinY; y < damageAreaBorderMaxY; y++) {
@@ -146,8 +144,8 @@ public class EasyTilePatchAreaFinderService {
         }
     }
 
-    private static void addIfValid(Collection<PairOfCoordinates> possibleBorderQueue, PairOfCoordinates pairOfCoordinates, Board board) {
-        if (isInBoard(pairOfCoordinates,board) && !isOnBorder(pairOfCoordinates, board)) possibleBorderQueue.add(pairOfCoordinates);
+    private static void addIfValid(Collection<PairOfCoordinates> coordinatesCollection, PairOfCoordinates pairOfCoordinates, Board board) {
+        if (isInBoard(pairOfCoordinates,board) && !isOnBorder(pairOfCoordinates, board)) coordinatesCollection.add(pairOfCoordinates);
     }
 
     private static HashMap<Integer, PairOfCoordinates> getAllNeighboursNotInArea(PairOfCoordinates centralTile, ArrayList<PairOfCoordinates> patchArea, Board board) {
@@ -183,5 +181,10 @@ public class EasyTilePatchAreaFinderService {
     private static boolean isOnBorder(PairOfCoordinates possibleBorderMember, Board board) {
         return possibleBorderMember.x() == 0 || possibleBorderMember.y() == 0 ||
                 possibleBorderMember.x() == board.getWidth() - 1 || possibleBorderMember.y() == board.getHeight() - 1;
+    }
+
+    private static boolean isInBoard(PairOfCoordinates neighbour, Board board) {
+        if (neighbour.y() < 0 || neighbour.x() < 0) return false;
+        return neighbour.y() < board.getHeight() && neighbour.x() < board.getWidth();
     }
 }

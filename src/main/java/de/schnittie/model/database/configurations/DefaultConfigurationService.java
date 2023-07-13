@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class DefaultConfigurationService {
     public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
@@ -15,7 +16,10 @@ public class DefaultConfigurationService {
         //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability
         HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("FantasyCastle.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleBlue.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleRed.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertBlue.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertRed.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeVertical.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeHorizontal.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBrickPath.png").getFile()) , 0);
@@ -26,26 +30,35 @@ public class DefaultConfigurationService {
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRuinTwo.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasySpring.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRotatablePaths.png").getFile()) , 3);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOcean.png").getFile()) , 3);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOcean.png").getFile()) , 0);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()) , 0);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiver.png").getFile()) , 0);
+
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInflux.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInfluxMirrored.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInflux.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInfluxMirrored.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInflux.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInfluxMirrored.png").getFile()) , -1);
+
+
+
+
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneHorizontal.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneVertical.png").getFile()) , -1);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
         HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
                 fantasyFileToInstructions, "FantasyConfig",fantasyProbabilityChange));
 
-        HashMap<File , Integer> desertFileToInstructions = new HashMap<>(2);
-        desertFileToInstructions.put(new File(classLoader.getResource("fantasyDesertPath.png").getFile()), 0);
-        HashMap<Integer, Integer> desertProbabilityChange = new HashMap<>();
-        defaultConfigurations.add(new ConfigurationHolder(
-                desertFileToInstructions, "DesertConfig", desertProbabilityChange));
-
-        HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
+        /*HashMap<File , Integer> basicFileToInstructions = new HashMap<>(2);
         basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateNone.png").getFile()), 0);
         basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateOnce.png").getFile()), 1);
-        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateThrice.png").getFile()), 3);
+        basicFileToInstructions.put(new File(classLoader.getResource("BasicTilemapRotateThrice.png").getFile()), 3)
         HashMap<Integer, Integer> basicProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
-                basicFileToInstructions, "BasicConfig", basicProbabilityChange));
+                basicFileToInstructions, "BasicConfig", basicProbabilityChange));;*/
 
         return defaultConfigurations;
     }
