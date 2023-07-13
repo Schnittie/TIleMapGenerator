@@ -23,7 +23,7 @@ public class Configuration {
     private  final ArrayList<Integer> possibleTileIDs = dBinteractions.getPossibleTileIDs();
     private  final HashMap<Integer, Integer> probabilityMap = dBinteractions.getProbabilityMap();
     private final ArrayList<ArrayList<Integer>> easyTiles = dBinteractions.getEasyTiles();
-    private final boolean isSimpleMap = possibleTileIDs.size() < 100;
+    private final boolean isSimpleMap = possibleTileIDs.size() < 300;
     private  final String dbFolder = DBinteractions.getInstance().getDbFolder();
 
 

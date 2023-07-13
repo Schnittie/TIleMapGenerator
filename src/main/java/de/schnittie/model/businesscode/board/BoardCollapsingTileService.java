@@ -13,8 +13,6 @@ public class BoardCollapsingTileService {
     // while Reading "service", I'd expect this class to be instantiated instead of calling#
     // some static utility-(*cough*)Methods.
 
-    private static ArrayList<ArrayList<Integer>> listOfEasyTileSets = Configuration.getInstance().getEasyTiles();
-
     public static void collapseATile(PairOfCoordinates pairOfCoordinates, Board board) {
         if (!board.getTile(pairOfCoordinates).isCollapsed()) {
             board.setTile(pairOfCoordinates, board.getTile(pairOfCoordinates).collapse());
@@ -58,7 +56,7 @@ public class BoardCollapsingTileService {
 
     public static void forceCollapse(Collection<PairOfCoordinates> coordinatesCollection, Board board, int tileID) {
         Random random = new Random();
-        ArrayList<Integer> easyTileSet = findEasyTileSetForExample(listOfEasyTileSets, tileID);
+        ArrayList<Integer> easyTileSet = findEasyTileSetForExample(Configuration.getInstance().getEasyTiles(), tileID);
         for (PairOfCoordinates coordinates : coordinatesCollection) {
             board.setTile(coordinates, board.getTile(coordinates).collapse(easyTileSet.get(random.nextInt(easyTileSet.size()))));
         }

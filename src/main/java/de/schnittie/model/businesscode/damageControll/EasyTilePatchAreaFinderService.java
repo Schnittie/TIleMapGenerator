@@ -161,10 +161,6 @@ public class EasyTilePatchAreaFinderService {
         return directionToNeighbourMap;
     }
 
-    private static boolean isInBoard(PairOfCoordinates neighbour, Board board) {
-        if (neighbour.y() < 0 || neighbour.x() < 0) return false;
-        return neighbour.y() < board.getHeight() && neighbour.x() < board.getWidth();
-    }
 
     private static void putAllNeighboursInQueueIfNotPresent(PairOfCoordinates possibleQueueMember, Queue<PairOfCoordinates>
             patchBorder, ArrayList<PairOfCoordinates> patchArea, Board board) {

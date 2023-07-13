@@ -1,6 +1,7 @@
 package de.schnittie.model.database.fillingDB;
 
 import de.schnittie.model.businesscode.tile.PossibleAdjacencyProvider;
+import de.schnittie.model.businesscode.tile.TileDataProvider;
 import de.schnittie.model.database.DBinteractions;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class EasyTileCreationService {
     }
 
     public static ArrayList<ArrayList<Integer>> findEasyTileSets(ArrayList<Integer> easyTileIds) {
-        PossibleAdjacencyProvider possibleAdjacencyProvider = new PossibleAdjacencyProvider();
+        PossibleAdjacencyProvider possibleAdjacencyProvider = TileDataProvider.getInstance().getPossibleAdjacencyProvider();
         ArrayList<ArrayList<Integer>> easyTileLists = new ArrayList<>();
         HashMap<Integer, Boolean> hasTileBeenAddedToASet = new HashMap<>(easyTileIds.size());
         for (Integer tileId : easyTileIds) {

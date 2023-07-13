@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class CreatingConfigurationService {
-    public static void createNewConfiguration(String tileFolder, HashMap<File, Integer> tilemapToRotationInstructionMap) {
+    public static void createNewConfiguration(String tileFolder, HashMap<File, RuleCreationInstruction> tilemapToRotationInstructionMap) {
         String pathToConfigFolderString = InstallationHandler.getResourcesURLandIfNotExistsCreate() + File.separator + tileFolder;
         Path pathForFolder = Path.of(pathToConfigFolderString);
         if (Files.exists(pathForFolder)) {

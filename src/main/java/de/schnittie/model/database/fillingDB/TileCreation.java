@@ -1,6 +1,7 @@
 package de.schnittie.model.database.fillingDB;
 
 import de.schnittie.model.database.DBinteractions;
+import de.schnittie.model.database.configurations.RuleCreationInstruction;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
@@ -16,13 +17,13 @@ public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();
 
-    public static void addTiles(HashMap<File, Integer> tilemapToRotationInstructionMap, String tileFolder) {
+    public static void addTiles(HashMap<File, RuleCreationInstruction> tilemapToRotationInstructionMap, String tileFolder) {
         //receives a Map that mapps a file to how often it should rotate
 
         System.out.println("Creating Tiles...");
         for (File tilemap : tilemapToRotationInstructionMap.keySet()) {
             try {
-                TileCreation.splitImage(tilemap, tilemapToRotationInstructionMap.get(tilemap), tileFolder);
+                TileCreation.splitImage(tilemap, tilemapToRotationInstructionMap.get(tilemap).getRotationInteger(), tileFolder);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
