@@ -24,5 +24,6 @@ public class ManuallyChangingRulesAndProbabilitiesService {
     }
     public static void changeProbability(int ruleID, int probability){
         dBinteractions.setProbabilityForTile(ruleID,probability);
+        System.out.println("Probability changed successfully");
     }
 }
