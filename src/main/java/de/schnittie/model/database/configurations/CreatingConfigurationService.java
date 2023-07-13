@@ -19,7 +19,7 @@ public class CreatingConfigurationService {
             System.out.println("Failed to create Configuration: config Folder of that name already exists");
             return;
         }
-        HashMap<Integer, Integer> emptyInstructionsMap = new HashMap<>(0);
+        HashMap<String, Integer> emptyInstructionsMap = new HashMap<>(0);
         try {
             InstallationHandler.createAndFillDirectoryWithDefaultImageAndDB(tileFolder);
             InstallationHandler.generateTilesIfNotPresent(new ConfigurationHolder(tilemapToRotationInstructionMap,

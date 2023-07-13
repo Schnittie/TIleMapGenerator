@@ -5,5 +5,5 @@ import java.util.HashMap;
 
 public record ConfigurationHolder(
         HashMap<InputStream, RuleCreationInstruction> inputStreamToRotateInstructionMap, String nameOfConfiguration,
-        HashMap<Integer, Integer> probabilityChange, HashMap<InputStream, String> inputStreamToFilenameMap) {
+        HashMap<String, Integer> probabilityChange, HashMap<InputStream, String> inputStreamToFilenameMap) {
 }
