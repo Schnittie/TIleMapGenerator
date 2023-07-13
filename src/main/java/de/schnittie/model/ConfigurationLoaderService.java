@@ -20,4 +20,7 @@ public class ConfigurationLoaderService {
         TileDataProvider.reloadTileDataProvider();
         System.out.println("Successfully loaded new Config");
     }
+    public static void reloadConfiguration(){
+        loadConfiguration(dBinteractions.getDbFolder());
+    }
 }

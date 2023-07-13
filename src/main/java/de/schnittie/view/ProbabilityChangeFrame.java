@@ -1,24 +1,21 @@
 package de.schnittie.view;
 
+import de.schnittie.model.GettingInformationService;
+import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService;
+
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.schnittie.model.GettingInformationService;
-
-import static de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService.changeProbability;
 
 public class ProbabilityChangeFrame extends JDialog {
 
@@ -80,12 +77,14 @@ public class ProbabilityChangeFrame extends JDialog {
     }
 
     private void saveChanges() {
+        HashMap<Integer, Integer> probabilityMap = new HashMap<>(probabilityTableModel.getRowCount());
         for (int row = 0; row < probabilityTableModel.getRowCount(); row++) {
             BufferedImage image = (BufferedImage) probabilityTableModel.getValueAt(row, 0);
             Integer id = getKeyByValue(image, iDtoImage);
             Integer newProbability = (Integer) probabilityTableModel.getValueAt(row, 1);
-            changeProbability(id, newProbability);
+            probabilityMap.put(id, newProbability);
         }
+        ManuallyChangingRulesAndProbabilitiesService.changeProbability(probabilityMap);
 
 /*
         dispose();

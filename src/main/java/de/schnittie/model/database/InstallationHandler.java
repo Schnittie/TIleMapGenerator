@@ -93,11 +93,7 @@ public class InstallationHandler {
         TileCreation.addTiles(config.fileToRotateInstructionMap(), pathStringToDirectory +
                 File.separator + TILE_FOLDER_NAME + File.separator);
         System.out.println("Applying custom Rule changes...");
-
-        for (Integer probabilityChangeId : config.probabilityChange().keySet()) {
-            ManuallyChangingRulesAndProbabilitiesService.changeProbability(probabilityChangeId,
-                    config.probabilityChange().get(probabilityChangeId));
-        }
+        ManuallyChangingRulesAndProbabilitiesService.changeProbability(config.probabilityChange());
 
         System.out.println("Rules for " + config.nameOfConfiguration() + " successfully Generated");
 
