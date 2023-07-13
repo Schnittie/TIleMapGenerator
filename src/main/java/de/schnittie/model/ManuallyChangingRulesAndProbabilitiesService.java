@@ -26,7 +26,6 @@ public class ManuallyChangingRulesAndProbabilitiesService {
     }
     private static void changeProbability(int ruleID, int probability){
         dBinteractions.setProbabilityForTile(ruleID,probability);
-        System.out.println("Successfully changed probability");
     }
     public static void changeProbability(HashMap<Integer, Integer> probabilityMap){
         for (Integer id: probabilityMap.keySet()) {
