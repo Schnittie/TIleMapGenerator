@@ -2,9 +2,7 @@ package de.schnittie.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 class ImagePanel extends JPanel {
@@ -41,6 +39,20 @@ class ImagePanel extends JPanel {
                 repaint();
             }
 
+        });
+
+        addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                int notches = e.getWheelRotation();
+                if (notches < 0) {
+                    scaleFactor *= 1.1;
+                } else {
+                    scaleFactor *= 0.9;
+                }
+                revalidate();
+                repaint();
+            }
         });
 
         addMouseMotionListener(new MouseMotionAdapter() {
