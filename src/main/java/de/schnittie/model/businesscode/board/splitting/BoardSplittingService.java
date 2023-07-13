@@ -17,12 +17,12 @@ public class BoardSplittingService {
         //a "shelled" board is a board where all the outer edges are collapsed
         //TODO: Mulitithreaded Recursive Splitting
         System.out.println("Splitting board...");
-        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
-            System.out.println("board is too small to split");
-            HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
-            coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
-            return coordinatesSubBoardMap;
-        }
+//        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
+//            System.out.println("board is too small to split");
+//            HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
+//            coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
+//            return coordinatesSubBoardMap;
+//        }
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>();
         for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {
