@@ -5,6 +5,8 @@ import de.schnittie.model.database.RuleTO;
 import de.schnittie.model.database.fillingDB.InvalidAdjacencyException;
 import de.schnittie.model.database.fillingDB.RuleValidationService;
 
+import java.util.HashMap;
+
 public class ManuallyChangingRulesAndProbabilitiesService {
     private static DBinteractions dBinteractions = DBinteractions.getInstance();
 
@@ -22,8 +24,15 @@ public class ManuallyChangingRulesAndProbabilitiesService {
         dBinteractions.putRuleIntoDB(new RuleTO(-1, this_tile_id, that_tile_id, direction));
         dBinteractions.putRuleIntoDB(new RuleTO(-1, that_tile_id, this_tile_id, dBinteractions.getReverseDirection().get(direction)));
     }
-    public static void changeProbability(int ruleID, int probability){
+    private static void changeProbability(int ruleID, int probability){
         dBinteractions.setProbabilityForTile(ruleID,probability);
         System.out.println("Successfully changed probability");
+    }
+    public static void changeProbability(HashMap<Integer, Integer> probabilityMap){
+        for (Integer id: probabilityMap.keySet()) {
+            changeProbability(id, probabilityMap.get(id));
+        }
+        ConfigurationLoaderService.reloadConfiguration();
+        System.out.println("Probability changed successfully");
     }
 }
