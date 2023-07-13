@@ -15,11 +15,11 @@ public class DefaultConfigurationService {
         //integer >=0 means that colour Rules apply and the  int indicates the amount of rotations that should be applied
         //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability
         HashMap<File, Integer> fantasyFileToInstructions = new HashMap<>(2);
-        /*.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLake.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleBlue.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleRed.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertBlue.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertRed.png").getFile()) , -1);*/
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyCastleDesertRed.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeVertical.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBridgeHorizontal.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyBrickPath.png").getFile()) , 0);
@@ -35,18 +35,18 @@ public class DefaultConfigurationService {
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyOceanShip.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiver.png").getFile()) , 0);
 
-        /*fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInflux.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInflux.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeNoInfluxMirrored.png").getFile()) , -1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInflux.png").getFile()) ,-1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeSideInfluxMirrored.png").getFile()) ,-1);
         fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInflux.png").getFile()) , -1);
-        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInfluxMirrored.png").getFile()) , -1);*/
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyLakeTopInfluxMirrored.png").getFile()) , -1);
 
 
 
 
-        //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneHorizontal.png").getFile()) ,-1);
-        //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneVertical.png").getFile()) , -1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneHorizontal.png").getFile()) ,-1);
+        fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyRiverBridgeStoneVertical.png").getFile()) , -1);
         //fantasyFileToInstructions.put(new File(classLoader.getResource("fantasyWaves.png").getFile()) , 3);
         HashMap<Integer, Integer> fantasyProbabilityChange = new HashMap<>();
         defaultConfigurations.add(new ConfigurationHolder(
