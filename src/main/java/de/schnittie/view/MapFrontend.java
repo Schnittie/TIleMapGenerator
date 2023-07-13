@@ -11,6 +11,9 @@ import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
@@ -66,14 +69,31 @@ public class MapFrontend extends JFrame implements ModelListener{
             generateButton.setEnabled(true);
         });
 
+        final boolean[] dialogOpen = {false};
+
         JButton probabilityButton = new JButton("Change Probability");
-        probabilityButton.addActionListener(e -> {
-            generateButton.setEnabled(false);
-            configButton.setEnabled(false);
-            ProbabilityChangeFrame probabilityChangeFrame = new ProbabilityChangeFrame();
-            probabilityChangeFrame.setVisible(true);
-            generateButton.setEnabled(true);
-            configButton.setEnabled(true);
+        probabilityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!dialogOpen[0]) {
+                    dialogOpen[0] = true;
+                    generateButton.setEnabled(false);
+                    configButton.setEnabled(false);
+                    ProbabilityChangeFrame probabilityChangeFrame = new ProbabilityChangeFrame();
+                    probabilityChangeFrame.setVisible(true);
+                    generateButton.setEnabled(true);
+                    configButton.setEnabled(true);
+
+                    probabilityChangeFrame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            super.windowClosed(e);
+                            dialogOpen[0] = false;
+                        }
+                    });
+
+                }
+            }
         });
 
         JButton quitButton = new JButton("Quit");
