@@ -9,13 +9,13 @@ import net.harawata.appdirs.AppDirsFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
 
 public class InstallationHandler {
@@ -67,9 +67,9 @@ public class InstallationHandler {
         Files.createDirectories(Path.of(pathStringToDirectory + File.separator + TILE_FOLDER_NAME));
 
         //copying over Resources
-        copyFileFromResourcesToDirectorie("default.png", pathStringToDirectory);
-        copyFileFromResourcesToDirectorie("damage.png", pathStringToDirectory);
-        copyFileFromResourcesToDirectorie("TileMapGeneratorDB.db", pathStringToDirectory);
+        copyFileFromResourcesToDirectory("default.png", pathStringToDirectory);
+        copyFileFromResourcesToDirectory("damage.png", pathStringToDirectory);
+        copyFileFromResourcesToDirectory("TileMapGeneratorDB.db", pathStringToDirectory);
     }
 
     public static void generateTilesForDefaultMapIfNotPresent() {
@@ -88,11 +88,9 @@ public class InstallationHandler {
         if (!DBinteractions.getInstance().setDbFolder(pathStringToDirectory).getPossibleTileIDs().isEmpty()) {
             return;
         }
-
-
         System.out.println("Resources for " + config.nameOfConfiguration() + " successfully copied");
-        TileCreation.addTiles(config.fileToRotateInstructionMap(), pathStringToDirectory +
-                File.separator + TILE_FOLDER_NAME + File.separator);
+        TileCreation.addTiles(config.inputStreamToRotateInstructionMap(), pathStringToDirectory +
+                File.separator + TILE_FOLDER_NAME + File.separator, config.inputStreamToFilenameMap());
         System.out.println("Applying custom Rule changes...");
 
         for (Integer probabilityChangeId : config.probabilityChange().keySet()) {
@@ -104,11 +102,11 @@ public class InstallationHandler {
 
     }
 
-    private static void copyFileFromResourcesToDirectorie(String filename, String pathStringToDirectory) throws URISyntaxException, IOException {
+    private static void copyFileFromResourcesToDirectory(String filename, String pathStringToDirectory) throws URISyntaxException, IOException {
         ClassLoader classLoader = InstallationHandler.class.getClassLoader();
-        File absoluteSourcePath = new File(Objects.requireNonNull(classLoader.getResource(filename)).getFile());
-        Files.copy(absoluteSourcePath.toPath(), Path.of(
-                pathStringToDirectory + File.separator + filename), StandardCopyOption.REPLACE_EXISTING);
+        InputStream inputStream = Objects.requireNonNull(classLoader.getResourceAsStream(filename));
+        Files.copy(inputStream, Path.of(pathStringToDirectory + File.separator + filename), StandardCopyOption.REPLACE_EXISTING);
+        inputStream.close();
     }
 
 

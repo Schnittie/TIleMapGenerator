@@ -1,9 +1,9 @@
 package de.schnittie.model.database.configurations;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 
 public record ConfigurationHolder(
-        HashMap<File, RuleCreationInstruction> fileToRotateInstructionMap, String nameOfConfiguration,
-        HashMap<Integer, Integer> probabilityChange) {
+        HashMap<InputStream, RuleCreationInstruction> inputStreamToRotateInstructionMap, String nameOfConfiguration,
+        HashMap<Integer, Integer> probabilityChange, HashMap<InputStream, String> inputStreamToFilenameMap) {
 }

@@ -9,6 +9,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 //TODO
@@ -17,13 +18,13 @@ public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();
 
-    public static void addTiles(HashMap<File, RuleCreationInstruction> tilemapToRotationInstructionMap, String tileFolder) {
+    public static void addTiles(HashMap<InputStream, RuleCreationInstruction> tilemapToRotationInstructionMap, String tileFolder, HashMap<InputStream, String> inputStreamToFilenameMap) {
         //receives a Map that mapps a file to how often it should rotate
 
         System.out.println("Creating Tiles...");
-        for (File tilemap : tilemapToRotationInstructionMap.keySet()) {
+        for (InputStream inputStream : tilemapToRotationInstructionMap.keySet()) {
             try {
-                TileCreation.splitImage(tilemap, tilemapToRotationInstructionMap.get(tilemap).getRotationInteger(), tileFolder);
+                TileCreation.splitImage(inputStream, tilemapToRotationInstructionMap.get(inputStream).getRotationInteger(), tileFolder, inputStreamToFilenameMap.get(inputStream));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -61,9 +62,9 @@ public class TileCreation {
         }
     }
 
-    private static void splitImage(File inputFile, int shouldRotate, String tileFolder) throws IOException {
+    private static void splitImage(InputStream inputStream, int shouldRotate, String tileFolder, String filename) throws IOException {
         //splits a Tilemap into the individual images and rotates it the specified amount, then saves it
-        BufferedImage inputImage = ImageIO.read(inputFile);
+        BufferedImage inputImage = ImageIO.read(inputStream);
 
         int numCols = inputImage.getWidth() / TILE_SIZE;
         int numRows = inputImage.getHeight() / TILE_SIZE;
@@ -93,12 +94,12 @@ public class TileCreation {
                     if (col == 0) {
                         edgeMarker.append("Left");
                     }
-                    String baseOutputFilePath = tileFolder + "NeighbourRules Based on " + inputFile.getName() + " p" + shouldRotate + edgeMarker + "_" + col + "_" + row + ".png";
+                    String baseOutputFilePath = tileFolder + "NeighbourRules Based on " + filename + " p" + shouldRotate + edgeMarker + "_" + col + "_" + row + ".png";
 
                     ImageIO.write(outputImage, "png", new File(baseOutputFilePath));
                     continue;
                 }
-                String rotateFileName = "rotated_" + shouldRotate + "_times_from_" +inputFile.getName();
+                String rotateFileName = "rotated_" + shouldRotate + "_times_from_" + filename;
                 String baseOutputFilePath = tileFolder + rotateFileName + "_" + col + "_" + row + "_";
 
 
