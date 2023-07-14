@@ -40,7 +40,7 @@ public class BoardPropagationUtility {
     private static void propagate(BoardPropagationToDo boardPropagationToDo, BoardPropagationQueue boardPropagationQueue,
                                   Board board) throws MapGenerationException {
         boolean propagationRecieverHasChangedPossibilites = false;
-        Tile tile = board.getTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y());
+        Tile tile = board.getTile(boardPropagationToDo.coordinates());
         if (tile.isCollapsed()){
             return;
         }
@@ -51,11 +51,11 @@ public class BoardPropagationUtility {
         }
         if (propagationRecieverHasChangedPossibilites) {
             if (tile.isCollapsed()){
-                board.setTile(boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y(),
+                board.setTile(boardPropagationToDo.coordinates(),
                         new TileCollapsed(tile.getContent()));
             }
             addNewEntriesToQueue(boardPropagationToDo.coordinates(), boardPropagationQueue, board, board.getTile(
-                    boardPropagationToDo.coordinates().x(), boardPropagationToDo.coordinates().y()).getPossibleTileContentLeft());
+                    boardPropagationToDo.coordinates()).getPossibleTileContentLeft());
         }
     }
 
