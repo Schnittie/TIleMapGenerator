@@ -1,7 +1,5 @@
 package de.schnittie.model.businesscode.board.splitting;
-//TODO
-// see comments in "BoardFusionException"
-public class InvalidDimensionException extends Throwable {
+public class InvalidDimensionException extends Exception {
     private final String message;
     public InvalidDimensionException(String cause) {
         this.message = cause;

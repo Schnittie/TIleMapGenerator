@@ -1,7 +1,7 @@
 package de.schnittie.model.businesscode.board;
 
-import de.schnittie.model.businesscode.board.splitting.BoardFusionFactory;
-import de.schnittie.model.businesscode.board.splitting.BoardSplittingService;
+import de.schnittie.model.businesscode.board.splitting.BoardFusionUtility;
+import de.schnittie.model.businesscode.board.splitting.BoardSplittingUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class MultithreadedBoardFillingService {
     //Takes an empty Board and returns a filled board
     public static Board generateBoard(Board board) {
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap =
-                BoardSplittingService.splitBoardIntoSmallerShelledBoards(board);
+                BoardSplittingUtility.splitBoardIntoSmallerShelledBoards(board);
         ArrayList<BoardFillingServiceThread> listOfFillingThreads = new ArrayList<>(coordinatesSubBoardMap.size());
 
         for (Board subBoard : coordinatesSubBoardMap.values()) {
@@ -32,22 +32,7 @@ public class MultithreadedBoardFillingService {
                 throw new RuntimeException(e);
             }
         }
-        // this is something w should talk about in discord, cant really tell whats the problem here...
-        //TODO: ask artur about this (Generating the board images gets called multiple times)
-//        ExecutorService executorService = ExecutorServiceProvider.getLinkedBlockingQueueExecutor();
-//        for (Thread t : listOfThreads) {
-//            executorService.submit(t);
-//        }
-//        executorService.shutdown();
-//        boolean finishedThread = false;
-//        try {
-//            finishedThread = !executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException("Unexpected Interruption");
-//        }
-//        if (finishedThread) System.out.println("Threads didn't finish");
-
         System.out.println("Fusing SubBoards together...");
-        return BoardFusionFactory.fuseMapOfBoardsIntoOneBoard(coordinatesSubBoardMap);
+        return BoardFusionUtility.fuseMapOfBoardsIntoOneBoard(coordinatesSubBoardMap);
     }
 }

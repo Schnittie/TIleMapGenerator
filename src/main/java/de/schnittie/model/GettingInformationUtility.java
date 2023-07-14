@@ -1,6 +1,6 @@
 package de.schnittie.model;
 
-import de.schnittie.model.businesscode.TileImageLoaderService;
+import de.schnittie.model.logic.TileImageLoaderService;
 import de.schnittie.model.database.DBinteractions;
 
 import java.awt.image.BufferedImage;

@@ -1,16 +1,16 @@
 package de.schnittie.model.database.fillingDB;
 
-import de.schnittie.model.businesscode.tile.PossibleAdjacencyProvider;
-import de.schnittie.model.businesscode.tile.TileDataProvider;
+import de.schnittie.model.logic.tile.PossibleAdjacencyProvider;
+import de.schnittie.model.logic.tile.TileDataProvider;
 import de.schnittie.model.database.DBinteractions;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EasyTileCreationService {
+public class EasyTileCreationUtility {
     public static void createEasyTiles(HashMap<Integer, ArrayList<Integer>> tileSocketList, ArrayList<Socket> socketSet, HashMap<Integer, String> tilePathMap) {
-        ArrayList<ArrayList<Integer>> easyTileSets = EasyTileCreationService.findEasyTiles(tileSocketList,socketSet,tilePathMap);
+        ArrayList<ArrayList<Integer>> easyTileSets = EasyTileCreationUtility.findEasyTiles(tileSocketList,socketSet,tilePathMap);
         DBinteractions.getInstance().putEasyTilesIntoDB(easyTileSets);
     }
 

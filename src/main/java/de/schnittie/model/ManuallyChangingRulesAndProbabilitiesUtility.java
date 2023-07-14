@@ -1,6 +1,6 @@
 package de.schnittie.model;
 
-import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.logic.Configuration;
 import de.schnittie.model.database.DBinteractions;
 import de.schnittie.model.database.RuleTO;
 import de.schnittie.model.database.fillingDB.InvalidAdjacencyException;

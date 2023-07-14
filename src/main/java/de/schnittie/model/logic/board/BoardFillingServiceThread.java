@@ -12,7 +12,7 @@ public class BoardFillingServiceThread implements Runnable{
                 //this means all Tiles are collapsed
                 return;
             }
-            BoardCollapsingTileService.collapseATile(nextTile, board);
+            BoardCollapsingTileUtility.collapseATile(nextTile, board);
         }
     }
 

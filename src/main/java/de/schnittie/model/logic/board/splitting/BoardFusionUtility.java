@@ -12,7 +12,7 @@ import java.util.HashMap;
 // described in the DesignPattern book of the GangOfFour.
 // really nice lecture for all this stuff: https://www.amazon.de/Entwurfsmuster-von-Kopf-bis-Fu%C3%9F/dp/3897214210
 // tell me if you need a PDF ;)
-public class BoardFusionFactory {
+public class BoardFusionUtility {
 
     public static Board fuseMapOfBoardsIntoOneBoard(HashMap<PairOfCoordinates, Board> coordinatesBoardMap) {
         try {
@@ -40,7 +40,6 @@ public class BoardFusionFactory {
         int y = 0;
         ArrayList<Board> listOfVerticalSlices = new ArrayList<>();
         while (coordinatesBoardMap.containsKey(new PairOfCoordinates(0, y))) {
-            //TODO maybe this fails because of pointer
             while (coordinatesBoardMap.containsKey(new PairOfCoordinates(x, y))) {
                 fuseBoardsAlongYAxis(coordinatesBoardMap.get(new PairOfCoordinates(0, y)),
                         coordinatesBoardMap.get(new PairOfCoordinates(x, y)));

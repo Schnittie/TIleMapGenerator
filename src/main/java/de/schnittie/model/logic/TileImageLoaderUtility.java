@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode;
+package de.schnittie.model.logic;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -31,8 +31,7 @@ public class BoardPropagationInstructionForOneTile {
     public Set<Integer> getAffectedDirections(){
         return directionNewTileContentMap.keySet();
     }
-    //TODO
-    // seems to be unused
+
     public List<Integer> getNewTileContentForDirection(int direction){
         return directionNewTileContentMap.get(direction);
     }

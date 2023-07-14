@@ -1,7 +1,7 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.logic.tile;
 
-import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.tile.tileObjects.TileInProgress;
+import de.schnittie.model.logic.MapGenerationException;
+import de.schnittie.model.logic.tile.tileObjects.TileInProgress;
 
 import java.util.ArrayList;
 import java.util.List;

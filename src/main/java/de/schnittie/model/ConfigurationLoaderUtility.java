@@ -1,7 +1,7 @@
 package de.schnittie.model;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.tile.TileDataProvider;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.tile.TileDataProvider;
 import de.schnittie.model.database.DBinteractions;
 
 import java.sql.SQLException;

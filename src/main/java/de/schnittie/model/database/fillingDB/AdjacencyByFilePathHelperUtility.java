@@ -1,6 +1,6 @@
 package de.schnittie.model.database.fillingDB;
 
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 import de.schnittie.model.database.DBinteractions;
 
 import java.io.File;

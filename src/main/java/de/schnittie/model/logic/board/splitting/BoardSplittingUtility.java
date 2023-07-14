@@ -2,27 +2,17 @@ package de.schnittie.model.businesscode.board.splitting;
 
 import de.schnittie.model.businesscode.Configuration;
 import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.board.BoardCollapsingTileService;
+import de.schnittie.model.businesscode.board.BoardCollapsingTileUtility;
 import de.schnittie.model.businesscode.board.PairOfCoordinates;
 
 import java.util.*;
-//TODO
-// Stop calling utils a "Service" :D
-// conventions DO matter :P
-public class BoardSplittingService {
+public class BoardSplittingUtility {
     private static final int MINIMAL_BOARD_HEIGHT = 50;
     private static final int MINIMAL_BOARD_WIDTH = 50;
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
-        //TODO: Mulitithreaded Recursive Splitting
         System.out.println("Splitting board...");
-//        if (board.getHeight() <= MINIMAL_BOARD_HEIGHT && board.getWidth() <= MINIMAL_BOARD_WIDTH) {
-//            System.out.println("board is too small to split");
-//            HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>(1);
-//            coordinatesSubBoardMap.put(new PairOfCoordinates(0, 0), board);
-//            return coordinatesSubBoardMap;
-//        }
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>();
         for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {
@@ -58,9 +48,9 @@ public class BoardSplittingService {
         //Collapse all Tiles at the Edges between SubBoards => Shelling them
         System.out.println("Collapsing Tiles along Splitlines ...");
         if (Configuration.getInstance().isSimpleMap()){
-            BoardCollapsingTileService.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+            BoardCollapsingTileUtility.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
         } else {
-            BoardCollapsingTileService.collapseAllEasy(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
+            BoardCollapsingTileUtility.collapseAllEasy(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
         }
         return boardToCornerMap;
     }
