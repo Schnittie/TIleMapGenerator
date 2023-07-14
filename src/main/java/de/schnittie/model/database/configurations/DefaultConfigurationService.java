@@ -24,7 +24,6 @@ public class DefaultConfigurationService {
         
         ConfigurationHolder fantasyConfig = new ConfigurationHolder(new HashMap<>(), "FantasyConfig", new HashMap<>(),new HashMap<>());
         addTilemapToConfig(fantasyConfig, "fantasyLake.png" , RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLake.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyCastleBlue.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyCastleRed.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyCastleDesertBlue.png", RuleCreationInstruction.ADJACENCY_RULES);
@@ -39,17 +38,17 @@ public class DefaultConfigurationService {
         addTilemapToConfig(fantasyConfig,"fantasyRuinTwo.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasySpring.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyRotatablePaths.png", RuleCreationInstruction.ROTATE_THRICE);
-        addTilemapToConfig(fantasyConfig,"fantasyOcean.png", RuleCreationInstruction.ROTATE_NONE);
+        //addTilemapToConfig(fantasyConfig,"fantasyOcean.png", RuleCreationInstruction.ROTATE_NONE);
         addTilemapToConfig(fantasyConfig,"fantasyDesertPath.png", RuleCreationInstruction.ROTATE_NONE);
-        addTilemapToConfig(fantasyConfig,"fantasyOceanShip.png", RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyOceanShip.png", RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyRiver.png", RuleCreationInstruction.ROTATE_NONE);
 
-        addTilemapToConfig(fantasyConfig,"fantasyLakeNoInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLakeNoInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLakeSideInflux.png",RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLakeSideInfluxMirrored.png",RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLakeTopInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
-        addTilemapToConfig(fantasyConfig,"fantasyLakeTopInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyLakeNoInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
+       //addTilemapToConfig(fantasyConfig,"fantasyLakeNoInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyLakeSideInflux.png",RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyLakeSideInfluxMirrored.png",RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyLakeTopInflux.png", RuleCreationInstruction.ADJACENCY_RULES);
+        //addTilemapToConfig(fantasyConfig,"fantasyLakeTopInfluxMirrored.png", RuleCreationInstruction.ADJACENCY_RULES);
 
         addTilemapToConfig(fantasyConfig,"fantasyRiverBridgeStoneHorizontal.png",RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyRiverBridgeStoneVertical.png", RuleCreationInstruction.ADJACENCY_RULES);
@@ -59,7 +58,7 @@ public class DefaultConfigurationService {
         ConfigurationHolder desertConfig = new ConfigurationHolder(new HashMap<>(), "DesertConfig", new HashMap<>(),new HashMap<>());
         addTilemapToConfig(desertConfig,"fantasyDesertPath.png", RuleCreationInstruction.ROTATE_NONE);
         addTilemapToConfig(desertConfig,"fantasyDesertRiver.png", RuleCreationInstruction.ROTATE_NONE);
-        changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_2_0.png",60);
+        /*changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_2_0.png",60);
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_3_0.png",50);
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_4_0.png",1000);
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_5_0.png",1000);
@@ -139,7 +138,7 @@ public class DefaultConfigurationService {
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_5_9_0.png",45);
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_0_0.png",50);
         changeProbabilityForConfig(desertConfig,"rotated_0_times_from_fantasyDesertPath.png_6_1_0.png",50);
-        defaultConfigurations.add(desertConfig);
+        defaultConfigurations.add(desertConfig);*/
 
         ConfigurationHolder basicConfig = new ConfigurationHolder(new HashMap<>(), "BasicConfig", new HashMap<>(),new HashMap<>());
         addTilemapToConfig(basicConfig,"BasicTilemapRotateNone.png", RuleCreationInstruction.ROTATE_NONE);
