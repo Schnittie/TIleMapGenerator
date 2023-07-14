@@ -1,8 +1,6 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
-import de.schnittie.model.businesscode.TileImageLoaderService;
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.TileImageLoaderService;
+import de.schnittie.model.logic.TileImageLoaderUtility;
 import de.schnittie.model.database.DBinteractions;
 
 import javax.imageio.ImageIO;
@@ -25,7 +23,7 @@ public class BoardImageFactory {
         int height = board.getHEIGHT();
         int imageWidth = width * TILE_SIZE;
         int imageHeight = height * TILE_SIZE;
-        HashMap<Integer, BufferedImage> imageById = TileImageLoaderService.getImageMapFromFilepathMap();
+        HashMap<Integer, BufferedImage> imageById = TileImageLoaderUtility.getImageMapFromFilepathMap();
         BufferedImage boardImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics2D = boardImage.createGraphics();

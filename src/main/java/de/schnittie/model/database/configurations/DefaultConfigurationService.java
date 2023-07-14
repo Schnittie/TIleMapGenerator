@@ -16,7 +16,6 @@ public class DefaultConfigurationService {
     public static ArrayList<ConfigurationHolder> getDefaultConfigurations() throws URISyntaxException {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
         ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>();
-        //TODO make into Enum
 
         //integer >=RuleCreationInstruction.ROTATE_NONE means that colour Rules apply and the  int indicates the amount of rotations that should be applied
         //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability

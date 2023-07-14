@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.board.propagation;
+package de.schnittie.model.logic.board.propagation;
 
-import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.logic.MapGenerationException;
 
 import java.util.HashMap;
 import java.util.List;

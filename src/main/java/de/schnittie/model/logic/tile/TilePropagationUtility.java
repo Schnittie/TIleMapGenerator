@@ -6,7 +6,7 @@ import de.schnittie.model.logic.tile.tileObjects.TileInProgress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TilePropagationService {
+public class TilePropagationUtility {
 
     public static boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller, TileInProgress tileInProgress)
             throws MapGenerationException {

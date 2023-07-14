@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.logic.tile;
 
-import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.logic.Configuration;
 
 import java.util.ArrayList;
 

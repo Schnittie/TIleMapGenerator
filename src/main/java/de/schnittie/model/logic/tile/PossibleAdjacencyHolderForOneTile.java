@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.logic.tile;
 
 import java.util.HashMap;
 import java.util.HashSet;

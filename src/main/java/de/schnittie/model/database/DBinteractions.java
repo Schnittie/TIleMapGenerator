@@ -1,6 +1,6 @@
 package de.schnittie.model.database;
 
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 

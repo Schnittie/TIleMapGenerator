@@ -1,8 +1,8 @@
-package de.schnittie.model.businesscode.board.splitting;
+package de.schnittie.model.logic.board.splitting;
 
-import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
-import de.schnittie.model.businesscode.tile.tileObjects.Tile;
+import de.schnittie.model.logic.board.Board;
+import de.schnittie.model.logic.board.PairOfCoordinates;
+import de.schnittie.model.logic.tile.tileObjects.Tile;
 
 import java.util.ArrayList;
 import java.util.HashMap;

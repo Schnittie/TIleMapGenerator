@@ -1,12 +1,12 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
-import de.schnittie.model.businesscode.board.splitting.BoardFusionUtility;
-import de.schnittie.model.businesscode.board.splitting.BoardSplittingUtility;
+import de.schnittie.model.logic.board.splitting.BoardFusionUtility;
+import de.schnittie.model.logic.board.splitting.BoardSplittingUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MultithreadedBoardFillingService {
+public class MultithreadedBoardFillingUtility {
 
     //Takes an empty Board and returns a filled board
     public static Board generateBoard(Board board) {

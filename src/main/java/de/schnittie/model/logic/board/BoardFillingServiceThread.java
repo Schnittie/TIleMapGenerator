@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
 public class BoardFillingServiceThread implements Runnable{
     private final Board board;
@@ -7,7 +7,7 @@ public class BoardFillingServiceThread implements Runnable{
     }
     public void fill(Board board) {
         while (true) {
-            PairOfCoordinates nextTile = BoardNextTileToCollapseService.getNextTile(board);
+            PairOfCoordinates nextTile = BoardNextTileToCollapseUtility.getNextTile(board);
             if (nextTile.x() == -10) {
                 //this means all Tiles are collapsed
                 return;

@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.tile.tileObjects;
+package de.schnittie.model.logic.tile.tileObjects;
 
-import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.logic.MapGenerationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +26,18 @@ public class TileCollapsed implements Tile {
 
     @Override
     public void removePossibility(int toRemove) {
-        //nothing to do here (shouldn't be called)
-        throw new RuntimeException("This shouldn be called on a collapsed Tile");
-        //TODO
-        // maybe this shouldn't be part of the "Tile" interface then?
-        // this exception implies, that a caller knows, that this shouldn't be called.
-        // this again implies, that a TileInProgress is known to be one by a caller.
-        // Just cast it to "TileInProgress" then and call this method, which is only implemented in "TileInProgress"
+        //nothing to do here
     }
 
     @Override
     public TileCollapsed collapse(int i) {
-        //nothing to do here (shouldn't be called)
+        //nothing to do here
          return  new TileCollapsed(i);
     }
 
     @Override
     public Tile collapse() {
-        //nothing to do here (shouldn't be called)
+        //nothing to do here
         return this;
     }
 

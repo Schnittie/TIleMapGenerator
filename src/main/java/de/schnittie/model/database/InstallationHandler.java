@@ -1,6 +1,7 @@
 package de.schnittie.model.database;
 
-import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService;
+import de.schnittie.model.ConfigurationLoaderUtility;
+import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesUtility;
 import de.schnittie.model.database.configurations.ConfigurationHolder;
 import de.schnittie.model.database.configurations.DefaultConfigurationService;
 import de.schnittie.model.database.fillingDB.TileCreation;
@@ -50,7 +51,6 @@ public class InstallationHandler {
                 createAndFillDirectoryWithDefaultImageAndDB(defaultConfig.nameOfConfiguration());
             }
 
-            System.out.println("Directory created and Resources copied successfully");
         } catch (IOException | URISyntaxException e) {
             System.out.println("failed to create directory or copy Resources");
             e.printStackTrace();
@@ -91,8 +91,8 @@ public class InstallationHandler {
         System.out.println("Resources for " + config.nameOfConfiguration() + " successfully copied");
         TileCreation.addTiles(config.inputStreamToRotateInstructionMap(), pathStringToDirectory +
                 File.separator + TILE_FOLDER_NAME + File.separator, config.inputStreamToFilenameMap());
-        System.out.println("Applying custom Rule changes...");
-        ManuallyChangingRulesAndProbabilitiesService.changeProbabilityOfFileName(config.probabilityChange());
+        ConfigurationLoaderUtility.reloadConfiguration();
+        ManuallyChangingRulesAndProbabilitiesUtility.changeProbabilityOfFileName(config.probabilityChange());
 
         System.out.println("Rules for " + config.nameOfConfiguration() + " successfully Generated");
 

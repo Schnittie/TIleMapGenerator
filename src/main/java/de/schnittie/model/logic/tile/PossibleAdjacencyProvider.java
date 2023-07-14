@@ -1,7 +1,7 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.logic.tile;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.MapGenerationException;
 import de.schnittie.model.database.RuleTO;
 
 import java.util.ArrayList;

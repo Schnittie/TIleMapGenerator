@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
 public record PairOfCoordinates(int x, int y) implements Comparable<PairOfCoordinates>{
     @Override

@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
 public class BoardTOFactory {
     public static BoardTO getBoardTO(Board board) {

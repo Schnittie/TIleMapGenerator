@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdjacencyByFilePathHelperService {
+public class AdjacencyByFilePathHelperUtility {
     private final static HashMap<Integer, PairOfCoordinates> directionChanges = DBinteractions.getInstance().getDirectionChanges();
     private final static HashMap<Integer, String> directionNames = DBinteractions.getInstance().getDirectionNameMap();
     private final static HashMap<Integer, Integer> directionOpposites = DBinteractions.getInstance().getReverseDirection();
@@ -16,8 +16,8 @@ public class AdjacencyByFilePathHelperService {
 
         String thisTileFileName = getFileName(thisTileId, tilePathMap);
         String thatTileFileName = getFileName(thatTileId, tilePathMap);
-        ArrayList<Integer> thatTileNumbers = ExtractingNumberService.extractNumbers(getFileName(thatTileId, tilePathMap));
-        ArrayList<Integer> thisTileNumbers = ExtractingNumberService.extractNumbers(getFileName(thisTileId, tilePathMap));
+        ArrayList<Integer> thatTileNumbers = ExtractingNumberUtility.extractNumbers(getFileName(thatTileId, tilePathMap));
+        ArrayList<Integer> thisTileNumbers = ExtractingNumberUtility.extractNumbers(getFileName(thisTileId, tilePathMap));
         thisTileNumbers.remove(0);
         thatTileNumbers.remove(0);
         PairOfCoordinates pairOfCoordinates = directionChanges.get(direction);

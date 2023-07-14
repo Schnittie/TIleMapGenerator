@@ -1,18 +1,17 @@
-package de.schnittie.model.businesscode.damageControll;
+package de.schnittie.model.logic.damageControll;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
-import de.schnittie.model.businesscode.tile.TilePropagationService;
-import de.schnittie.model.businesscode.tile.tileObjects.TileInProgress;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.MapGenerationException;
+import de.schnittie.model.logic.board.Board;
+import de.schnittie.model.logic.board.PairOfCoordinates;
+import de.schnittie.model.logic.tile.TilePropagationUtility;
+import de.schnittie.model.logic.tile.tileObjects.TileInProgress;
 import de.schnittie.model.database.DBinteractions;
 
 import java.util.*;
 
-//TODO
-// util?
-public class EasyTilePatchAreaFinderService {
+
+public class EasyTilePatchAreaFinderUtility {
     private static final int DAMAGE_MIN_SIZE = 1;
     private static final HashMap<Integer, PairOfCoordinates> directionChanges = Configuration.getInstance().getDirectionChanges();
     private static final HashMap<Integer, Integer> reverseDirection = DBinteractions.getInstance().getReverseDirection();
@@ -22,11 +21,6 @@ public class EasyTilePatchAreaFinderService {
         for (ArrayList<Integer> easyTileList : easyTileLists) {
             easyTileSetExamples.add(easyTileList.get(0));
         }
-        // all these printlns should probably be replaced by a logger... its fine for development, but you'll like
-        // not to bother the users with pointless logging stuff they'll never see anyways while
-        // eating CPU-Cycles like they were crisps. A logger can be configured to shut up for prod builds.
-        // this applies to every single println in your code.
-        System.out.println("Trying to make out a damage Area...");
         return tryToFindPatchArea(damageOrigin, easyTileSetExamples, board);
     }
 
@@ -91,13 +85,13 @@ public class EasyTilePatchAreaFinderService {
         easyTilePossibilityAsList.add(easyTile);
         allNeighboursNotInArea.remove(reverseDirection.get(direction));
         try {
-            TilePropagationService.propagate(reverseDirection.get(direction), easyTilePossibilityAsList, potentialTile);
+            TilePropagationUtility.propagate(reverseDirection.get(direction), easyTilePossibilityAsList, potentialTile);
         } catch (MapGenerationException e) {
             return false;
         }
         for (Integer neighbourDirection : allNeighboursNotInArea.keySet()) {
             try {
-                TilePropagationService.propagate(reverseDirection.get(neighbourDirection),
+                TilePropagationUtility.propagate(reverseDirection.get(neighbourDirection),
                         board.getTile(allNeighboursNotInArea.get(neighbourDirection)).getPossibleTileContentLeft(), potentialTile);
             } catch (MapGenerationException e) {
                 return false;
@@ -108,11 +102,10 @@ public class EasyTilePatchAreaFinderService {
 
 
     private static boolean couldBeEasyIfItWereNew(Board board, HashMap<Integer, PairOfCoordinates> allNeighboursNotInArea, int easyTile) {
-        //TODO rename
         TileInProgress potentialTile = new TileInProgress();
         for (Integer direction : allNeighboursNotInArea.keySet()) {
             try {
-                TilePropagationService.propagate(reverseDirection.get(direction),
+                TilePropagationUtility.propagate(reverseDirection.get(direction),
                         board.getTile(allNeighboursNotInArea.get(direction)).getPossibleTileContentLeft(), potentialTile);
             } catch (MapGenerationException e) {
                 return false;

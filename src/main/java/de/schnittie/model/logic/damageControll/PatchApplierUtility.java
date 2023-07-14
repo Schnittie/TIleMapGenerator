@@ -5,7 +5,7 @@ import de.schnittie.model.logic.MapGenerationException;
 import de.schnittie.model.logic.board.Board;
 import de.schnittie.model.logic.board.BoardCollapsingTileUtility;
 import de.schnittie.model.logic.board.PairOfCoordinates;
-import de.schnittie.model.logic.tile.TilePropagationService;
+import de.schnittie.model.logic.tile.TilePropagationUtility;
 import de.schnittie.model.logic.tile.tileObjects.Tile;
 import de.schnittie.model.logic.tile.tileObjects.TileInProgress;
 import de.schnittie.model.database.DBinteractions;
@@ -13,9 +13,8 @@ import de.schnittie.model.database.DBinteractions;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//TODO
-// util :3
-public class PatchApplierService {
+
+public class PatchApplierUtility {
     private static final HashMap<Integer, PairOfCoordinates> directionChangeMap = Configuration.getInstance().getDirectionChanges();
     private static final HashMap<Integer,Integer> reverseDirection = DBinteractions.getInstance().getReverseDirection();
     public static void applyPatch(PatchInstruction patchInstruction, Board board) {
@@ -35,7 +34,7 @@ public class PatchApplierService {
         if (tileInProgress.isCollapsed())return;
         for (Integer direction : directionChangeMap.keySet()) {
             try {
-                TilePropagationService.propagate(reverseDirection.get(direction),board.getTile(
+                TilePropagationUtility.propagate(reverseDirection.get(direction),board.getTile(
                         coordinatesOfResetTile.x()+directionChangeMap.get(direction).x(),
                         coordinatesOfResetTile.y() + directionChangeMap.get(direction).y()).
                         getPossibleTileContentLeft(),(TileInProgress) tileInProgress);

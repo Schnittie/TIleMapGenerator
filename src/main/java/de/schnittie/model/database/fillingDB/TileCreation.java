@@ -21,7 +21,6 @@ public class TileCreation {
     public static void addTiles(HashMap<InputStream, RuleCreationInstruction> tilemapToRotationInstructionMap, String tileFolder, HashMap<InputStream, String> inputStreamToFilenameMap) {
         //receives a Map that mapps a file to how often it should rotate
 
-        System.out.println("Creating Tiles...");
         for (InputStream inputStream : tilemapToRotationInstructionMap.keySet()) {
             try {
                 TileCreation.splitImage(inputStream, tilemapToRotationInstructionMap.get(inputStream).getRotationInteger(), tileFolder, inputStreamToFilenameMap.get(inputStream));
@@ -51,7 +50,7 @@ public class TileCreation {
 
     private static int getProbabilityForTile(String filename) {
         try {
-            ArrayList<Integer> numbersInUrl = ExtractingNumberService.extractNumbers(filename);
+            ArrayList<Integer> numbersInUrl = ExtractingNumberUtility.extractNumbers(filename);
             if (filename.contains("Neighbour")) {
                 return numbersInUrl.get(0);
             }

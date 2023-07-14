@@ -1,4 +1,4 @@
-package de.schnittie.model.businesscode.board.splitting;
+package de.schnittie.model.logic.board.splitting;
 
 public class BoardFusionException extends Exception {
     private final String message;

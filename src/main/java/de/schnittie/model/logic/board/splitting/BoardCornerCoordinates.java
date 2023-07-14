@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.board.splitting;
+package de.schnittie.model.logic.board.splitting;
 
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 
 public record BoardCornerCoordinates(PairOfCoordinates MinXMinY, PairOfCoordinates MaxXMinY, PairOfCoordinates MinXMaxY, PairOfCoordinates MaxXMaxY) {
 }

@@ -1,8 +1,8 @@
-package de.schnittie.model.businesscode.tile.tileObjects;
+package de.schnittie.model.logic.tile.tileObjects;
 
-import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.tile.TileDataProvider;
-import de.schnittie.model.businesscode.tile.TilePropagationService;
+import de.schnittie.model.logic.MapGenerationException;
+import de.schnittie.model.logic.tile.TileDataProvider;
+import de.schnittie.model.logic.tile.TilePropagationUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class TileInProgress implements Tile {
     }
     public boolean propagate(int whereIamRelativeToCaller, List<Integer> listOfPossibilitiesOfCaller)
             throws MapGenerationException {
-        return TilePropagationService.propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
+        return TilePropagationUtility.propagate(whereIamRelativeToCaller,listOfPossibilitiesOfCaller, this);
     }
     public List<Integer> getPossibleTileContentLeft() {
         //returns List of all the possibilities that this TileInProgress can still be

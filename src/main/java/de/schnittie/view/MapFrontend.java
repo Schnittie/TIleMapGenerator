@@ -1,6 +1,6 @@
 package de.schnittie.view;
 
-import de.schnittie.model.businesscode.Configuration;
+import de.schnittie.model.logic.Configuration;
 import de.schnittie.model.database.InstallationHandler;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
 import de.schnittie.model.mvcStuffs.MapGeneratorEvent;
@@ -16,7 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import static de.schnittie.model.ConfigurationLoaderService.loadConfiguration;
+import static de.schnittie.model.ConfigurationLoaderUtility.loadConfiguration;
 
 
 public class MapFrontend extends JFrame implements ModelListener{
@@ -29,7 +29,6 @@ public class MapFrontend extends JFrame implements ModelListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("action Performend");
         model.generateMap();
     }
     public MapFrontend(){
@@ -54,7 +53,6 @@ public class MapFrontend extends JFrame implements ModelListener{
 
         JButton generateButton = new JButton("Generate Map");
         generateButton.addActionListener(e -> {
-            System.out.println("Action performed");
 
             int width = Integer.parseInt(widthTextField.getText());
             int height = Integer.parseInt(heightTextField.getText());

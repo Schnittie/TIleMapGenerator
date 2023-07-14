@@ -1,7 +1,7 @@
 package de.schnittie.view;
 
-import de.schnittie.model.GettingInformationService;
-import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesService;
+import de.schnittie.model.GettingInformationUtility;
+import de.schnittie.model.ManuallyChangingRulesAndProbabilitiesUtility;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +28,7 @@ public class ProbabilityChangeFrame extends JDialog {
         super();
         setSize(600, 600);
         setLocationRelativeTo(null);
-        GettingInformationService iDtoProbability = new GettingInformationService();
+        GettingInformationUtility iDtoProbability = new GettingInformationUtility();
         iDToProbabilityMap = iDtoProbability.getTileIdToProbabilityMap();
         iDtoImage = iDtoProbability.getTileIdToBufferedImageMap();
 
@@ -84,7 +84,7 @@ public class ProbabilityChangeFrame extends JDialog {
             Integer newProbability = (Integer) probabilityTableModel.getValueAt(row, 1);
             probabilityMap.put(id, newProbability);
         }
-        ManuallyChangingRulesAndProbabilitiesService.changeProbability(probabilityMap);
+        ManuallyChangingRulesAndProbabilitiesUtility.changeProbability(probabilityMap);
 
 /*
         dispose();

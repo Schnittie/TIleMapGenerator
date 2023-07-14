@@ -1,7 +1,6 @@
-package de.schnittie.model.businesscode;
-//TODO
-// see other exception classes
-public class MapGenerationException extends Throwable {
+package de.schnittie.model.logic;
+
+public class MapGenerationException extends Exception {
     public MapGenerationException() {
     }
 }

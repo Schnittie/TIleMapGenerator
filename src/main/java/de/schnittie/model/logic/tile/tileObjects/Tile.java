@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.tile.tileObjects;
+package de.schnittie.model.logic.tile.tileObjects;
 
-import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.logic.MapGenerationException;
 
 import java.util.List;
 

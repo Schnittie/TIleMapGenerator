@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class TileImageLoaderService {
+public class TileImageLoaderUtility {
     public static HashMap<Integer, BufferedImage> getImageMapFromFilepathMap() {
         HashMap<Integer, String> filePathMap = Configuration.getInstance().getFilePathMap();
         HashMap<Integer, BufferedImage> imageById = new HashMap<>(filePathMap.size() + 1);

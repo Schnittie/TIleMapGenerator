@@ -1,7 +1,7 @@
-package de.schnittie.model.businesscode.board;
+package de.schnittie.model.logic.board;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.board.propagation.BoardPropagationUtility;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.board.propagation.BoardPropagationUtility;
 
 import java.util.ArrayList;
 import java.util.Collection;

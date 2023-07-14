@@ -1,7 +1,7 @@
-package de.schnittie.model.businesscode.tile;
+package de.schnittie.model.logic.tile;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.MapGenerationException;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.MapGenerationException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +16,7 @@ public class TileRandomCollapsingService {
     public int getRandomState(List<Integer> possibleStates)
             throws MapGenerationException {
         if (possibleStates.isEmpty()) {
-            //TODO
-            // sounds more like an IllegalArgumentException here...
-            throw new RuntimeException("No Possible State");
+            throw new IllegalArgumentException("No Possible State");
         }
         if (possibleStates.size() == 1) {
             return possibleStates.get(0);

@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.damageControll;
+package de.schnittie.model.logic.damageControll;
 
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 
 import java.util.ArrayList;
 import java.util.Queue;

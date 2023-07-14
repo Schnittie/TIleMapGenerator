@@ -1,6 +1,6 @@
-package de.schnittie.model.businesscode.board.propagation;
+package de.schnittie.model.logic.board.propagation;
 
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 
 public record BoardPropagationToDo(PairOfCoordinates coordinates, BoardPropagationInstructionForOneTile instruction) {
 }

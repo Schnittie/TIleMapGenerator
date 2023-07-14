@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExtractingNumberService {
+public class ExtractingNumberUtility {
     public static ArrayList<Integer> extractNumbers(String input) {
         ArrayList<Integer> numbers = new ArrayList<>();
 

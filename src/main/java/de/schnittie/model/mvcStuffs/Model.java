@@ -1,9 +1,8 @@
 package de.schnittie.model.mvcStuffs;
 
-import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.board.BoardFillingServiceThread;
-import de.schnittie.model.businesscode.board.BoardImageFactory;
-import de.schnittie.model.businesscode.board.MultithreadedBoardFillingService;
+import de.schnittie.model.logic.board.Board;
+import de.schnittie.model.logic.board.BoardImageFactory;
+import de.schnittie.model.logic.board.MultithreadedBoardFillingUtility;
 import de.schnittie.view.ModelListener;
 
 import java.awt.image.BufferedImage;
@@ -15,14 +14,13 @@ import java.util.List;
 public class Model {
 
     private List<ModelListener> listeners = new ArrayList<>();
-    private BoardFillingServiceThread boardFillingServiceThread;
     private HashMap<File, Integer> tilesToAdd = new HashMap<>();
     private BufferedImage lastMap;
 
     public BufferedImage generateMap(int width, int height) {
         long timeBefore = System.currentTimeMillis();
         Board board = new Board(width, height);
-        board = MultithreadedBoardFillingService.generateBoard(board);
+        board = MultithreadedBoardFillingUtility.generateBoard(board);
         System.out.println("Finished generating Map in " + (System.currentTimeMillis() - timeBefore) + " Milliseconds");
         lastMap = BoardImageFactory.renderBoardImage(board.getBoardTO());
         notifyListeners(new NewMapEvent(lastMap));
@@ -46,16 +44,6 @@ public class Model {
     public void addTiles(String filepath, int rotation) {
         tilesToAdd.put(new File(filepath), rotation);
     }
-
-    public void generateRules() {
-        //TODO where to generate these rules to?
-        //TileCreation.addTiles(tilesToAdd);
-    }
-
-    public BufferedImage getLastMap() {
-        return lastMap;
-    }
-
     public void generateMap() {
     }
 }

@@ -41,7 +41,7 @@ public class RuleCreation {
             for (Integer direction : directionChanges.keySet()) {
                 for (Integer that_tile_Id : tileSocketList.keySet()) {
 
-                    int neighbourValidity = AdjacencyByFilePathHelperService.extraRuleValidly(this_tile_Id, that_tile_Id,
+                    int neighbourValidity = AdjacencyByFilePathHelperUtility.extraRuleValidly(this_tile_Id, that_tile_Id,
                             direction, tilePathMap);
 
                     if (neighbourValidity == 1 || (tileSocketList.get(this_tile_Id).get(direction).equals
@@ -52,17 +52,15 @@ public class RuleCreation {
             }
         }
         try {
-            System.out.println("Validating rules...");
-            RuleValidationService.areRulesValid(listOfRulesToCreate);
+            RuleValidationUtility.areRulesValid(listOfRulesToCreate);
         } catch (InvalidAdjacencyException e) {
             e.printFaultyTiles();
             throw new RuntimeException(e);
         }
         System.out.println("putting " + listOfRulesToCreate.size() + " Entries into the DB...");
         dBinteractions.putListOfRulesIntoDB(listOfRulesToCreate);
-        System.out.println("Done putting entries into DB");
 
-        EasyTileCreationService.createEasyTiles(tileSocketList, socketSet, tilePathMap);
+        EasyTileCreationUtility.createEasyTiles(tileSocketList, socketSet, tilePathMap);
     }
 
     private static void putTileIntoLists(BufferedImage tileImage, Integer tileId,

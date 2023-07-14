@@ -1,12 +1,12 @@
-package de.schnittie.model.businesscode.board.propagation;
+package de.schnittie.model.logic.board.propagation;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.MapGenerationException;
-import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.damageControll.BoardDamageControlService;
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
-import de.schnittie.model.businesscode.tile.tileObjects.Tile;
-import de.schnittie.model.businesscode.tile.tileObjects.TileCollapsed;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.MapGenerationException;
+import de.schnittie.model.logic.board.Board;
+import de.schnittie.model.logic.damageControll.BoardDamageControlUtility;
+import de.schnittie.model.logic.board.PairOfCoordinates;
+import de.schnittie.model.logic.tile.tileObjects.Tile;
+import de.schnittie.model.logic.tile.tileObjects.TileCollapsed;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +22,7 @@ public class BoardPropagationUtility {
             workThroughPropagationQueue(boardPropagationQueue, board);
         } catch (MapGenerationException e) {
             try {
-                System.out.println("I need to control damage");
-                BoardDamageControlService.controlDamage(x, y, board);
+                BoardDamageControlUtility.controlDamage(x, y, board);
             } catch (MapGenerationException ex) {
                 throw new RuntimeException(ex);
             }

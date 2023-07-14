@@ -1,9 +1,9 @@
-package de.schnittie.model.businesscode.board.splitting;
+package de.schnittie.model.logic.board.splitting;
 
-import de.schnittie.model.businesscode.Configuration;
-import de.schnittie.model.businesscode.board.Board;
-import de.schnittie.model.businesscode.board.BoardCollapsingTileUtility;
-import de.schnittie.model.businesscode.board.PairOfCoordinates;
+import de.schnittie.model.logic.Configuration;
+import de.schnittie.model.logic.board.Board;
+import de.schnittie.model.logic.board.BoardCollapsingTileUtility;
+import de.schnittie.model.logic.board.PairOfCoordinates;
 
 import java.util.*;
 public class BoardSplittingUtility {
@@ -12,7 +12,6 @@ public class BoardSplittingUtility {
 
     public static HashMap<PairOfCoordinates, Board> splitBoardIntoSmallerShelledBoards(Board board) {
         //a "shelled" board is a board where all the outer edges are collapsed
-        System.out.println("Splitting board...");
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = vorbereitingForSplitting(board);
         HashMap<PairOfCoordinates, Board> coordinatesSubBoardMap = new HashMap<>();
         for (PairOfCoordinates coordinates : boardToCornerMap.keySet()) {
@@ -46,7 +45,6 @@ public class BoardSplittingUtility {
         HashMap<PairOfCoordinates, BoardCornerCoordinates> boardToCornerMap = getBoardCoordinatesToBoardCornersMap(
                 board, numberOfBoardsAlongHeight, numberOfBoardsAlongWidth);
         //Collapse all Tiles at the Edges between SubBoards => Shelling them
-        System.out.println("Collapsing Tiles along Splitlines ...");
         if (Configuration.getInstance().isSimpleMap()){
             BoardCollapsingTileUtility.collapseAll(getListOfCoordinatesForSplitLines(boardToCornerMap), board);
         } else {
