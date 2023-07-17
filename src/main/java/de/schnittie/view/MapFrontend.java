@@ -1,5 +1,6 @@
 package de.schnittie.view;
 
+import de.schnittie.model.database.DBinteractions;
 import de.schnittie.model.logic.Configuration;
 import de.schnittie.model.database.InstallationHandler;
 import de.schnittie.model.mvcStuffs.GenerationErrorEvent;
@@ -159,10 +160,7 @@ public class MapFrontend extends JFrame implements ModelListener{
             e.printStackTrace();
         }
         JFileChooser chooseNewDirectory = new JFileChooser();
-        chooseNewDirectory.setCurrentDirectory(new File(
-                System.getProperty("user.home") + System.getProperty("file.separator") + "AppData" +
-                        System.getProperty("file.separator") + "Local" + System.getProperty("file.separator") + "CatboyMaps"
-                        + System.getProperty("file.separator") + "TileMapGenerator"));
+        chooseNewDirectory.setCurrentDirectory(new File((DBinteractions.getInstance().getDbFolder())));
         chooseNewDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = chooseNewDirectory.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
