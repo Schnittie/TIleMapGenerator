@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-//TODO
-// ..util.
+
 public class TileCreation {
     private static final int TILE_SIZE = 15;
     private static final DBinteractions dbinteractions = DBinteractions.getInstance();

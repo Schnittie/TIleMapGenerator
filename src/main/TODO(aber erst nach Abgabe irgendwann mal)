@@ -1,2 +1,9 @@
 mehrere maps als Biome
 Hexagons!!
+
+Linked Hashset?
+
+What if the lists of possible tiles were just a long line of bits. Could I do something with NAND to make .removeAll faster (making list stuff easier in general)
+-> IDs would have to be powers of 2, then I could use adding and subtracting aswell
+
+do the bit stuff in a C++ thingy (native einbinden)

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DefaultConfigurationService {
-    private static void addTilemapToConfig(ConfigurationHolder config, String filename, RuleCreationInstruction ruleCreationInstruction) {
+    public static void addTilemapToConfig(ConfigurationHolder config, String filename, RuleCreationInstruction ruleCreationInstruction) {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(filename);
         config.inputStreamToFilenameMap().put(inputStream, filename);
@@ -17,10 +17,7 @@ public class DefaultConfigurationService {
         ClassLoader classLoader = DefaultConfigurationService.class.getClassLoader();
         ArrayList<ConfigurationHolder> defaultConfigurations = new ArrayList<>();
 
-        //integer >=RuleCreationInstruction.ROTATE_NONE means that colour Rules apply and the  int indicates the amount of rotations that should be applied
-        //a negative integer means that neighbourhood rules should apply ant the amount translates into the Probability
-        HashMap<InputStream, RuleCreationInstruction> fantasyFileToInstructions = new HashMap<>();
-        
+
         ConfigurationHolder fantasyConfig = new ConfigurationHolder(new HashMap<>(), "FantasyConfig", new HashMap<>(),new HashMap<>());
         addTilemapToConfig(fantasyConfig, "fantasyLake.png" , RuleCreationInstruction.ADJACENCY_RULES);
         addTilemapToConfig(fantasyConfig,"fantasyLake.png", RuleCreationInstruction.ADJACENCY_RULES);
@@ -145,6 +142,10 @@ public class DefaultConfigurationService {
         addTilemapToConfig(basicConfig,"BasicTilemapRotateOnce.png", RuleCreationInstruction.ROTATE_ONCE);
         addTilemapToConfig(basicConfig,"BasicTilemapRotateThrice.png", RuleCreationInstruction.ROTATE_THRICE);
         defaultConfigurations.add(basicConfig);
+
+        ConfigurationHolder tryConfig = new ConfigurationHolder(new HashMap<>(), "TryConfig", new HashMap<>(),new HashMap<>());
+        addTilemapToConfig(tryConfig, "TryTilemapRotateNone.png", RuleCreationInstruction.ROTATE_NONE);
+        defaultConfigurations.add(tryConfig);
         return defaultConfigurations;
     }
 

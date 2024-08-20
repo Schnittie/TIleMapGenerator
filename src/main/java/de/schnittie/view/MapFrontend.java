@@ -95,6 +95,15 @@ public class MapFrontend extends JFrame implements ModelListener{
             }
         });
 
+        JButton newConfigButton = new JButton("NewConfig");
+        newConfigButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewConfigFrame newConfigFrame = new NewConfigFrame();
+                newConfigFrame.setVisible(true);
+            }
+        });
+
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> {
             System.exit(0);
@@ -111,6 +120,7 @@ public class MapFrontend extends JFrame implements ModelListener{
         buttonPanel.add(warningLabel);
         buttonPanel.add(configButton);
         buttonPanel.add(probabilityButton);
+        buttonPanel.add(newConfigButton);
         buttonPanel.add(quitButton);
         warningLabel.setText("Warning: Generating a map with high numbers may take a long time.");
 
